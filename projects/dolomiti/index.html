@@ -5,9 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Электропечи для бани и сауны Dolomiti — со склада в Казахстане</title>
 <meta name="description" content="Электрические печи Dolomiti для бань и саун 2–45 м³. Гарантия, ТЭНы в наличии в РК, отгрузка по Казахстану. Шоурум в Алматы, Ратушного 40.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>D</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Dolomiti Kazakhstan",
+"url":"https://dolomiti.kz","telephone":"+77019482840","email":"artemzaharov2707@gmail.com",
+"address":{"@type":"PostalAddress","streetAddress":"Ратушного 40","addressLocality":"Алматы","addressCountry":"KZ"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":"Электропечь для сауны Dolomiti Pillar",
+"brand":{"@type":"Brand","name":"Dolomiti&F"},
+"offers":{"@type":"AggregateOffer","priceCurrency":"KZT","lowPrice":"265000","offerCount":"9","availability":"https://schema.org/InStock"}}
+</script>
 <style>
   :root{
     --black:#111111; --white:#ffffff; --gray:#f4f3f0;
@@ -42,6 +53,10 @@
   .menu a:hover{opacity:.55}
   .nav-cta{display:flex;gap:10px;align-items:center}
   .burger{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer}
+  .nav-phone{font-size:.9rem;font-weight:600;white-space:nowrap}
+  .nav-phone:hover,.nav-wa:hover{opacity:.55}
+  .nav-wa{font-size:.9rem;text-decoration:underline;white-space:nowrap}
+  @media(max-width:1240px){.nav-phone,.nav-wa{display:none}}
   /* hero */
   .hero{padding-top:clamp(40px,6vw,90px)}
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,72px);align-items:center}
@@ -144,9 +159,11 @@
     <nav class="menu">
       <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
       <a href="#steam">Парогенераторы</a><a href="#accessories">Аксессуары</a>
-      <a href="#brand">О бренде</a><a href="#contacts">Контакты</a>
+      <a href="#brand">О бренде</a><a href="#brand">База знаний</a><a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
+      <a class="nav-phone" href="tel:+77019482840">+7 701 948 28 40</a>
+      <a class="nav-wa" href="https://wa.me/77019482840" target="_blank" aria-label="WhatsApp">WhatsApp</a>
       <a class="btn sm" href="#podbor">Купить печь</a>
       <a class="btn sm outline" href="partneram.html">Стать дилером</a>
       <button class="burger" aria-label="Меню">☰</button>
@@ -357,7 +374,7 @@
       <label class="check"><input type="checkbox" name="accessories"> Нужен комплект аксессуаров</label>
       <input type="hidden" name="lead_type" value="Розница">
       <button class="btn" style="width:100%">Получить подбор и цену</button>
-      <p class="muted" style="font-size:.78rem;margin-top:10px">Нажимая кнопку, вы соглашаетесь с <a href="#" style="text-decoration:underline">политикой конфиденциальности</a>.</p>
+      <p class="muted" style="font-size:.78rem;margin-top:10px">Нажимая кнопку, вы соглашаетесь с <a href="politika.html" style="text-decoration:underline">политикой конфиденциальности</a>.</p>
     </form>
   </div>
 </section>
@@ -375,7 +392,7 @@
     </div>
     <div>
       <p><b>Разделы</b></p><br>
-      <p><a href="#catalog">Каталог печей</a><br><a href="#pults">Пульты</a><br><a href="#steam">Парогенераторы</a><br><a href="partneram.html">Стать дилером</a><br><a href="#">Политика конфиденциальности</a></p>
+      <p><a href="#catalog">Каталог печей</a><br><a href="#pults">Пульты</a><br><a href="#steam">Парогенераторы</a><br><a href="partneram.html">Стать дилером</a><br><a href="politika.html">Политика конфиденциальности</a></p>
     </div>
   </div>
 </footer>
@@ -498,6 +515,14 @@ function fakeSubmit(f){alert('Прототип: заявка «'+(f.model?f.mode
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* UTM-метки: захват из URL в скрытые поля всех форм (п.5 ТЗ) */
+const utm=new URLSearchParams(location.search);
+const utmStr=['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+  .map(k=>utm.get(k)?k+'='+utm.get(k):null).filter(Boolean).join('&');
+if(utmStr)document.querySelectorAll('form').forEach(f=>{
+  const i=document.createElement('input');i.type='hidden';i.name='utm';i.value=utmStr;f.appendChild(i);
+});
 </script>
 </body>
 </html>
