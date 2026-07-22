@@ -88,6 +88,8 @@
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:.5px solid var(--line);margin-top:44px}
   .card{background:var(--white);padding:26px;display:flex;flex-direction:column;gap:14px;transition:background .2s;cursor:pointer}
   .card:hover{background:var(--gray)}
+  .card .ph img{transition:transform .5s ease}
+  .card:hover .ph img{transform:scale(1.04)}
   .card .ph{aspect-ratio:1/1.1}
   .card-meta{font-size:.82rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
   .badge{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border:.5px solid var(--black);padding:4px 10px;width:max-content}
@@ -509,6 +511,7 @@ function renderCatalog(min,max){
     grid.appendChild(d);
   });
   if(!grid.children.length)grid.innerHTML='<div class="card"><p class="muted">Под этот объём подберём решение индивидуально — напишите в WhatsApp.</p></div>';
+  if(window.animateCatalog)window.animateCatalog();
 }
 renderCatalog();
 
@@ -550,6 +553,7 @@ function openPopup(s){
   document.getElementById('pWa').href=`https://wa.me/77019482840?text=${encodeURIComponent('Здравствуйте, интересует печь '+s.name)}`;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
+  if(window.animatePopupOpen)window.animatePopupOpen();
 }
 function closePopup(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup();});
@@ -566,6 +570,62 @@ const utmStr=['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
 if(utmStr)document.querySelectorAll('form').forEach(f=>{
   const i=document.createElement('input');i.type='hidden';i.name='utm';i.value=utmStr;f.appendChild(i);
 });
+</script>
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script>
+/* Мягкие анимации (ui-ux-pro-max motion presets, tier: Subtle).
+   Если GSAP не загрузился или включён prefers-reduced-motion —
+   остаётся базовый IntersectionObserver-фолбэк (.rv). */
+(function(){
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced||!window.gsap||!window.ScrollTrigger)return;
+  gsap.registerPlugin(ScrollTrigger);
+  // нейтрализуем CSS-фолбэк, дальше рулит GSAP
+  document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+
+  // 1. Интро первого экрана: каскад текста + раскрытие фото
+  gsap.from('.hero .kicker, .hero h1, .hero .sub, .hero-cta, .trust',
+    {opacity:0,y:22,duration:.7,stagger:.09,ease:'power2.out'});
+  gsap.from('.hero-img',{clipPath:'inset(0 0 100% 0)',duration:1,ease:'power2.inOut'});
+  gsap.from('.hero-img img',{scale:1.08,duration:1.4,ease:'power2.out'});
+  // лёгкий параллакс фото при скролле
+  gsap.to('.hero-img img',{yPercent:7,ease:'none',
+    scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+
+  // 2. Заголовки секций: fade-up (Scroll Reveal, Subtle)
+  document.querySelectorAll('section:not(.hero) .wrap > .kicker, section:not(.hero) h2').forEach(el=>{
+    gsap.from(el,{opacity:0,y:14,duration:.4,ease:'power1.out',
+      scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+  });
+
+  // 3. Карточки и ячейки: батч-стаггер (Stagger List, Subtle)
+  ScrollTrigger.batch('.cols4>div, .acc>div, #pultsGrid .card, #proof .card',{
+    start:'top 90%',once:true,
+    onEnter:batch=>gsap.from(batch,{opacity:0,y:12,duration:.35,stagger:.05,ease:'power1.out'})
+  });
+
+  // 4. Строки «параметр — значение» и дилерская секция
+  ScrollTrigger.batch('#brand .row, #dealers .drow, .dark-stats>div, .certs a',{
+    start:'top 92%',once:true,
+    onEnter:batch=>gsap.from(batch,{opacity:0,y:8,duration:.3,stagger:.04,ease:'power1.out'})
+  });
+
+  // 5. Каталог: появление при скролле + пере-анимация при фильтрации
+  window.animateCatalog=function(){
+    gsap.fromTo('#catalogGrid .card',{opacity:0,y:10},
+      {opacity:1,y:0,duration:.3,stagger:.04,ease:'power1.out',overwrite:true});
+  };
+  gsap.set('#catalogGrid .card',{opacity:0});
+  ScrollTrigger.create({trigger:'#catalogGrid',start:'top 88%',once:true,onEnter:()=>window.animateCatalog()});
+
+  // 6. Попап: мягкое появление
+  window.animatePopupOpen=function(){
+    gsap.fromTo('#overlay',{opacity:0},{opacity:1,duration:.22,ease:'power1.out'});
+    gsap.fromTo('#overlay .popup',{opacity:0,y:24,scale:.985},
+      {opacity:1,y:0,scale:1,duration:.32,ease:'power2.out'});
+  };
+})();
 </script>
 </body>
 </html>
