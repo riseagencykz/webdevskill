@@ -132,12 +132,29 @@
   .dealer-grid .fi{background:#1d1d1d;border-color:rgba(255,255,255,.16);color:var(--white)}
   .dealer-grid .fi::placeholder{color:#777}
   @media(max-width:1000px){.dealer-grid{grid-template-columns:1fr}}
-  /* faq */
-  details{border-bottom:.5px solid var(--line)}
-  summary{padding:20px 0;font-weight:600;font-size:1.05rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
-  summary::after{content:"+";font-weight:400;font-size:1.4rem}
-  details[open] summary::after{content:"–"}
-  details p{padding:0 0 20px;color:#333;max-width:52em}
+  /* faq (паттерн: 21st.dev faq-monochrome, адаптирован под ч/б без скруглений) */
+  .faq-item{border-bottom:.5px solid var(--line);position:relative;overflow:hidden}
+  .faq-item::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+    background:radial-gradient(260px circle at var(--fx,50%) var(--fy,50%),rgba(17,17,17,.045),transparent 70%)}
+  .faq-item:hover::before,.faq-item.open::before{opacity:1}
+  .faq-q{width:100%;background:none;border:none;font:inherit;text-align:left;cursor:pointer;
+    display:flex;align-items:center;gap:18px;padding:22px 0;position:relative}
+  .faq-ico{flex-shrink:0;width:40px;height:40px;border:.5px solid var(--black);display:flex;align-items:center;justify-content:center;transition:background .3s,color .3s}
+  .faq-ico svg{width:16px;height:16px}
+  .faq-ico svg{transition:transform .45s cubic-bezier(.22,.68,0,1)}
+  .faq-item.open .faq-ico{background:var(--black);color:var(--white)}
+  .faq-item.open .faq-ico svg{transform:rotate(45deg)}
+  .faq-q h3{font-size:1.05rem;font-weight:600;flex:1}
+  .faq-tag{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);border:.5px solid var(--line);padding:5px 12px;white-space:nowrap}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,.68,0,1)}
+  .faq-a p{padding:0 0 22px 58px;color:#333;max-width:52em}
+  .faq-item.open .faq-a{max-height:260px}
+  @media(max-width:700px){.faq-tag{display:none}.faq-a p{padding-left:0}}
+  /* курсорная подсветка карточек каталога (тот же паттерн) */
+  .card{position:relative}
+  .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+    background:radial-gradient(320px circle at var(--fx,50%) var(--fy,50%),rgba(17,17,17,.05),transparent 70%)}
+  .card:hover::after{opacity:1}
   /* footer */
   footer{background:var(--gray);padding:clamp(40px,6vw,70px) var(--pad);font-size:.9rem}
   .foot{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px}
@@ -395,13 +412,7 @@
   <div class="wrap rv" style="max-width:900px">
     <div class="kicker">Вопросы и ответы</div>
     <h2 style="margin-bottom:30px">FAQ</h2>
-    <details><summary>Как подобрать мощность печи?</summary><p>Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.</p></details>
-    <details><summary>Печи работают от 220В или 380В?</summary><p>Модели до 4,5 кВт подключаются к 220В. Печи от 6 кВт требуют трёхфазную сеть 380В. В карточке каждой модели указано требуемое подключение.</p></details>
-    <details><summary>Нужен ли отдельный пульт управления?</summary><p>У части моделей управление встроено. Для остальных подойдёт любой пульт экосистемы Dolomiti: BB90, Classy или Classy WiFi — с управлением со смартфона.</p></details>
-    <details><summary>Какая гарантия и есть ли сервис в Казахстане?</summary><p>Гарантия [N] года. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа.</p></details>
-    <details><summary>Как быстро доставите?</summary><p>Печи в наличии в Алматы. Отгрузка в день заказа, доставка ТК по РК — 2–7 дней.</p></details>
-    <details><summary>Можно посмотреть печи вживую?</summary><p>Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.</p></details>
-    <details><summary>Хочу продавать печи Dolomiti в своём магазине</summary><p>Отлично! У нас дилерская программа с защитой территории и маржой до [X]%. Подробности — на странице <a href="#dealers" style="text-decoration:underline">«Стать дилером»</a>.</p></details>
+    <div id="faqList"></div>
   </div>
 </section>
 
@@ -557,6 +568,36 @@ function openPopup(s){
 }
 function closePopup(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup();});
+
+const FAQS=[
+ ["Как подобрать мощность печи?","Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.","Подбор"],
+ ["Печи работают от 220В или 380В?","Модели до 4,5 кВт подключаются к 220В. Печи от 6 кВт требуют трёхфазную сеть 380В. В карточке каждой модели указано требуемое подключение.","Электрика"],
+ ["Нужен ли отдельный пульт управления?","У части моделей управление встроено. Для остальных подойдёт любой пульт экосистемы Dolomiti: BB90, Classy или Classy WiFi — с управлением со смартфона.","Управление"],
+ ["Какая гарантия и есть ли сервис в Казахстане?","Гарантия [N] года. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа.","Сервис"],
+ ["Как быстро доставите?","Печи в наличии в Алматы. Отгрузка в день заказа, доставка ТК по РК — 2–7 дней.","Доставка"],
+ ["Можно посмотреть печи вживую?","Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.","Шоурум"],
+ ["Хочу продавать печи Dolomiti в своём магазине","Отлично! У нас дилерская программа с защитой территории и маржой до [X]%. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.","Дилерам"]
+];
+const faqList=document.getElementById('faqList');
+faqList.innerHTML=FAQS.map((f,i)=>`<div class="faq-item">
+  <button class="faq-q" aria-expanded="false" aria-controls="faqA${i}">
+    <span class="faq-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+    <h3>${f[0]}</h3><span class="faq-tag">${f[2]}</span>
+  </button>
+  <div class="faq-a" id="faqA${i}" role="region"><p>${f[1]}</p></div>
+</div>`).join('');
+faqList.querySelectorAll('.faq-q').forEach(btn=>btn.addEventListener('click',()=>{
+  const item=btn.parentElement, wasOpen=item.classList.contains('open');
+  faqList.querySelectorAll('.faq-item.open').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+  if(!wasOpen){item.classList.add('open');btn.setAttribute('aria-expanded','true');}
+}));
+document.addEventListener('pointermove',e=>{
+  const t=e.target.closest('.faq-item, .card');
+  if(!t)return;
+  const r=t.getBoundingClientRect();
+  t.style.setProperty('--fx',(e.clientX-r.left)+'px');
+  t.style.setProperty('--fy',(e.clientY-r.top)+'px');
+});
 
 function fakeSubmit(f){alert('Прототип: заявка «'+(f.model?f.model.value||'подбор':'подбор')+'» ушла бы на e-mail + WhatsApp с метками (тип: '+f.lead_type.value+').');return false;}
 
