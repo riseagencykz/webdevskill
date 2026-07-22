@@ -56,7 +56,8 @@
   .nav-phone{font-size:.9rem;font-weight:600;white-space:nowrap}
   .nav-phone:hover,.nav-wa:hover{opacity:.55}
   .nav-wa{font-size:.9rem;text-decoration:underline;white-space:nowrap}
-  @media(max-width:1240px){.nav-phone,.nav-wa{display:none}}
+  @media(max-width:1560px){.nav-phone,.nav-wa{display:none}}
+  .menu a{white-space:nowrap}
   /* hero */
   .hero{padding-top:clamp(40px,6vw,90px)}
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,72px);align-items:center}
@@ -113,7 +114,14 @@
   .dark .muted{color:#999}
   .dark-stats{display:flex;gap:clamp(24px,5vw,80px);flex-wrap:wrap;margin:34px 0}
   .dark-stats .n{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800}
-  .dark-stats .l{font-size:.85rem;color:#999;margin-top:4px}
+  .dark-stats .l{font-size:.85rem;color:#999;margin-top:4px;max-width:220px}
+  .dealer-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,72px);margin-top:10px}
+  .dealer-grid .drow{border-color:rgba(255,255,255,.16)}
+  .dealer-grid .drow span:first-child{color:var(--white);font-weight:600}
+  .dealer-grid .drow span:last-child{color:#999;font-weight:400}
+  .dealer-grid .fi{background:#1d1d1d;border-color:rgba(255,255,255,.16);color:var(--white)}
+  .dealer-grid .fi::placeholder{color:#777}
+  @media(max-width:1000px){.dealer-grid{grid-template-columns:1fr}}
   /* faq */
   details{border-bottom:.5px solid var(--line)}
   summary{padding:20px 0;font-weight:600;font-size:1.05rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
@@ -165,7 +173,7 @@
       <a class="nav-phone" href="tel:+77019482840">+7 701 948 28 40</a>
       <a class="nav-wa" href="https://wa.me/77019482840" target="_blank" aria-label="WhatsApp">WhatsApp</a>
       <a class="btn sm" href="#podbor">Купить печь</a>
-      <a class="btn sm outline" href="partneram.html">Стать дилером</a>
+      <a class="btn sm outline" href="#dealers">Стать дилером</a>
       <button class="burger" aria-label="Меню">☰</button>
     </div>
   </div>
@@ -317,17 +325,38 @@
   </div>
 </section>
 
-<!-- Блок 10. Тизер дилерам -->
+<!-- Блок 10. Дилерская секция (B2B в составе одностраничника) -->
 <section class="dark" id="dealers">
   <div class="wrap rv">
-    <div class="kicker" style="color:#999">Для бизнеса</div>
+    <div class="kicker" style="color:#999">Для бизнеса · дилерская программа</div>
     <h2>Продаёте банное оборудование?<br>Стройте бизнес на Dolomiti</h2>
     <div class="dark-stats">
-      <div><div class="n">до [X]%</div><div class="l">маржа дилера</div></div>
-      <div><div class="n">2–5 дней</div><div class="l">отгрузка со склада в РК</div></div>
-      <div><div class="n">1 регион</div><div class="l">защита территории</div></div>
+      <div><div class="n">до [X]%</div><div class="l">маржа дилера + скидочная сетка от объёма</div></div>
+      <div><div class="n">2–5 дней</div><div class="l">отгрузка со склада в РК — без денег в контейнере</div></div>
+      <div><div class="n">1 регион</div><div class="l">защита территории — один дилер на регион</div></div>
     </div>
-    <a class="btn" href="partneram.html">Стать дилером</a>
+    <div class="dealer-grid">
+      <div>
+        <h4 style="font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:14px">Что даём партнёру</h4>
+        <div class="row drow"><span>Маркетинговый пакет</span><span>фотобанк, каталоги, контент для соцсетей</span></div>
+        <div class="row drow"><span>Обучение продавцов</span><span>подбор мощности, работа с возражениями</span></div>
+        <div class="row drow"><span>Сервис и ТЭНы в РК</span><span>гарантию клиентов закрываем мы</span></div>
+        <div class="row drow"><span>Образец для шоурума</span><span>по дилерской цене с первым заказом</span></div>
+        <h4 style="font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#999;margin:28px 0 14px">Как стать дилером</h4>
+        <div class="row drow"><span>01 — Заявка</span><span>02 — Условия и презентация</span></div>
+        <div class="row drow"><span>03 — Договор</span><span>04 — Первый заказ и обучение</span></div>
+      </div>
+      <form onsubmit="return fakeSubmit(this)">
+        <input class="fi" type="text" name="name" placeholder="Имя" required>
+        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
+        <input class="fi" type="text" name="city" placeholder="Город" required>
+        <input class="fi" type="text" name="company" placeholder="Название магазина / компании">
+        <label class="check" style="color:#999"><input type="checkbox" name="retail" checked> Есть розничная точка</label>
+        <input type="hidden" name="lead_type" value="ОПТ">
+        <button class="btn" style="width:100%">Стать дилером</button>
+        <p style="font-size:.78rem;color:#777;margin-top:10px">Вышлем дилерскую презентацию и прайс в ответ на заявку.</p>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -356,7 +385,7 @@
     <details><summary>Какая гарантия и есть ли сервис в Казахстане?</summary><p>Гарантия [N] года. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа.</p></details>
     <details><summary>Как быстро доставите?</summary><p>Печи в наличии в Алматы. Отгрузка в день заказа, доставка ТК по РК — 2–7 дней.</p></details>
     <details><summary>Можно посмотреть печи вживую?</summary><p>Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.</p></details>
-    <details><summary>Хочу продавать печи Dolomiti в своём магазине</summary><p>Отлично! У нас дилерская программа с защитой территории и маржой до [X]%. Подробности — на странице <a href="partneram.html" style="text-decoration:underline">«Стать дилером»</a>.</p></details>
+    <details><summary>Хочу продавать печи Dolomiti в своём магазине</summary><p>Отлично! У нас дилерская программа с защитой территории и маржой до [X]%. Подробности — на странице <a href="#dealers" style="text-decoration:underline">«Стать дилером»</a>.</p></details>
   </div>
 </section>
 
@@ -392,7 +421,7 @@
     </div>
     <div>
       <p><b>Разделы</b></p><br>
-      <p><a href="#catalog">Каталог печей</a><br><a href="#pults">Пульты</a><br><a href="#steam">Парогенераторы</a><br><a href="partneram.html">Стать дилером</a><br><a href="politika.html">Политика конфиденциальности</a></p>
+      <p><a href="#catalog">Каталог печей</a><br><a href="#pults">Пульты</a><br><a href="#steam">Парогенераторы</a><br><a href="#dealers">Стать дилером</a><br><a href="politika.html">Политика конфиденциальности</a></p>
     </div>
   </div>
 </footer>
