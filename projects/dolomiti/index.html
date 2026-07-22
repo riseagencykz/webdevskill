@@ -65,7 +65,15 @@
   .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
   .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:.5px solid var(--line);font-size:.86rem;color:var(--muted)}
   .trust b{color:var(--black);font-weight:600}
-  .ph{background:var(--gray);display:flex;align-items:center;justify-content:center;color:#b7b3ab;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:12px}
+  .ph{background:var(--gray);display:flex;align-items:center;justify-content:center;color:#b7b3ab;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:12px;overflow:hidden}
+  .ph:has(img){padding:0}
+  .ph img{width:100%;height:100%;object-fit:cover}
+  .ph.contain img{object-fit:contain;padding:14px}
+  .certs{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .certs a{display:block;width:96px;border:.5px solid var(--line);transition:transform .2s}
+  .certs a:hover{transform:translateY(-3px)}
+  .certs img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+  .certs figcaption{font-size:.7rem;text-align:center;padding:4px 0;color:var(--muted)}
   .hero-img{aspect-ratio:4/5;max-height:640px;width:100%}
   /* chips + calc */
   .chips{display:flex;gap:10px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
@@ -196,7 +204,7 @@
         <span><b>Kaspi</b> / рассрочка</span>
       </div>
     </div>
-    <div class="ph hero-img rv">Фото: печь Pillar,<br>пар на камнях</div>
+    <div class="ph hero-img rv"><img src="img/hero-pillar.webp" alt="Электропечь Dolomiti Pillar в парной"></div>
   </div>
 </section>
 
@@ -255,7 +263,13 @@
       <div><div class="n">CE·EAC·SGS</div><h3>Те же сертификаты</h3><p class="muted" style="margin-top:8px;font-size:.92rem">Международная сертификация CE, EAC, SGS, SAA, CVC — как у финских брендов.</p></div>
       <div><div class="n">1 бренд</div><h3>Полная экосистема</h3><p class="muted" style="margin-top:8px;font-size:.92rem">Печь, пульт, парогенератор, камни и аксессуары — всё совместимо из коробки.</p></div>
     </div>
-    <div style="margin-top:36px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+    <div class="certs">
+      <a href="img/cert-ce.webp" target="_blank"><img src="img/cert-ce.webp" alt="Сертификат CE" loading="lazy"><figcaption>CE</figcaption></a>
+      <a href="img/cert-sgs.webp" target="_blank"><img src="img/cert-sgs.webp" alt="Сертификат SGS" loading="lazy"><figcaption>SGS</figcaption></a>
+      <a href="img/cert-saa.webp" target="_blank"><img src="img/cert-saa.webp" alt="Сертификат SAA" loading="lazy"><figcaption>SAA</figcaption></a>
+      <a href="img/cert-cvc.webp" target="_blank"><img src="img/cert-cvc.webp" alt="Сертификат CVC" loading="lazy"><figcaption>CVC</figcaption></a>
+    </div>
+    <div style="margin-top:30px;display:flex;gap:16px;align-items:center;flex-wrap:wrap">
       <a class="btn" href="https://wa.me/77019482840?text=Здравствуйте!%20Пришлите%20таблицу%20сравнения%20Dolomiti%20с%20моей%20печью" target="_blank">Пришлём таблицу сравнения с вашей печью в WhatsApp</a>
     </div>
   </div>
@@ -264,7 +278,7 @@
 <!-- Блок 6. Парогенераторы -->
 <section class="dark" id="steam">
   <div class="wrap split rv">
-    <div class="ph" style="aspect-ratio:4/3;background:#1d1d1d;color:#555">Фото: парогенератор S6A</div>
+    <div class="ph contain" style="aspect-ratio:4/3;background:#1d1d1d"><img src="img/steam-s6a.webp" alt="Парогенератор Dolomiti S6A" loading="lazy"></div>
     <div>
       <div class="kicker" style="color:#999">Для хаммамов и паровых</div>
       <h2>Парогенераторы S6A</h2>
@@ -281,11 +295,11 @@
     <h2>Соберём баню под ключ одним заказом</h2>
     <div class="acc">
       <div><div class="ph">Фото</div>Камни для печи</div>
-      <div><div class="ph">Фото</div>Вёдра и черпаки</div>
-      <div><div class="ph">Фото</div>Подголовники</div>
-      <div><div class="ph">Фото</div>Термометры</div>
-      <div><div class="ph">Фото</div>Ограждения</div>
-      <div><div class="ph">Фото</div>Освещение</div>
+      <div><div class="ph contain"><img src="img/acc-bucket.webp" alt="Ведро для сауны Dolomiti" loading="lazy"></div>Вёдра</div>
+      <div><div class="ph contain"><img src="img/acc-ladle.webp" alt="Черпак для сауны Dolomiti" loading="lazy"></div>Черпаки</div>
+      <div><div class="ph contain"><img src="img/acc-headrest.webp" alt="Деревянный подголовник Dolomiti" loading="lazy"></div>Подголовники</div>
+      <div><div class="ph contain"><img src="img/acc-hygro.webp" alt="Термометр-гигрометр для сауны" loading="lazy"></div>Термометры</div>
+      <div><div class="ph contain"><img src="img/acc-fence.webp" alt="Деревянное ограждение печи" loading="lazy"></div>Ограждения</div>
     </div>
   </div>
 </section>
@@ -297,13 +311,13 @@
       <div class="kicker">О бренде</div>
       <h2>Мы не просто продаём печи — мы&nbsp;строим сауны</h2>
       <p style="margin:16px 0">Dolomiti&amp;F — бренд Emaux Wellness Living: 30 лет основателя в wellness-индустрии, собственное производство и международная сертификация. А мы в Казахстане — не импортёры с прайсом: мы проектируем и строим парные и знаем, как печи работают в местных условиях — от частной бани до коммерческого комплекса.</p>
-      <div class="ph" style="aspect-ratio:16/8;margin:22px 0">Фото построенных объектов (3–4 шт.)</div>
+      <div class="ph" style="aspect-ratio:16/8;margin:22px 0"><img src="img/object-1.webp" alt="Построенная сауна с оборудованием Dolomiti" loading="lazy"></div>
       <div class="kicker" style="margin-top:26px">Из базы знаний</div>
       <div class="row"><span>Как подобрать печь по объёму сауны</span><span>→</span></div>
       <div class="row"><span>Открытая или закрытая каменка: что выбрать</span><span>→</span></div>
       <div class="row"><span>Как выбрать контроллер: встроенный, выносной, WiFi</span><span>→</span></div>
     </div>
-    <div class="ph" style="aspect-ratio:3/4">Фото: монтаж печи<br>на объекте в РК</div>
+    <div class="ph" style="aspect-ratio:3/4"><img src="img/sauna-steam.webp" alt="Парная с электропечью Dolomiti" loading="lazy"></div>
   </div>
 </section>
 
@@ -313,8 +327,8 @@
     <div class="kicker">Наши объекты и отзывы</div>
     <h2>Печи Dolomiti уже работают в&nbsp;Казахстане</h2>
     <div class="grid" style="grid-template-columns:repeat(4,1fr)">
-      <div class="card"><div class="ph" style="aspect-ratio:1">Фото объекта 1</div></div>
-      <div class="card"><div class="ph" style="aspect-ratio:1">Фото объекта 2</div></div>
+      <div class="card"><div class="ph" style="aspect-ratio:1"><img src="img/object-2.webp" alt="Аксессуары Dolomiti в сауне" loading="lazy"></div></div>
+      <div class="card"><div class="ph" style="aspect-ratio:1"><img src="img/object-3.webp" alt="Пульт Dolomiti на объекте" loading="lazy"></div></div>
       <div class="card"><div class="ph" style="aspect-ratio:1">Скрин отзыва WhatsApp</div></div>
       <div class="card"><div class="ph" style="aspect-ratio:1">Скрин отзыва 2ГИС</div></div>
     </div>
@@ -465,20 +479,20 @@
 <script>
 /* Все цены — ЗАГЛУШКИ, заменить на актуальные от заказчика */
 const SERIES=[
- {id:"complex-mini",name:"Complex Mini",models:[["TH30 · 3 кВт · 2–4 м³","от 265 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 265 000 ₸",desc:"Компактная настенная печь для мини-саун и домашних парных. Встроенное управление, подключение 220В.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Камни","до 20 кг"]]},
- {id:"pillar-mini",name:"Pillar Mini",models:[["PH30 · 3 кВт · 2–4 м³","от 295 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 295 000 ₸",desc:"Напольная колонна для маленьких парных: максимум камней при минимальной площади, мягкий обволакивающий пар.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Камни","до 35 кг"]]},
- {id:"corner",name:"Corner",models:[["CH30 · 3 кВт · 2–4 м³","от 285 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 285 000 ₸",desc:"Угловая печь, экономящая место в компактной парной. Не занимает полезную площадь полок.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Установка","угловая"]]},
- {id:"complex",name:"Complex",models:[["TH45 · 4,5 кВт · 5–6 м³","от 340 000 ₸"],["TH60 · 6 кВт · 6–8 м³","от 385 000 ₸"],["TH80 · 8 кВт · 8–12 м³","от 440 000 ₸"]],power:"4,5–8 кВт",vol:"5–13 м³",min:5,max:13,price:"от 340 000 ₸",desc:"Универсальная настенная серия для домашних саун. Три мощности под парные от 5 до 12 м³.",specs:[["Мощность","4,5–8 кВт"],["Объём парной","5–13 м³"],["Подключение","220В/380В"],["Камни","до 25 кг"]]},
- {id:"crown",name:"Crown",models:[["CR60 · 6 кВт · 6–8 м³","от 465 000 ₸"],["CR90 · 9 кВт · 9–13 м³","от 520 000 ₸"]],power:"6–9 кВт",vol:"5–13 м³",min:5,max:13,price:"от 465 000 ₸",desc:"Дизайнерская серия с открытой каменкой: печь-акцент, вокруг которой строится интерьер парной.",specs:[["Мощность","6–9 кВт"],["Объём парной","5–13 м³"],["Подключение","380В"],["Каменка","открытая"]]},
- {id:"pillar",name:"Pillar",models:[["PH60 · 6 кВт · 6–8 м³","от 490 000 ₸"],["PH90 · 9 кВт · 9–13 м³","от 545 000 ₸"]],power:"6–9 кВт",vol:"5–13 м³",min:5,max:13,price:"от 490 000 ₸",desc:"Флагманская колонна: 60 кг камней, мощный жар и мягкий пар — как у дровяной печи, но с электроуправлением.",specs:[["Мощность","6–9 кВт"],["Объём парной","5–13 м³"],["Габариты","320×320×950 мм"],["Камни","60 кг"],["Подключение","380В"]]},
- {id:"space",name:"Space",models:[["SD60E · 6 кВт","от 430 000 ₸"],["SD75E · 7,5 кВт","от 470 000 ₸"],["SD90E · 9 кВт","от 510 000 ₸"]],power:"6–9 кВт",vol:"8–13 м³",min:8,max:13,price:"от 430 000 ₸",desc:"Строгая напольная серия для просторных домашних и полукоммерческих парных.",specs:[["Мощность","6–9 кВт"],["Объём парной","8–13 м³"],["Подключение","380В"],["Управление","выносной пульт"]]},
- {id:"power",name:"Power",models:[["TH105E · 10,5 кВт","Цена по запросу"],["TH120E · 12 кВт","Цена по запросу"],["TH160E · 16 кВт","Цена по запросу"]],power:"10,5–16 кВт",vol:"9–22 м³",min:9,max:22,price:"Цена по запросу",desc:"Коммерческая серия для саун фитнес-клубов, отелей и комплексов. Ресурс под ежедневную многочасовую работу.",specs:[["Мощность","10,5–16 кВт"],["Объём парной","9–22 м³"],["Подключение","380В"],["Режим","коммерческий"]],b2b:true},
- {id:"space-pro",name:"Space Pro",models:[["SD180E · 18 кВт","Цена по запросу"],["SD225E · 22,5 кВт","Цена по запросу"],["SD270E · 27 кВт","Цена по запросу"]],power:"18–27 кВт",vol:"18–45 м³",min:18,max:45,price:"Цена по запросу",desc:"Максимальная мощность для больших коммерческих саун до 45 м³. Фронтальная замена ТЭНов — обслуживание без демонтажа печи.",specs:[["Мощность","18–27 кВт"],["Объём парной","18–45 м³"],["Подключение","380В"],["Сервис","фронтальная замена ТЭНов"]],b2b:true}
+ {id:"complex-mini",img:"img/complex-mini.webp",contain:0,name:"Complex Mini",models:[["TH30 · 3 кВт · 2–4 м³","от 265 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 265 000 ₸",desc:"Компактная настенная печь для мини-саун и домашних парных. Встроенное управление, подключение 220В.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Камни","до 20 кг"]]},
+ {id:"pillar-mini",img:"img/pillar-mini.webp",contain:1,name:"Pillar Mini",models:[["PH30 · 3 кВт · 2–4 м³","от 295 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 295 000 ₸",desc:"Напольная колонна для маленьких парных: максимум камней при минимальной площади, мягкий обволакивающий пар.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Камни","до 35 кг"]]},
+ {id:"corner",img:"img/corner.webp",contain:0,name:"Corner",models:[["CH30 · 3 кВт · 2–4 м³","от 285 000 ₸"]],power:"3 кВт",vol:"2–4 м³",min:2,max:4,price:"от 285 000 ₸",desc:"Угловая печь, экономящая место в компактной парной. Не занимает полезную площадь полок.",specs:[["Мощность","3 кВт"],["Объём парной","2–4 м³"],["Подключение","220В"],["Установка","угловая"]]},
+ {id:"complex",img:"img/complex.webp",contain:0,name:"Complex",models:[["TH45 · 4,5 кВт · 5–6 м³","от 340 000 ₸"],["TH60 · 6 кВт · 6–8 м³","от 385 000 ₸"],["TH80 · 8 кВт · 8–12 м³","от 440 000 ₸"]],power:"4,5–8 кВт",vol:"5–13 м³",min:5,max:13,price:"от 340 000 ₸",desc:"Универсальная настенная серия для домашних саун. Три мощности под парные от 5 до 12 м³.",specs:[["Мощность","4,5–8 кВт"],["Объём парной","5–13 м³"],["Подключение","220В/380В"],["Камни","до 25 кг"]]},
+ {id:"crown",img:"img/crown.webp",contain:1,name:"Crown",models:[["CR60 · 6 кВт · 6–8 м³","от 465 000 ₸"],["CR90 · 9 кВт · 9–13 м³","от 520 000 ₸"]],power:"6–9 кВт",vol:"5–13 м³",min:5,max:13,price:"от 465 000 ₸",desc:"Дизайнерская серия с открытой каменкой: печь-акцент, вокруг которой строится интерьер парной.",specs:[["Мощность","6–9 кВт"],["Объём парной","5–13 м³"],["Подключение","380В"],["Каменка","открытая"]]},
+ {id:"pillar",img:"img/hero-pillar.webp",contain:0,name:"Pillar",models:[["PH60 · 6 кВт · 6–8 м³","от 490 000 ₸"],["PH90 · 9 кВт · 9–13 м³","от 545 000 ₸"]],power:"6–9 кВт",vol:"5–13 м³",min:5,max:13,price:"от 490 000 ₸",desc:"Флагманская колонна: 60 кг камней, мощный жар и мягкий пар — как у дровяной печи, но с электроуправлением.",specs:[["Мощность","6–9 кВт"],["Объём парной","5–13 м³"],["Габариты","320×320×950 мм"],["Камни","60 кг"],["Подключение","380В"]]},
+ {id:"space",img:"img/space.webp",contain:0,name:"Space",models:[["SD60E · 6 кВт","от 430 000 ₸"],["SD75E · 7,5 кВт","от 470 000 ₸"],["SD90E · 9 кВт","от 510 000 ₸"]],power:"6–9 кВт",vol:"8–13 м³",min:8,max:13,price:"от 430 000 ₸",desc:"Строгая напольная серия для просторных домашних и полукоммерческих парных.",specs:[["Мощность","6–9 кВт"],["Объём парной","8–13 м³"],["Подключение","380В"],["Управление","выносной пульт"]]},
+ {id:"power",img:"img/power.webp",contain:1,name:"Power",models:[["TH105E · 10,5 кВт","Цена по запросу"],["TH120E · 12 кВт","Цена по запросу"],["TH160E · 16 кВт","Цена по запросу"]],power:"10,5–16 кВт",vol:"9–22 м³",min:9,max:22,price:"Цена по запросу",desc:"Коммерческая серия для саун фитнес-клубов, отелей и комплексов. Ресурс под ежедневную многочасовую работу.",specs:[["Мощность","10,5–16 кВт"],["Объём парной","9–22 м³"],["Подключение","380В"],["Режим","коммерческий"]],b2b:true},
+ {id:"space-pro",img:"img/space-pro.webp",contain:1,name:"Space Pro",models:[["SD180E · 18 кВт","Цена по запросу"],["SD225E · 22,5 кВт","Цена по запросу"],["SD270E · 27 кВт","Цена по запросу"]],power:"18–27 кВт",vol:"18–45 м³",min:18,max:45,price:"Цена по запросу",desc:"Максимальная мощность для больших коммерческих саун до 45 м³. Фронтальная замена ТЭНов — обслуживание без демонтажа печи.",specs:[["Мощность","18–27 кВт"],["Объём парной","18–45 м³"],["Подключение","380В"],["Сервис","фронтальная замена ТЭНов"]],b2b:true}
 ];
 const PULTS=[
- {name:"BB90",desc:"Механический пульт: просто, надёжно, без лишнего.",price:"от 65 000 ₸"},
- {name:"Classy",desc:"Сенсорный пульт с таймером и точным контролем температуры.",price:"от 95 000 ₸"},
- {name:"Classy WiFi",desc:"Управление со смартфона: включите баню по дороге домой.",price:"от 125 000 ₸"}
+ {img:"img/pult-bb90.webp",contain:1,name:"BB90",desc:"Механический пульт: просто, надёжно, без лишнего.",price:"от 65 000 ₸"},
+ {img:"img/pult-classy.webp",contain:0,name:"Classy",desc:"Сенсорный пульт с таймером и точным контролем температуры.",price:"от 95 000 ₸"},
+ {img:"img/pult-wifi.webp",contain:1,name:"Classy WiFi",desc:"Управление со смартфона: включите баню по дороге домой.",price:"от 125 000 ₸"}
 ];
 
 const grid=document.getElementById('catalogGrid');
@@ -486,7 +500,7 @@ function renderCatalog(min,max){
   grid.innerHTML='';
   SERIES.filter(s=>min==null||(s.max>=min&&s.min<=max)).forEach(s=>{
     const d=document.createElement('div');d.className='card';
-    d.innerHTML=`<div class="ph">Фото серии ${s.name}</div>
+    d.innerHTML=`<div class="ph${s.contain?' contain':''}"><img src="${s.img}" alt="Печь Dolomiti ${s.name}" loading="lazy"></div>
       <div><h3>${s.name}</h3><div class="card-meta"><span>${s.power}</span><span>${s.vol}</span></div></div>
       <span class="badge">${s.b2b?'Коммерческая серия':'В наличии в Алматы'}</span>
       <div class="price">${s.price}</div>
@@ -499,7 +513,7 @@ function renderCatalog(min,max){
 renderCatalog();
 
 document.getElementById('pultsGrid').innerHTML=PULTS.map(p=>`
-  <div class="card" style="cursor:default"><div class="ph" style="aspect-ratio:1">Фото ${p.name}</div>
+  <div class="card" style="cursor:default"><div class="ph${p.contain?' contain':''}" style="aspect-ratio:1"><img src="${p.img}" alt="Пульт ${p.name}" loading="lazy"></div>
   <h3>${p.name}</h3><p class="muted" style="font-size:.92rem">${p.desc}</p>
   <div class="price">${p.price}</div></div>`).join('');
 
@@ -528,7 +542,7 @@ function openPopup(s){
   document.getElementById('pKicker').textContent=`Серия · ${s.power} · ${s.vol}`;
   document.getElementById('pTitle').textContent=s.name;
   document.getElementById('pDesc').textContent=s.desc;
-  document.getElementById('pImg').textContent=`Галерея: ${s.name} (3–5 фото)`;
+  document.getElementById('pImg').innerHTML=`<img src="${s.img}" alt="Печь Dolomiti ${s.name}">`;document.getElementById('pImg').classList.toggle('contain',!!s.contain);
   document.getElementById('pSpecs').innerHTML=s.specs.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('');
   document.getElementById('pModels').innerHTML=s.models.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('');
   document.getElementById('pPults').textContent=s.b2b?'Classy · Classy WiFi (коммерческий режим)':'BB90 · Classy · Classy WiFi';
