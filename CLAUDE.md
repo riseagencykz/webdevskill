@@ -102,6 +102,12 @@ When modifying files:
 
 4. **Reference Folders** - No manual sync needed. The CLI generates these from templates during `uipro init`.
 
+## MCP Servers
+
+Project-level MCP servers are declared in `.mcp.json`:
+
+- **Magic MCP (21st.dev)** - UI component generation: animations, glassmorphism, layouts. Requires an API key from https://21st.dev/magic/console exported as `TWENTYFIRST_API_KEY` in your environment.
+
 ## Prerequisites
 
 Python 3.x (no external dependencies required)
