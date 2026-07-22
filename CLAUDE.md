@@ -106,7 +106,7 @@ When modifying files:
 
 Project-level MCP servers are declared in `.mcp.json`:
 
-- **Magic MCP (21st.dev)** - UI component generation: animations, glassmorphism, layouts. Requires an API key from https://21st.dev/magic/console exported as `TWENTYFIRST_API_KEY` in your environment.
+- **Magic MCP (21st.dev)** - UI component generation: animations, glassmorphism, layouts. Two entries: `21st` (HTTP, https://21st.dev/api/mcp) and `magic` (stdio via `npx @21st-dev/magic`). Both require an API key from https://21st.dev/magic/console exported as `API_KEY_21ST` in your environment.
 
 ## Prerequisites
 
