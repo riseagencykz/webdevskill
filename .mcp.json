@@ -6,6 +6,15 @@
       "headers": {
         "x-api-key": "${API_KEY_21ST}"
       }
+    },
+    "magic": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": {
+        "API_KEY": "${API_KEY_21ST}",
+        "NODE_USE_ENV_PROXY": "1",
+        "NODE_EXTRA_CA_CERTS": "/root/.ccr/ca-bundle.crt"
+      }
     }
   }
 }
