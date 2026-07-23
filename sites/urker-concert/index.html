@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>URKER в Астане, 9 августа 2026, BIART</title>
+<meta name="description" content="Urker, живая легенда казахстанской музыки. Вечер любимых песен и живого звука. 9 августа 2026, 19:00, BIART Астана. Билеты от 18 000 тенге.">
+
+<!-- OG-теги -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="URKER в Астане, 9 августа 2026">
+<meta property="og:description" content="Вечер любимых песен и живого звука. 9 августа, 19:00, BIART Астана. Билеты от 18 000 тенге.">
+<!-- [ЗАМЕНИТЬ og:image на абсолютный URL афиши 1200x630, напр. https://site.kz/og-urker.jpg] -->
+<meta property="og:image" content="https://REPLACE-WITH-DOMAIN/og-urker.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- ============================================================
+     META PIXEL (заглушка)
+     [ВСТАВИТЬ PIXEL_ID вместо строки PIXEL_ID ниже, в двух местах]
+     Событие InitiateCheckout шлётся из trackCTA() при клике на кнопку.
+     ============================================================ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+/* fbq('init', 'PIXEL_ID'); */   // [РАСКОММЕНТИРОВАТЬ и вставить PIXEL_ID]
+/* fbq('track', 'PageView'); */  // [РАСКОММЕНТИРОВАТЬ после init]
+</script>
+<!-- <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript> -->
+<!-- ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b0b0d;
+    --bg-2:#111114;
+    --card:#161619;
+    --line:#26262b;
+    --fg:#f4f1ea;
+    --muted:#9a968d;
+    --accent:#e8a33d;      /* янтарь */
+    --accent-2:#c7772f;    /* медь для active */
+    --accent-ink:#1a1206;  /* текст на кнопке */
+    --maxw:640px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Oswald',system-ui,Arial,sans-serif;
+    font-weight:300;
+    line-height:1.5;
+    letter-spacing:.2px;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-weight:700;line-height:1.02;letter-spacing:-.5px;text-transform:uppercase}
+  p{color:#d7d3c9}
+
+  /* ---------- Кнопка ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;min-height:56px;padding:16px 22px;
+    background:var(--accent);color:var(--accent-ink);
+    font-family:inherit;font-weight:700;font-size:19px;letter-spacing:.5px;
+    text-transform:uppercase;text-decoration:none;
+    border:0;border-radius:12px;cursor:pointer;
+    box-shadow:0 8px 24px rgba(232,163,61,.22);
+    transition:transform .15s ease,background-color .15s ease,box-shadow .15s ease;
+  }
+  .btn:hover{background:#f2b451;transform:translateY(-2px);box-shadow:0 12px 30px rgba(232,163,61,.32)}
+  .btn:active{background:var(--accent-2);transform:translateY(0);box-shadow:0 4px 14px rgba(199,119,47,.3)}
+  .btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;min-height:100svh;display:flex;flex-direction:column;
+    justify-content:center;overflow:hidden;
+    padding:calc(env(safe-area-inset-top) + 28px) 0 32px;
+    /* [ОПЦИЯ: заменить фон на реальное фото сцены —
+       background:url('stage.jpg') center/cover no-repeat; и оставить overlay ниже] */
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(232,163,61,.16) 0%, rgba(232,163,61,0) 55%),
+      radial-gradient(90% 60% at 50% 12%, rgba(199,119,47,.10) 0%, rgba(11,11,13,0) 60%),
+      linear-gradient(180deg,#141216 0%, var(--bg) 60%);
+  }
+  .hero::after{ /* тонкая «пыль» сцены, без картинок */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size:3px 3px;
+  }
+  .hero .wrap{position:relative;z-index:1}
+  .kicker{
+    color:var(--accent);font-weight:600;font-size:14px;letter-spacing:2.5px;
+    text-transform:uppercase;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(72px,26vw,150px);letter-spacing:-2px;line-height:.92;
+  }
+  .hero .sub{
+    margin-top:16px;font-size:clamp(18px,5.2vw,24px);font-weight:400;
+    color:#e7e3d9;max-width:24ch;
+  }
+  .hero .when{
+    margin-top:22px;font-weight:500;font-size:16px;letter-spacing:.6px;
+    color:#fff;text-transform:uppercase;
+  }
+  .hero .when b{color:var(--accent);font-weight:700}
+  .hero .cta{margin-top:26px;max-width:420px}
+  .hero .note{margin-top:12px;color:var(--muted);font-size:13px;letter-spacing:.3px}
+
+  /* ---------- Секции ---------- */
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  .eyebrow{color:var(--accent);font-weight:600;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+
+  /* Буллеты */
+  .bullets{display:grid;gap:14px}
+  .bullet{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .bullet h3{font-size:20px;letter-spacing:0;color:#fff;margin-bottom:6px}
+  .bullet p{font-size:15px;color:var(--muted);font-weight:300}
+  .bullet .ic{width:26px;height:26px;color:var(--accent);margin-bottom:12px}
+
+  /* О группе */
+  .about h2{font-size:clamp(28px,8vw,40px);margin-bottom:18px}
+  .about p{font-size:17px;font-weight:300;color:#e2ded4}
+  .photo{
+    margin-top:22px;border:1px dashed #3a3a41;border-radius:14px;
+    aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;
+    text-align:center;color:#6f6b62;font-size:13px;letter-spacing:.5px;
+    background:repeating-linear-gradient(45deg,#141417,#141417 12px,#17171b 12px,#17171b 24px);
+    padding:20px;
+  }
+  /* [ЗАМЕНИТЬ .photo на фото группы:
+     <img src="urker-band.jpg" alt="Группа Urker" loading="lazy"
+          width="640" height="400" style="width:100%;border-radius:14px;display:block">] */
+
+  /* Практика */
+  .facts{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .facts .row{display:flex;justify-content:space-between;gap:16px;padding:15px 18px;border-bottom:1px solid var(--line);font-size:15px}
+  .facts .row:last-child{border-bottom:0}
+  .facts .k{color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-size:12px;font-weight:500;align-self:center}
+  .facts .v{color:#fff;font-weight:500;text-align:right;letter-spacing:.3px}
+
+  /* Дефицит */
+  .scarcity{text-align:center}
+  .count{font-weight:700;color:var(--accent);font-size:clamp(64px,22vw,120px);line-height:1;letter-spacing:-2px}
+  .count-lbl{color:var(--muted);text-transform:uppercase;letter-spacing:3px;font-size:13px;margin-top:6px}
+  .scarcity p{margin-top:20px;font-size:16px;color:#d7d3c9;max-width:32ch;margin-left:auto;margin-right:auto}
+
+  /* Финал */
+  .final{text-align:center;background:linear-gradient(180deg,var(--bg) 0%, #131015 100%)}
+  .final h2{font-size:clamp(34px,10vw,52px);letter-spacing:-1px}
+  .final .price{margin-top:16px;font-size:26px;font-weight:600;color:#fff}
+  .final .price b{color:var(--accent)}
+  .final .price small{display:block;font-size:14px;color:var(--muted);font-weight:300;margin-top:6px;letter-spacing:.3px}
+  .final .cta{margin-top:26px;max-width:420px;margin-left:auto;margin-right:auto}
+
+  footer{padding:30px 0 40px;text-align:center;color:#5f5c55;font-size:12px;letter-spacing:.5px}
+
+  /* ---------- Sticky mobile CTA ---------- */
+  .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(11,11,13,0) 0%, rgba(11,11,13,.92) 30%, #0b0b0d 100%);
+    transform:translateY(120%);transition:transform .28s ease;
+    pointer-events:none;
+  }
+  .sticky.show{transform:translateY(0);pointer-events:auto}
+  .sticky .btn{max-width:var(--maxw);margin:0 auto}
+  @media (min-width:768px){ .sticky{display:none} }
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn{transition:none}
+    .sticky{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== 1. HERO ===================== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">9 августа · BIART Астана</div>
+    <h1>URKER</h1>
+    <p class="sub">Песни, под которые прошли ваши лучшие годы. Один вечер живого звука.</p>
+    <div class="when"><b>9 августа</b>, 19:00, BIART Астана</div>
+    <div class="cta">
+      <a class="btn" href="https://ticketon.kz/concerts/event/tckt2-gruppa-urker-v-astane"
+         target="_blank" rel="noopener" data-cta="hero">Купить билет</a>
+    </div>
+    <div class="note">Билеты от 18 000 ₸. Мест в зале ограниченное число.</div>
+  </div>
+</header>
+
+<!-- ===================== 2. ЧТО БУДЕТ ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">Что будет в зале</div>
+    <div class="bullets">
+      <div class="bullet reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-9 2 5h5"/></svg>
+        <h3>Живой звук</h3>
+        <p>Вся группа на сцене. Живой вокал и инструменты, без фонограммы.</p>
+      </div>
+      <div class="bullet reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <h3>Любимые песни</h3>
+        <p>Те самые песни, которые вы знаете наизусть много лет.</p>
+      </div>
+      <div class="bullet reveal">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h3>90 минут</h3>
+        <p>Полтора часа концерта подряд, без пауз на рекламу.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. О ГРУППЕ ===================== -->
+<section class="about">
+  <div class="wrap">
+    <div class="eyebrow reveal">О группе</div>
+    <h2 class="reveal">Живая легенда</h2>
+    <p class="reveal">Urker, живая легенда казахстанской музыки. Вечер любимых песен, живого звучания и искренних эмоций. Музыка, проверенная временем.</p>
+    <!-- Плейсхолдер под фото группы, заменить на реальное фото (см. комментарий в CSS у .photo) -->
+    <div class="photo reveal">[ ВСТАВЬТЕ ФОТО ГРУППЫ URKER, 16:10, loading="lazy" ]</div>
+  </div>
+</section>
+
+<!-- ===================== 4. ПРАКТИКА ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">Коротко о концерте</div>
+    <div class="facts reveal">
+      <div class="row"><span class="k">Дата</span><span class="v">9 августа 2026, воскресенье</span></div>
+      <div class="row"><span class="k">Начало</span><span class="v">19:00</span></div>
+      <div class="row"><span class="k">Площадка</span><span class="v">BIART Астана, ул. Сыганак 17/41</span></div>
+      <div class="row"><span class="k">Длительность</span><span class="v">90 минут</span></div>
+      <div class="row"><span class="k">Возраст</span><span class="v">0+</span></div>
+      <div class="row"><span class="k">Язык</span><span class="v">Русский</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. ДЕФИЦИТ ===================== -->
+<section class="scarcity">
+  <div class="wrap">
+    <div class="eyebrow reveal">До концерта</div>
+    <div class="count reveal" id="countdown" aria-live="polite">·</div>
+    <div class="count-lbl reveal" id="countdown-lbl">дней</div>
+    <p class="reveal">В зале ограниченное число мест. Ближе к дате хорошие места заканчиваются первыми.</p>
+  </div>
+</section>
+
+<!-- ===================== 6. ФИНАЛ ===================== -->
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">Urker в Астане.<br>Один вечер.</h2>
+    <div class="price reveal">
+      Билеты <b>от 18 000 ₸</b>
+      <small>от 15 300 ₸ при покупке через Freedom SuperApp</small>
+    </div>
+    <div class="cta reveal">
+      <a class="btn" href="https://ticketon.kz/concerts/event/tckt2-gruppa-urker-v-astane"
+         target="_blank" rel="noopener" data-cta="final">Купить билет</a>
+    </div>
+  </div>
+</section>
+
+<footer>9 августа 2026 · BIART Астана · ул. Сыганак 17/41</footer>
+
+<!-- ===================== STICKY (mobile) ===================== -->
+<div class="sticky" id="sticky">
+  <a class="btn" href="https://ticketon.kz/concerts/event/tckt2-gruppa-urker-v-astane"
+     target="_blank" rel="noopener" data-cta="sticky">Купить билет</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- Трекинг кликов по кнопкам ---- */
+  function trackCTA(position){
+    // Meta Pixel: InitiateCheckout при каждом клике на кнопку покупки
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'InitiateCheckout', { content_name: 'URKER Astana', cta: position });
+    }
+    // Резервный лог/слой данных для GTM и отладки
+    (window.dataLayer = window.dataLayer || []).push({ event: 'cta_click', cta: position });
+    if (window.console) console.log('[cta]', position);
+  }
+  document.querySelectorAll('[data-cta]').forEach(function(a){
+    a.addEventListener('click', function(){ trackCTA(a.getAttribute('data-cta')); });
+  });
+
+  /* ---- Обратный отсчёт: считаем от текущей даты пользователя ---- */
+  (function(){
+    var el = document.getElementById('countdown');
+    var lbl = document.getElementById('countdown-lbl');
+    if(!el) return;
+    var target = new Date(2026, 7, 9, 19, 0, 0); // 9 августа 2026, 19:00 (локальное время)
+    var now = new Date();
+    var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var startOfEvent = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+    var days = Math.round((startOfEvent - startOfToday) / 86400000);
+
+    function plural(n){
+      var a = Math.abs(n) % 100, b = a % 10;
+      if (a > 10 && a < 20) return 'дней';
+      if (b > 1 && b < 5) return 'дня';
+      if (b === 1) return 'день';
+      return 'дней';
+    }
+    if (days > 0){ el.textContent = days; lbl.textContent = plural(days); }
+    else if (days === 0){ el.textContent = 'Сегодня'; el.style.fontSize = 'clamp(40px,14vw,80px)'; lbl.textContent = 'концерт уже сегодня'; }
+    else { el.textContent = 'Спасибо'; el.style.fontSize = 'clamp(40px,14vw,80px)'; lbl.textContent = 'концерт состоялся'; }
+  })();
+
+  /* ---- Sticky-кнопка: появляется после первого скролла ---- */
+  (function(){
+    var bar = document.getElementById('sticky');
+    if(!bar) return;
+    function onScroll(){
+      if (window.scrollY > window.innerHeight * 0.55) bar.classList.add('show');
+      else bar.classList.remove('show');
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+
+  /* ---- Появление блоков при скролле ---- */
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+})();
+</script>
+</body>
+</html>
