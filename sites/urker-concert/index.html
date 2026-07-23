@@ -142,9 +142,12 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     background:repeating-linear-gradient(45deg,#141417,#141417 12px,#17171b 12px,#17171b 24px);
     padding:20px;
   }
-  /* [ЗАМЕНИТЬ .photo на фото группы:
-     <img src="urker-band.jpg" alt="Группа Urker" loading="lazy"
-          width="640" height="400" style="width:100%;border-radius:14px;display:block">] */
+  .photo-img{
+    margin-top:22px;width:100%;height:auto;display:block;
+    aspect-ratio:16/9;object-fit:cover;
+    border-radius:14px;border:1px solid var(--line);
+    background:#141417;
+  }
 
   /* Практика */
   .facts{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
@@ -238,8 +241,9 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     <div class="eyebrow reveal">О группе</div>
     <h2 class="reveal">Живая легенда</h2>
     <p class="reveal">Urker, живая легенда казахстанской музыки. Вечер любимых песен, живого звучания и искренних эмоций. Музыка, проверенная временем.</p>
-    <!-- Плейсхолдер под фото группы, заменить на реальное фото (см. комментарий в CSS у .photo) -->
-    <div class="photo reveal">[ ВСТАВЬТЕ ФОТО ГРУППЫ URKER, 16:10, loading="lazy" ]</div>
+    <!-- Фото группы. Для полностью автономного файла замените src на data-URI. -->
+    <img class="photo-img reveal" loading="lazy" width="640" height="360" alt="Группа Urker на сцене"
+         src="https://optim.tildacdn.pro/tild6362-6465-4664-b063-623736303765/-/format/webp/640x360.png.webp">
   </div>
 </section>
 
