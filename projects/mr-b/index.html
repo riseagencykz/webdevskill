@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr B — барбершоп премиум-класса</title>
+  <meta name="description" content="Mr B — барбершоп премиум-класса: стрижка, моделирование бороды, королевское бритьё. Онлайн-запись за 30 секунд.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    // Palette: colors.csv -> "Luxury/Premium Brand" (accent #A16207 is the WCAG 3:1-adjusted gold)
+    // Type:    typography.csv -> "Classic Elegant" (Playfair Display + Inter)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1C1917',
+            secondary: '#44403C',
+            accent: '#A16207',
+            'accent-soft': '#D4A03C',
+            background: '#0C0A09',
+            surface: '#1C1917',
+            text: '#FAFAF9',
+            muted: '#A8A29E',
+            border: '#292524',
+          },
+          fontFamily: {
+            heading: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ux-guidelines.csv -> Accessibility: respect reduced-motion, never trap the user in animation */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    html { scroll-behavior: smooth; }
+    body { background-color: #0C0A09; }
+
+    .rule {
+      background: linear-gradient(90deg, transparent, #A16207, transparent);
+      height: 1px;
+    }
+    .gold-text {
+      background: linear-gradient(135deg, #D4A03C, #A16207);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      border-color: #A16207;
+      box-shadow: 0 18px 40px -18px rgba(161, 98, 7, .45);
+    }
+    /* motion.csv -> Parallax Scroll (Subtle): decorative layer only, never text */
+    .parallax-layer { will-change: transform; }
+    .grain {
+      background-image: radial-gradient(rgba(161,98,7,.10) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+    /* Visible focus ring for keyboard users on a dark surface */
+    :where(a, button, input, select, textarea):focus-visible {
+      outline: 2px solid #D4A03C;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .reveal { opacity: 0; transform: translateY(24px); }
+  </style>
+  <!-- JS disabled entirely: .reveal would never animate in, so show it all. -->
+  <noscript>
+    <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
+  </noscript>
+</head>
+<body class="bg-background font-body text-text antialiased">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-4 focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-white">
+    Перейти к содержимому
+  </a>
+
+  <!-- ================= NAV ================= -->
+  <header class="fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4" aria-label="Основная навигация">
+      <a href="#main" class="font-heading text-2xl font-semibold tracking-wide">
+        Mr<span class="gold-text"> B</span>
+      </a>
+      <ul class="hidden items-center gap-8 text-sm text-muted md:flex">
+        <li><a href="#services" class="transition-colors hover:text-accent-soft">Услуги</a></li>
+        <li><a href="#masters" class="transition-colors hover:text-accent-soft">Мастера</a></li>
+        <li><a href="#gallery" class="transition-colors hover:text-accent-soft">Работы</a></li>
+        <li><a href="#reviews" class="transition-colors hover:text-accent-soft">Отзывы</a></li>
+        <li><a href="#contacts" class="transition-colors hover:text-accent-soft">Контакты</a></li>
+      </ul>
+      <a href="#booking"
+         class="rounded-sm border border-accent px-5 py-2 text-sm font-medium text-accent-soft transition-colors hover:bg-accent hover:text-white">
+        Записаться
+      </a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+  <!-- ================= HERO ================= -->
+  <!-- landing.csv -> Hero-Centric + Social Proof: CTA above the fold, trust markers immediately after -->
+  <section class="relative flex min-h-screen items-center overflow-hidden pt-20">
+    <div class="parallax-layer grain absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="absolute -right-32 top-1/4 -z-10 h-96 w-96 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+    <div class="mx-auto grid w-full max-w-6xl gap-14 px-6 py-20 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="reveal mb-5 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent-soft">
+          <span class="inline-block h-px w-10 bg-accent"></span>
+          Барбершоп с 2014 года
+        </p>
+        <h1 class="reveal font-heading text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
+          Стрижка, которая<br><span class="gold-text">держит форму</span>
+        </h1>
+        <p class="reveal mt-6 max-w-md text-lg leading-relaxed text-muted">
+          Классический барберинг без спешки: разбор формы головы, работа ножницами
+          и опасной бритвой, укладка, которую вы повторите дома.
+        </p>
+        <div class="reveal mt-9 flex flex-wrap items-center gap-4">
+          <a href="#booking"
+             class="rounded-sm bg-accent px-8 py-4 font-medium text-white transition-transform hover:scale-[1.03]">
+            Записаться онлайн
+          </a>
+          <a href="tel:+77000000000"
+             class="flex items-center gap-2 rounded-sm border border-border px-8 py-4 font-medium transition-colors hover:border-accent hover:text-accent-soft">
+            <svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M222.37 158.46l-47.11-21.11-.13-.06a16 16 0 00-15.17 1.4 8.12 8.12 0 00-.75.56L134.87 160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16 16 0 001.32-15.06v-.12L97.54 33.64a16 16 0 00-16.62-9.52A56.26 56.26 0 0032 80c0 79.4 64.6 144 144 144a56.26 56.26 0 0055.88-48.92 16 16 0 00-9.51-16.62z"/></svg>
+            +7 700 000-00-00
+          </a>
+        </div>
+
+        <!-- Social proof directly under the CTA -->
+        <dl class="reveal mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-border pt-8">
+          <div>
+            <dt class="sr-only">Лет на рынке</dt>
+            <dd><span class="font-heading text-3xl text-accent-soft">11</span>
+              <span class="mt-1 block text-xs uppercase tracking-wider text-muted">лет работы</span></dd>
+          </div>
+          <div>
+            <dt class="sr-only">Постоянных клиентов</dt>
+            <dd><span class="font-heading text-3xl text-accent-soft">6 400</span>
+              <span class="mt-1 block text-xs uppercase tracking-wider text-muted">клиентов</span></dd>
+          </div>
+          <div>
+            <dt class="sr-only">Средняя оценка</dt>
+            <dd><span class="font-heading text-3xl text-accent-soft">4.9</span>
+              <span class="mt-1 block text-xs uppercase tracking-wider text-muted">рейтинг 2GIS</span></dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="reveal relative">
+        <div class="aspect-[4/5] overflow-hidden rounded-sm border border-border bg-gradient-to-br from-surface via-secondary/40 to-background">
+          <div class="flex h-full flex-col items-center justify-center gap-4 text-center">
+            <svg width="72" height="72" viewBox="0 0 256 256" fill="none" stroke="#A16207" stroke-width="8" aria-hidden="true">
+              <circle cx="64" cy="184" r="32"/><circle cx="192" cy="184" r="32"/>
+              <line x1="88" y1="160" x2="200" y2="40" stroke-linecap="round"/>
+              <line x1="168" y1="160" x2="56" y2="40" stroke-linecap="round"/>
+            </svg>
+            <p class="px-8 text-sm text-muted">Место под фото интерьера<br>или работы мастера</p>
+          </div>
+        </div>
+        <div class="absolute -bottom-6 -left-6 hidden rounded-sm border border-accent/40 bg-surface px-6 py-4 sm:block">
+          <p class="font-heading text-xl text-accent-soft">45 мин</p>
+          <p class="text-xs uppercase tracking-wider text-muted">средний сеанс</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section id="services" class="border-t border-border py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal mb-14 max-w-2xl">
+        <p class="mb-3 text-xs uppercase tracking-[0.3em] text-accent-soft">Прайс</p>
+        <h2 class="font-heading text-4xl sm:text-5xl">Услуги и цены</h2>
+        <p class="mt-4 text-muted">Честные цены без «звёздочек». Финальная стоимость называется до начала работы.</p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="reveal card-hover rounded-sm border border-border bg-surface p-8">
+          <svg width="32" height="32" viewBox="0 0 256 256" fill="none" stroke="#A16207" stroke-width="10" class="mb-6" aria-hidden="true">
+            <circle cx="64" cy="184" r="28"/><circle cx="192" cy="184" r="28"/>
+            <line x1="86" y1="164" x2="200" y2="44" stroke-linecap="round"/>
+            <line x1="170" y1="164" x2="56" y2="44" stroke-linecap="round"/>
+          </svg>
+          <h3 class="font-heading text-2xl">Мужская стрижка</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Консультация, мытьё головы, стрижка машинкой и ножницами, укладка. Разбираем,
+            как держать форму между визитами.
+          </p>
+          <p class="mt-6 flex items-baseline gap-2">
+            <span class="font-heading text-3xl text-accent-soft">8 000 ₸</span>
+            <span class="text-sm text-muted">· 45 мин</span>
+          </p>
+        </article>
+
+        <!-- Card 2 — highlighted -->
+        <article class="reveal card-hover relative rounded-sm border border-accent bg-surface p-8">
+          <span class="absolute -top-3 left-8 bg-accent px-3 py-1 text-xs font-medium uppercase tracking-wider text-white">
+            Чаще всего берут
+          </span>
+          <svg width="32" height="32" viewBox="0 0 256 256" fill="none" stroke="#A16207" stroke-width="10" class="mb-6" aria-hidden="true">
+            <path d="M40 96c0 60 40 112 88 112s88-52 88-112" stroke-linecap="round"/>
+            <path d="M40 96c0-30 40-48 88-48s88 18 88 48" stroke-linecap="round"/>
+          </svg>
+          <h3 class="font-heading text-2xl">Стрижка + борода</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Полный комплекс: стрижка, моделирование бороды опасной бритвой,
+            горячее полотенце, уход маслом.
+          </p>
+          <p class="mt-6 flex items-baseline gap-2">
+            <span class="font-heading text-3xl text-accent-soft">12 000 ₸</span>
+            <span class="text-sm text-muted">· 75 мин</span>
+          </p>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="reveal card-hover rounded-sm border border-border bg-surface p-8">
+          <svg width="32" height="32" viewBox="0 0 256 256" fill="none" stroke="#A16207" stroke-width="10" class="mb-6" aria-hidden="true">
+            <path d="M208 48L96 160" stroke-linecap="round"/>
+            <path d="M96 160l-40 8 8-40" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M160 96l48 48" stroke-linecap="round"/>
+          </svg>
+          <h3 class="font-heading text-2xl">Королевское бритьё</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Классическое бритьё опасной бритвой: компрессы, предбритвенное масло,
+            пена, финальный уход и восстановление кожи.
+          </p>
+          <p class="mt-6 flex items-baseline gap-2">
+            <span class="font-heading text-3xl text-accent-soft">7 000 ₸</span>
+            <span class="text-sm text-muted">· 40 мин</span>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MASTERS ================= -->
+  <section id="masters" class="border-t border-border bg-surface/40 py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal mb-14 max-w-2xl">
+        <p class="mb-3 text-xs uppercase tracking-[0.3em] text-accent-soft">Команда</p>
+        <h2 class="font-heading text-4xl sm:text-5xl">Мастера</h2>
+        <p class="mt-4 text-muted">Можно записаться к конкретному барберу — цена от выбора мастера не меняется.</p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="reveal card-hover rounded-sm border border-border bg-background p-6 text-center">
+          <div class="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-accent/40 bg-surface font-heading text-3xl text-accent-soft">АК</div>
+          <h3 class="font-heading text-xl">Арман К.</h3>
+          <p class="mt-1 text-sm text-accent-soft">Топ-барбер · 9 лет</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">Классика, фейды, работа с густыми и вьющимися волосами.</p>
+        </article>
+        <article class="reveal card-hover rounded-sm border border-border bg-background p-6 text-center">
+          <div class="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-accent/40 bg-surface font-heading text-3xl text-accent-soft">ДС</div>
+          <h3 class="font-heading text-xl">Даниил С.</h3>
+          <p class="mt-1 text-sm text-accent-soft">Барбер · 6 лет</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">Борода, опасная бритва, оформление контуров.</p>
+        </article>
+        <article class="reveal card-hover rounded-sm border border-border bg-background p-6 text-center">
+          <div class="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-accent/40 bg-surface font-heading text-3xl text-accent-soft">ТМ</div>
+          <h3 class="font-heading text-xl">Тимур М.</h3>
+          <p class="mt-1 text-sm text-accent-soft">Барбер · 4 года</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">Современные формы, текстурные стрижки, укладка.</p>
+        </article>
+        <article class="reveal card-hover rounded-sm border border-border bg-background p-6 text-center">
+          <div class="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border border-accent/40 bg-surface font-heading text-3xl text-accent-soft">ЕР</div>
+          <h3 class="font-heading text-xl">Ерлан Р.</h3>
+          <p class="mt-1 text-sm text-accent-soft">Барбер · 3 года</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">Детские стрижки, аккуратная работа с подростками.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALLERY ================= -->
+  <section id="gallery" class="border-t border-border py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal mb-14 max-w-2xl">
+        <p class="mb-3 text-xs uppercase tracking-[0.3em] text-accent-soft">Портфолио</p>
+        <h2 class="font-heading text-4xl sm:text-5xl">Наши работы</h2>
+        <p class="mt-4 text-muted">Заглушки под фото — замените на реальные снимки до/после в 4:5.</p>
+      </div>
+      <div class="grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-3">
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-br from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 1</div>
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-tr from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 2</div>
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-bl from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 3</div>
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-tl from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 4</div>
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-r from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 5</div>
+        <div class="reveal card-hover flex aspect-square items-center justify-center rounded-sm border border-border bg-gradient-to-l from-surface to-background text-xs uppercase tracking-widest text-muted">Фото 6</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section id="reviews" class="border-t border-border bg-surface/40 py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="reveal mb-14 max-w-2xl">
+        <p class="mb-3 text-xs uppercase tracking-[0.3em] text-accent-soft">Отзывы</p>
+        <h2 class="font-heading text-4xl sm:text-5xl">Что говорят клиенты</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        <figure class="reveal card-hover rounded-sm border border-border bg-background p-8">
+          <div class="mb-4 text-accent-soft" aria-label="Оценка 5 из 5">★★★★★</div>
+          <blockquote class="text-sm leading-relaxed text-muted">
+            «Хожу третий год. Ни разу не было “ну почти”. Арман сразу понимает,
+            что нужно, и объясняет, чем одна форма лучше другой.»
+          </blockquote>
+          <figcaption class="mt-6 border-t border-border pt-4 text-sm">
+            Ислам Б. <span class="text-muted">· постоянный клиент</span>
+          </figcaption>
+        </figure>
+        <figure class="reveal card-hover rounded-sm border border-border bg-background p-8">
+          <div class="mb-4 text-accent-soft" aria-label="Оценка 5 из 5">★★★★★</div>
+          <blockquote class="text-sm leading-relaxed text-muted">
+            «Пришёл на бритьё перед свадьбой. Горячее полотенце, всё по классике —
+            вышел как из фильма. Отдельное спасибо за то, что уложились в час.»
+          </blockquote>
+          <figcaption class="mt-6 border-t border-border pt-4 text-sm">
+            Дмитрий Л. <span class="text-muted">· королевское бритьё</span>
+          </figcaption>
+        </figure>
+        <figure class="reveal card-hover rounded-sm border border-border bg-background p-8">
+          <div class="mb-4 text-accent-soft" aria-label="Оценка 5 из 5">★★★★★</div>
+          <blockquote class="text-sm leading-relaxed text-muted">
+            «Записался онлайн в 23:40, пришёл на следующий день к 12:00.
+            Никаких звонков и переписок — это редкость.»
+          </blockquote>
+          <figcaption class="mt-6 border-t border-border pt-4 text-sm">
+            Санжар А. <span class="text-muted">· стрижка + борода</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BOOKING ================= -->
+  <!-- ux-guidelines.csv -> Forms: every input has a <label for>; submit shows loading -> success -->
+  <section id="booking" class="border-t border-border py-24">
+    <div class="mx-auto max-w-3xl px-6">
+      <div class="reveal mb-10 text-center">
+        <p class="mb-3 text-xs uppercase tracking-[0.3em] text-accent-soft">Запись</p>
+        <h2 class="font-heading text-4xl sm:text-5xl">Забронировать время</h2>
+        <p class="mt-4 text-muted">Перезвоним в течение 15 минут и подтвердим слот.</p>
+      </div>
+
+      <form id="booking-form" class="reveal space-y-6 rounded-sm border border-border bg-surface p-8" novalidate>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="name" class="mb-2 block text-sm text-muted">Имя <span class="text-accent-soft" aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" required autocomplete="name"
+                   class="w-full rounded-sm border border-border bg-background px-4 py-3 text-text placeholder:text-muted/60 focus:border-accent focus:outline-none">
+          </div>
+          <div>
+            <label for="phone" class="mb-2 block text-sm text-muted">Телефон <span class="text-accent-soft" aria-hidden="true">*</span></label>
+            <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="+7 700 000-00-00"
+                   class="w-full rounded-sm border border-border bg-background px-4 py-3 text-text placeholder:text-muted/60 focus:border-accent focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="service" class="mb-2 block text-sm text-muted">Услуга</label>
+            <select id="service" name="service"
+                    class="w-full rounded-sm border border-border bg-background px-4 py-3 text-text focus:border-accent focus:outline-none">
+              <option>Мужская стрижка — 8 000 ₸</option>
+              <option>Стрижка + борода — 12 000 ₸</option>
+              <option>Королевское бритьё — 7 000 ₸</option>
+            </select>
+          </div>
+          <div>
+            <label for="master" class="mb-2 block text-sm text-muted">Мастер</label>
+            <select id="master" name="master"
+                    class="w-full rounded-sm border border-border bg-background px-4 py-3 text-text focus:border-accent focus:outline-none">
+              <option>Любой свободный</option>
+              <option>Арман К.</option>
+              <option>Даниил С.</option>
+              <option>Тимур М.</option>
+              <option>Ерлан Р.</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="datetime" class="mb-2 block text-sm text-muted">Желаемые дата и время</label>
+          <input id="datetime" name="datetime" type="datetime-local"
+                 class="w-full rounded-sm border border-border bg-background px-4 py-3 text-text focus:border-accent focus:outline-none">
+        </div>
+
+        <button type="submit" id="submit-btn"
+                class="w-full rounded-sm bg-accent px-8 py-4 font-medium text-white transition-transform hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60">
+          Записаться
+        </button>
+
+        <!-- Submit feedback: polite live region, announced by screen readers -->
+        <p id="form-status" role="status" aria-live="polite" class="min-h-[1.5rem] text-center text-sm"></p>
+      </form>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ================= CONTACTS / FOOTER ================= -->
+  <footer id="contacts" class="border-t border-border bg-surface/40 py-16">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 md:grid-cols-3">
+        <div>
+          <p class="font-heading text-2xl">Mr<span class="gold-text"> B</span></p>
+          <p class="mt-4 text-sm leading-relaxed text-muted">
+            Барбершоп премиум-класса.<br>Классический барберинг с 2014 года.
+          </p>
+        </div>
+        <div>
+          <h2 class="mb-4 text-xs uppercase tracking-[0.3em] text-accent-soft">Контакты</h2>
+          <ul class="space-y-2 text-sm text-muted">
+            <li><a href="tel:+77000000000" class="transition-colors hover:text-accent-soft">+7 700 000-00-00</a></li>
+            <li><a href="mailto:hello@mrb.kz" class="transition-colors hover:text-accent-soft">hello@mrb.kz</a></li>
+            <li>г. Алматы, ул. Примерная, 1</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-4 text-xs uppercase tracking-[0.3em] text-accent-soft">Часы работы</h2>
+          <ul class="space-y-2 text-sm text-muted">
+            <li>Пн–Пт · 10:00 — 21:00</li>
+            <li>Сб–Вс · 10:00 — 20:00</li>
+            <li class="text-accent-soft">Без перерыва</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rule my-10"></div>
+      <p class="text-center text-xs text-muted">
+        © 2026 Mr B. Все права защищены.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ================= MOTION ================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var reveals = document.querySelectorAll('.reveal');
+
+      // No GSAP (offline/CDN blocked) or reduced motion -> show everything, skip animation entirely.
+      if (reduced || typeof gsap === 'undefined') {
+        reveals.forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // motion.csv -> Stagger List (Complex), plain-fade variant: no SplitText, no paid-plugin dependency.
+      gsap.utils.toArray('section').forEach(function (section) {
+        var items = section.querySelectorAll('.reveal');
+        if (!items.length) return;
+        gsap.to(items, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'expo.out',
+          scrollTrigger: { trigger: section, start: 'top 80%', once: true }
+        });
+      });
+
+      // motion.csv -> Parallax Scroll (Subtle): yPercent 10, scrub, decorative layer only.
+      gsap.to('.parallax-layer', {
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: { trigger: '.parallax-layer', start: 'top top', end: 'bottom top', scrub: true }
+      });
+    })();
+
+    // Form: loading -> success. Replace the timeout with your real endpoint / CRM webhook.
+    document.getElementById('booking-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = e.currentTarget;
+      var btn = document.getElementById('submit-btn');
+      var status = document.getElementById('form-status');
+
+      if (!form.name.value.trim() || !form.phone.value.trim()) {
+        status.textContent = 'Заполните имя и телефон — по ним мы подтвердим запись.';
+        status.className = 'min-h-[1.5rem] text-center text-sm text-red-400';
+        (form.name.value.trim() ? form.phone : form.name).focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Отправляем…';
+      status.textContent = '';
+
+      setTimeout(function () {
+        btn.textContent = 'Записаться';
+        btn.disabled = false;
+        form.reset();
+        status.textContent = 'Заявка принята. Перезвоним в течение 15 минут.';
+        status.className = 'min-h-[1.5rem] text-center text-sm text-accent-soft';
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
