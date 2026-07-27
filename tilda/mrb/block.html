@@ -1,0 +1,898 @@
+<!-- ============================================================
+     Mr B Academy — лендинг под TikTok UGC-трафик
+     Блок T123 (HTML) для Тильды. Вставлять целиком, одним блоком.
+
+     Всё внутри .mrb, все классы с префиксом mrb-, JS в IIFE.
+     Глобальные селекторы и стили body/html не используются.
+     Собственного сабмита нет — кнопки открывают попап Тильды.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Токены (scoped на .mrb, не на :root) ===== */
+.mrb{
+  --mrb-teal:#0D9488; --mrb-teal-dark:#0F766E;
+  --mrb-ink:#134E4A; --mrb-body:#334155; --mrb-muted-fg:#64748B;
+  --mrb-bg:#FFFFFF; --mrb-surface:#F0FDFA; --mrb-surface-2:#F8FAFC;
+  --mrb-border:#E2E8F0; --mrb-border-teal:#99F6E4;
+  --mrb-cta:#C2410C; --mrb-cta-hover:#9A3412; --mrb-on-cta:#FFFFFF;
+  --mrb-fs-h1:clamp(2rem,7.2vw,3.5rem);
+  --mrb-fs-h2:clamp(1.5rem,5.2vw,2.5rem);
+  --mrb-fs-h3:clamp(1.125rem,3.6vw,1.5rem);
+  --mrb-fs-lead:clamp(1rem,4vw,1.25rem);
+  --mrb-section-y:clamp(48px,9vw,96px);
+  --mrb-gutter:clamp(16px,5vw,24px);
+  --mrb-maxw:1120px;
+  --mrb-radius:14px; --mrb-radius-sm:10px;
+  --mrb-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px -12px rgba(15,23,42,.12);
+  --mrb-shadow-cta:0 6px 20px -8px rgba(194,65,12,.5);
+  --mrb-tap:48px;
+  --mrb-dur:340ms; --mrb-ease:cubic-bezier(.22,.61,.36,1);
+  --mrb-z-sticky:900;
+
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:400;
+  color:var(--mrb-body);
+  background:var(--mrb-bg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-size-adjust:100%;
+}
+.mrb *,.mrb *::before,.mrb *::after{box-sizing:border-box;}
+
+/* ux-guidelines.csv -> Tap Delay: убирает 300ms задержку на мобильных */
+.mrb a,.mrb button,.mrb summary{touch-action:manipulation;}
+
+.mrb-wrap{max-width:var(--mrb-maxw);margin:0 auto;padding-left:var(--mrb-gutter);padding-right:var(--mrb-gutter);}
+.mrb-section{padding-top:var(--mrb-section-y);padding-bottom:var(--mrb-section-y);}
+.mrb-section--tint{background:var(--mrb-surface);}
+.mrb-section--soft{background:var(--mrb-surface-2);}
+
+/* ===== Типографика ===== */
+.mrb-h1{font-size:var(--mrb-fs-h1);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--mrb-ink);margin:0;}
+.mrb-h2{font-size:var(--mrb-fs-h2);font-weight:800;line-height:1.15;letter-spacing:-.015em;color:var(--mrb-ink);margin:0 0 var(--mrb-s-4,16px);}
+.mrb-h3{font-size:var(--mrb-fs-h3);font-weight:800;line-height:1.3;color:var(--mrb-ink);margin:0 0 8px;}
+.mrb-lead{font-size:var(--mrb-fs-lead);line-height:1.5;color:var(--mrb-body);margin:0;}
+.mrb-p{margin:0;color:var(--mrb-body);}
+.mrb-small{font-size:.875rem;color:var(--mrb-muted-fg);margin:0;}
+.mrb-eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mrb-teal-dark);margin:0 0 12px;}
+.mrb-section-head{max-width:640px;margin-bottom:32px;}
+
+/* ===== Кнопки. Акцент только здесь ===== */
+.mrb-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:var(--mrb-tap);padding:14px 28px;
+  background:var(--mrb-cta);color:var(--mrb-on-cta);
+  font-family:inherit;font-size:1.0625rem;font-weight:800;line-height:1.2;
+  text-decoration:none;text-align:center;
+  border:none;border-radius:var(--mrb-radius-sm);
+  cursor:pointer;box-shadow:var(--mrb-shadow-cta);
+  transition:background var(--mrb-dur) var(--mrb-ease),transform var(--mrb-dur) var(--mrb-ease);
+}
+.mrb-btn:hover{background:var(--mrb-cta-hover);transform:translateY(-1px);}
+.mrb-btn:active{transform:translateY(0);}
+.mrb-btn--full{display:flex;width:100%;}
+.mrb-btn--ghost{
+  background:transparent;color:var(--mrb-ink);
+  border:2px solid var(--mrb-border-teal);box-shadow:none;
+}
+.mrb-btn--ghost:hover{background:var(--mrb-surface);border-color:var(--mrb-teal);}
+
+.mrb :where(a,button,summary,details):focus-visible{
+  outline:3px solid var(--mrb-teal);outline-offset:3px;border-radius:6px;
+}
+
+/* ===== 1. Первый экран ===== */
+.mrb-hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 80% at 50% 0%,#ECFEFF 0%,rgba(236,254,255,0) 60%),
+    linear-gradient(180deg,var(--mrb-surface) 0%,var(--mrb-bg) 100%);
+  padding-top:clamp(28px,7vw,64px);
+  padding-bottom:clamp(28px,6vw,64px);
+}
+/* Цель — уместиться в 390x844 без скролла */
+.mrb-hero-inner{min-height:calc(100svh - 96px);display:flex;flex-direction:column;justify-content:center;}
+@supports not (height:100svh){.mrb-hero-inner{min-height:calc(100vh - 96px);}}
+
+.mrb-badge{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  padding:6px 14px;margin-bottom:20px;
+  background:rgba(13,148,136,.10);border:1px solid var(--mrb-border-teal);
+  border-radius:999px;
+  font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mrb-teal-dark);
+}
+.mrb-hero .mrb-h1{margin-bottom:16px;}
+.mrb-hero-sub{font-size:var(--mrb-fs-lead);line-height:1.5;color:var(--mrb-body);margin:0 0 28px;max-width:34ch;}
+.mrb-hero-cta{display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
+.mrb-hero-note{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--mrb-muted-fg);}
+.mrb-hero-note svg{flex:0 0 auto;color:var(--mrb-teal);}
+
+/* ===== 2. Полоса доверия ===== */
+.mrb-trust{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  padding:0;margin:0;list-style:none;
+}
+.mrb-trust-item{
+  background:var(--mrb-bg);border:1px solid var(--mrb-border);border-radius:var(--mrb-radius);
+  padding:20px 16px;text-align:center;
+}
+.mrb-trust-num{display:block;font-size:clamp(1.75rem,6vw,2.5rem);font-weight:800;line-height:1;color:var(--mrb-teal-dark);letter-spacing:-.02em;}
+.mrb-trust-label{display:block;margin-top:8px;font-size:.8125rem;line-height:1.35;color:var(--mrb-muted-fg);}
+
+/* ===== 3. Боли / 4. Диагностика / 5. Треки — карточки ===== */
+.mrb-grid{display:grid;gap:16px;}
+.mrb-grid--2{grid-template-columns:repeat(2,1fr);}
+.mrb-grid--3{grid-template-columns:repeat(3,1fr);}
+
+.mrb-card{
+  background:var(--mrb-bg);border:1px solid var(--mrb-border);border-radius:var(--mrb-radius);
+  padding:24px;box-shadow:var(--mrb-shadow);
+}
+.mrb-card--flat{box-shadow:none;}
+.mrb-card--tint{background:var(--mrb-surface);border-color:var(--mrb-border-teal);}
+
+.mrb-pain{display:flex;gap:14px;align-items:flex-start;}
+.mrb-pain-mark{
+  flex:0 0 auto;width:28px;height:28px;border-radius:50%;
+  background:rgba(13,148,136,.10);color:var(--mrb-teal-dark);
+  display:flex;align-items:center;justify-content:center;
+}
+.mrb-pain-text{margin:0;font-size:1rem;line-height:1.5;color:var(--mrb-ink);font-weight:800;}
+
+.mrb-check{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.mrb-check:last-child{margin-bottom:0;}
+.mrb-check-mark{flex:0 0 auto;width:26px;height:26px;color:var(--mrb-teal);}
+.mrb-check-title{margin:0 0 4px;font-size:1.0625rem;font-weight:800;color:var(--mrb-ink);line-height:1.35;}
+.mrb-check-desc{margin:0;font-size:.9375rem;line-height:1.5;color:var(--mrb-muted-fg);}
+
+/* Условия оффера — снятие риска */
+.mrb-terms{
+  display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0;padding:0;list-style:none;
+}
+.mrb-term{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;background:var(--mrb-bg);border:1px solid var(--mrb-border-teal);
+  border-radius:999px;font-size:.875rem;font-weight:800;color:var(--mrb-ink);
+}
+.mrb-term svg{color:var(--mrb-teal);flex:0 0 auto;}
+
+/* ===== 5. Треки ===== */
+.mrb-track{position:relative;}
+.mrb-track-step{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;margin-bottom:14px;
+  background:var(--mrb-teal);color:#fff;border-radius:50%;
+  font-size:.9375rem;font-weight:800;
+}
+.mrb-track-meta{
+  display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 0;padding:16px 0 0;
+  border-top:1px solid var(--mrb-border);
+  font-size:.875rem;color:var(--mrb-muted-fg);
+}
+.mrb-track-meta b{color:var(--mrb-ink);font-weight:800;}
+.mrb-arrow{display:flex;align-items:center;justify-content:center;padding:4px 0;color:var(--mrb-teal);}
+
+/* ===== 6. Цены ===== */
+.mrb-price{display:flex;align-items:baseline;gap:8px;margin:12px 0 0;}
+.mrb-price-num{font-size:clamp(1.75rem,6vw,2.25rem);font-weight:800;color:var(--mrb-ink);line-height:1;letter-spacing:-.02em;}
+.mrb-price-per{font-size:.9375rem;color:var(--mrb-muted-fg);}
+.mrb-price-note{margin:20px 0 0;font-size:.875rem;color:var(--mrb-muted-fg);}
+
+/* ===== 7. Эксперт =====
+   Мобайл-фёрст: по умолчанию одна колонка, две — только с 981px.
+   Ширину колонок задаём здесь, а не inline: inline-стиль перебил бы
+   медиазапрос и секция уехала бы за экран на мобильном. */
+.mrb-expert{display:grid;gap:28px;align-items:start;}
+@media screen and (min-width:981px){
+  .mrb-expert{grid-template-columns:minmax(0,320px) minmax(0,1fr);}
+}
+.mrb-expert-photo{
+  width:100%;aspect-ratio:4/5;border-radius:var(--mrb-radius);overflow:hidden;
+  background:linear-gradient(160deg,var(--mrb-surface),#E2F5F1);
+  border:1px solid var(--mrb-border-teal);
+  display:flex;align-items:center;justify-content:center;
+}
+.mrb-expert-photo svg{width:33%;height:auto;color:var(--mrb-teal);opacity:.5;}
+.mrb-expert-facts{margin:20px 0 0;padding:0;list-style:none;}
+.mrb-expert-facts li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 0;border-top:1px solid var(--mrb-border);
+  font-size:.9375rem;line-height:1.5;color:var(--mrb-body);
+}
+.mrb-expert-facts li svg{flex:0 0 auto;color:var(--mrb-teal);margin-top:2px;}
+
+/* ===== 8. Результаты ===== */
+.mrb-rail{
+  display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,80%);
+  gap:16px;overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:8px;margin:0;list-style:none;
+  scrollbar-width:thin;
+  -webkit-overflow-scrolling:touch;
+}
+.mrb-rail>*{scroll-snap-align:start;}
+.mrb-shot{
+  aspect-ratio:3/4;border-radius:var(--mrb-radius-sm);
+  background:repeating-linear-gradient(45deg,var(--mrb-surface),var(--mrb-surface) 10px,var(--mrb-surface-2) 10px,var(--mrb-surface-2) 20px);
+  border:1px dashed var(--mrb-border-teal);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8125rem;color:var(--mrb-muted-fg);text-align:center;padding:16px;
+}
+.mrb-quote{margin:0;}
+.mrb-quote-text{margin:0 0 16px;font-size:1rem;line-height:1.55;color:var(--mrb-ink);}
+.mrb-quote-author{font-size:.875rem;color:var(--mrb-muted-fg);font-style:normal;}
+.mrb-quote-author b{display:block;color:var(--mrb-ink);font-weight:800;font-size:.9375rem;}
+
+/* ===== 9. FAQ ===== */
+.mrb-faq{border-top:1px solid var(--mrb-border);}
+.mrb-faq details{border-bottom:1px solid var(--mrb-border);}
+.mrb-faq summary{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  min-height:var(--mrb-tap);padding:18px 0;
+  font-size:1.0625rem;font-weight:800;color:var(--mrb-ink);line-height:1.4;
+  cursor:pointer;list-style:none;
+}
+.mrb-faq summary::-webkit-details-marker{display:none;}
+.mrb-faq-icon{
+  flex:0 0 auto;width:22px;height:22px;margin-top:2px;color:var(--mrb-teal);
+  transition:transform var(--mrb-dur) var(--mrb-ease);
+}
+.mrb-faq details[open] .mrb-faq-icon{transform:rotate(45deg);}
+.mrb-faq-answer{margin:0;padding:0 0 20px;font-size:1rem;line-height:1.6;color:var(--mrb-body);max-width:62ch;}
+
+/* ===== 10. Финальный CTA + sticky ===== */
+.mrb-final{
+  background:linear-gradient(160deg,var(--mrb-ink) 0%,#0B3B37 100%);
+  color:#E6FFFA;text-align:center;
+}
+.mrb-final .mrb-h2{color:#fff;}
+.mrb-final .mrb-lead{color:#B6E5DE;margin-left:auto;margin-right:auto;max-width:44ch;}
+.mrb-final-cta{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.mrb-final-note{font-size:.8125rem;color:#8FCFC7;}
+
+.mrb-sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:var(--mrb-z-sticky);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-top:1px solid var(--mrb-border);
+  transform:translateY(110%);
+  transition:transform var(--mrb-dur) var(--mrb-ease);
+  pointer-events:none;
+}
+.mrb-sticky.is-visible{transform:translateY(0);pointer-events:auto;}
+.mrb-sticky .mrb-btn{width:100%;}
+
+/* ===== Появление при скролле =====
+   motion.csv -> Scroll Reveal (Subtle), 340ms / 14px.
+   Начальное состояние вешает JS (класс mrb-js), поэтому без JS
+   и для краулеров контент виден сразу. */
+.mrb-js .mrb-reveal{opacity:0;transform:translateY(14px);}
+.mrb-js .mrb-reveal.is-in{
+  opacity:1;transform:none;
+  transition:opacity var(--mrb-dur) var(--mrb-ease),transform var(--mrb-dur) var(--mrb-ease);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mrb *,.mrb *::before,.mrb *::after{
+    animation-duration:.01ms !important;transition-duration:.01ms !important;
+  }
+  .mrb-js .mrb-reveal{opacity:1;transform:none;}
+  .mrb-rail{scroll-behavior:auto;}
+}
+
+/* ===== Брейкпоинты Тильды: 1200 / 980 / 640 / 480 ===== */
+@media screen and (max-width:1200px){
+  .mrb{--mrb-maxw:960px;}
+}
+@media screen and (max-width:980px){
+  .mrb-expert-photo{max-width:320px;}
+  .mrb-grid--3{grid-template-columns:repeat(2,1fr);}
+}
+@media screen and (max-width:640px){
+  .mrb-grid--2,.mrb-grid--3{grid-template-columns:1fr;}
+  /* Полоса доверия уезжает в горизонтальный скролл со снапом */
+  .mrb-trust{
+    grid-template-columns:repeat(4,minmax(140px,1fr));
+    overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:8px;margin-left:calc(var(--mrb-gutter)*-1);margin-right:calc(var(--mrb-gutter)*-1);
+    padding-left:var(--mrb-gutter);padding-right:var(--mrb-gutter);
+  }
+  .mrb-trust-item{scroll-snap-align:start;}
+  .mrb-hero-cta{align-items:stretch;width:100%;}
+  .mrb-hero-cta .mrb-btn{width:100%;}
+  .mrb-hero-note{justify-content:center;}
+  .mrb-rail{grid-auto-columns:minmax(240px,85%);}
+}
+@media screen and (max-width:480px){
+  .mrb-card{padding:20px;}
+  .mrb-hero-sub{max-width:none;}
+}
+
+/* На десктопе sticky-панель не нужна — трафик мобильный */
+@media screen and (min-width:641px){
+  .mrb-sticky{display:none;}
+  /* Кнопка во всю ширину карточки нужна только под палец на мобильном.
+     На широком экране растянутая на 1000px кнопка выглядит сломанной. */
+  .mrb-btn--full{display:inline-flex;width:auto;}
+}
+</style>
+
+<div class="mrb" id="mrb-root">
+
+  <!-- ============ 1. ПЕРВЫЙ ЭКРАН ============ -->
+  <section class="mrb-hero">
+    <div class="mrb-wrap mrb-hero-inner">
+      <span class="mrb-badge">Астана · левый берег + онлайн</span>
+
+      <!-- data-mrb-slot: текст меняется под связку без переверстки.
+           data-mrb-default хранит исходник для подстановки из ?h= -->
+      <h1 class="mrb-h1"
+          data-mrb-slot="h1"
+          data-mrb-default="Сдать IELTS на нужный балл — за 10 недель">Сдать IELTS на нужный балл — за 10 недель</h1>
+
+      <p class="mrb-hero-sub" data-mrb-slot="sub">
+        Преподаватель с опытом 15+ лет и экзаменаторским бэкграундом
+        Cambridge Assessment. Мини-группы до 6 человек.
+      </p>
+
+      <div class="mrb-hero-cta">
+        <a class="mrb-btn" href="#popup:diagnostika" data-mrb-cta="hero">
+          Записаться на бесплатную диагностику
+        </a>
+        <span class="mrb-hero-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+          30–40 минут, бесплатно, без обязательств
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. ПОЛОСА ДОВЕРИЯ ============ -->
+  <section class="mrb-section mrb-section--tint">
+    <div class="mrb-wrap">
+      <ul class="mrb-trust">
+        <li class="mrb-trust-item mrb-reveal">
+          <span class="mrb-trust-num" data-mrb-count="15" data-mrb-suffix="+">15+</span>
+          <span class="mrb-trust-label">лет преподавания</span>
+        </li>
+        <li class="mrb-trust-item mrb-reveal">
+          <span class="mrb-trust-num">Cambridge</span>
+          <span class="mrb-trust-label">экзаменаторский бэкграунд Assessment</span>
+        </li>
+        <li class="mrb-trust-item mrb-reveal">
+          <span class="mrb-trust-num" data-mrb-count="6" data-mrb-prefix="до ">до 6</span>
+          <span class="mrb-trust-label">человек в группе</span>
+        </li>
+        <li class="mrb-trust-item mrb-reveal">
+          <span class="mrb-trust-num">Астана</span>
+          <span class="mrb-trust-label">офлайн + онлайн по Казахстану</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 3. ЭТО ПРО ТЕБЯ? ============ -->
+  <section class="mrb-section">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Это про тебя?</p>
+        <h2 class="mrb-h2">Если хотя бы один пункт — твой, диагностика даст ответ</h2>
+      </div>
+
+      <div class="mrb-grid mrb-grid--2">
+        <div class="mrb-card mrb-card--flat mrb-reveal">
+          <div class="mrb-pain">
+            <span class="mrb-pain-mark" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <p class="mrb-pain-text">Учу английский, но уровень стоит на месте</p>
+          </div>
+        </div>
+        <div class="mrb-card mrb-card--flat mrb-reveal">
+          <div class="mrb-pain">
+            <span class="mrb-pain-mark" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <p class="mrb-pain-text">Теряю баллы в Speaking и Writing</p>
+          </div>
+        </div>
+        <div class="mrb-card mrb-card--flat mrb-reveal">
+          <div class="mrb-pain">
+            <span class="mrb-pain-mark" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <p class="mrb-pain-text">Не понимаю, по каким критериям меня оценивают</p>
+          </div>
+        </div>
+        <div class="mrb-card mrb-card--flat mrb-reveal">
+          <div class="mrb-pain">
+            <span class="mrb-pain-mark" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <p class="mrb-pain-text">Уже пробовал готовиться — не получилось</p>
+          </div>
+        </div>
+        <div class="mrb-card mrb-card--flat mrb-reveal">
+          <div class="mrb-pain">
+            <span class="mrb-pain-mark" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <p class="mrb-pain-text">Горят сроки — нужен балл к конкретной дате</p>
+          </div>
+        </div>
+        <div class="mrb-card mrb-card--tint mrb-reveal">
+          <p class="mrb-p" style="font-weight:800;color:var(--mrb-ink);margin-bottom:16px;">
+            Диагностика покажет, где именно ты теряешь баллы — и сколько времени
+            реально нужно до цели.
+          </p>
+          <a class="mrb-btn mrb-btn--full" href="#popup:diagnostika" data-mrb-cta="pains">Узнать свой уровень</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. ЧТО ДАЁТ ДИАГНОСТИКА (главный блок) ============ -->
+  <section class="mrb-section mrb-section--tint">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Главное</p>
+        <h2 class="mrb-h2">Что даёт бесплатная диагностика</h2>
+        <p class="mrb-lead">Это не пробный урок и не презентация курса. Это разбор твоего уровня по критериям IELTS.</p>
+      </div>
+
+      <div class="mrb-card mrb-reveal">
+        <div class="mrb-check">
+          <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+          <div>
+            <p class="mrb-check-title">Определим реальный уровень по критериям IELTS</p>
+            <p class="mrb-check-desc">Не «примерно intermediate», а оценка по четырём секциям в баллах.</p>
+          </div>
+        </div>
+        <div class="mrb-check">
+          <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+          <div>
+            <p class="mrb-check-title">Покажем, где именно теряются баллы</p>
+            <p class="mrb-check-desc">Разбор с позиции экзаменатора: что снижает оценку в Speaking и Writing.</p>
+          </div>
+        </div>
+        <div class="mrb-check">
+          <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+          <div>
+            <p class="mrb-check-title">Соберём индивидуальный план подготовки</p>
+            <p class="mrb-check-desc">С какого трека начинать, на что делать упор, в каком порядке.</p>
+          </div>
+        </div>
+        <div class="mrb-check">
+          <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+          <div>
+            <p class="mrb-check-title">Назовём реальный срок до целевого балла</p>
+            <p class="mrb-check-desc">Честно. Если до цели год — так и скажем, а не пообещаем два месяца.</p>
+          </div>
+        </div>
+
+        <ul class="mrb-terms">
+          <li class="mrb-term">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Бесплатно
+          </li>
+          <li class="mrb-term">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            30–40 минут
+          </li>
+          <li class="mrb-term">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Без обязательств
+          </li>
+        </ul>
+
+        <div style="margin-top:28px;">
+          <a class="mrb-btn mrb-btn--full" href="#popup:diagnostika" data-mrb-cta="diagnostika">Записаться на диагностику</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. ДВА ТРЕКА ============ -->
+  <section class="mrb-section">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Как устроена подготовка</p>
+        <h2 class="mrb-h2">Два трека — и честная логика перехода</h2>
+        <p class="mrb-lead">
+          IELTS — это не «выучить английский», а сдать экзамен по его правилам.
+          Если базы пока нет, прыгать сразу в интенсив бессмысленно: балл не вырастет.
+        </p>
+      </div>
+
+      <div class="mrb-grid mrb-grid--2">
+        <div class="mrb-card mrb-track mrb-reveal">
+          <span class="mrb-track-step">1</span>
+          <h3 class="mrb-h3">Pre-IELTS</h3>
+          <p class="mrb-p">
+            Поднимаем общий уровень языка до того, с которого экзамен вообще берётся:
+            грамматика, лексика, беглость речи, навык слушания.
+          </p>
+          <div class="mrb-track-meta">
+            <span>Формат: <b>помесячно</b></span>
+            <span>Длительность: <b>от 2–3 месяцев</b></span>
+          </div>
+        </div>
+
+        <div class="mrb-card mrb-track mrb-reveal">
+          <span class="mrb-track-step">2</span>
+          <h3 class="mrb-h3">IELTS Intensive</h3>
+          <p class="mrb-p">
+            Работа под экзамен: стратегии по секциям, критерии оценивания,
+            тайминг, пробные тесты с разбором от экзаменатора.
+          </p>
+          <div class="mrb-track-meta">
+            <span>Длительность: <b>10 недель</b></span>
+            <span>Группа: <b>до 6 человек</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mrb-card mrb-card--tint mrb-reveal" style="margin-top:16px;">
+        <h3 class="mrb-h3">Сколько это займёт на самом деле</h3>
+        <p class="mrb-p">
+          От <b>2–3 месяцев</b>, если база уже есть и нужен только экзаменационный навык,
+          до <b>года и больше</b>, если начинаем с нуля. Точный срок называем
+          на диагностике — после того, как увидим реальный уровень, а не до.
+        </p>
+        <div style="margin-top:20px;">
+          <a class="mrb-btn mrb-btn--full" href="#popup:diagnostika" data-mrb-cta="tracks">Узнать свой срок</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. ЦЕНЫ ============ -->
+  <section class="mrb-section mrb-section--soft">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Стоимость</p>
+        <h2 class="mrb-h2">Цены без «уточните у менеджера»</h2>
+      </div>
+
+      <div class="mrb-grid mrb-grid--2">
+        <div class="mrb-card mrb-reveal">
+          <h3 class="mrb-h3">Pre-IELTS</h3>
+          <p class="mrb-small">Подготовка базы до экзаменационного уровня</p>
+          <div class="mrb-price">
+            <span class="mrb-price-num">75 000 ₸</span>
+            <span class="mrb-price-per">/ месяц</span>
+          </div>
+        </div>
+        <div class="mrb-card mrb-reveal">
+          <h3 class="mrb-h3">IELTS Intensive</h3>
+          <p class="mrb-small">Полный курс подготовки к экзамену, 10 недель</p>
+          <div class="mrb-price">
+            <span class="mrb-price-num">250 000 ₸</span>
+            <span class="mrb-price-per">/ курс</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="mrb-price-note mrb-reveal">
+        Какой трек нужен именно тебе — определяется на диагностике. Она бесплатная.
+      </p>
+      <div class="mrb-reveal" style="margin-top:20px;">
+        <a class="mrb-btn" href="#popup:diagnostika" data-mrb-cta="pricing">Подобрать трек на диагностике</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. ЭКСПЕРТ ============ -->
+  <section class="mrb-section">
+    <div class="mrb-wrap">
+      <div class="mrb-expert">
+        <div class="mrb-expert-photo mrb-reveal">
+          <!-- ЗАГЛУШКА: заменить на фото преподавателя 4:5 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+          </svg>
+        </div>
+
+        <div class="mrb-reveal">
+          <p class="mrb-eyebrow">Кто ведёт</p>
+          <h2 class="mrb-h2">Преподаватель, который сам оценивал экзамен</h2>
+          <p class="mrb-lead">
+            Разница между «знает английский» и «знает, как его оценивают на IELTS» —
+            это и есть разница в баллах. Подготовка строится с позиции экзаменатора:
+            видно не только ошибку, но и то, сколько она стоит.
+          </p>
+          <ul class="mrb-expert-facts">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Более 15 лет преподавания английского и подготовки к международным экзаменам</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Экзаменаторский бэкграунд Cambridge Assessment</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Мини-группы до 6 человек — каждый успевает говорить на занятии</span>
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Очно в Астане на левом берегу и онлайн по всему Казахстану</span>
+            </li>
+          </ul>
+          <div style="margin-top:28px;">
+            <a class="mrb-btn" href="#popup:diagnostika" data-mrb-cta="expert">Записаться на разбор</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. РЕЗУЛЬТАТЫ ============
+       Секция скрывается автоматически, пока внутри нет ни одного
+       .mrb-result — чтобы не висела пустой до появления материалов. -->
+  <section class="mrb-section mrb-section--tint" data-mrb-collapsible="results">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Результаты</p>
+        <h2 class="mrb-h2">Баллы и отзывы учеников</h2>
+      </div>
+
+      <ul class="mrb-rail">
+        <!-- ЗАГЛУШКИ. Удалить элементы .mrb-result целиком, если материалов ещё нет —
+             секция скроется сама. Добавлять реальные скриншоты баллов и отзывы сюда. -->
+        <li class="mrb-result mrb-shot">Скриншот результата IELTS<br>(вставить изображение)</li>
+        <li class="mrb-result mrb-shot">Скриншот результата IELTS<br>(вставить изображение)</li>
+        <li class="mrb-result mrb-card">
+          <figure class="mrb-quote">
+            <p class="mrb-quote-text">Текст отзыва ученика — заменить на реальный.</p>
+            <figcaption class="mrb-quote-author"><b>Имя ученика</b> Band 7.5 · IELTS Intensive</figcaption>
+          </figure>
+        </li>
+        <li class="mrb-result mrb-card">
+          <figure class="mrb-quote">
+            <p class="mrb-quote-text">Текст отзыва ученика — заменить на реальный.</p>
+            <figcaption class="mrb-quote-author"><b>Имя ученика</b> Band 7.0 · IELTS Intensive</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 9. FAQ ============ -->
+  <section class="mrb-section">
+    <div class="mrb-wrap">
+      <div class="mrb-section-head mrb-reveal">
+        <p class="mrb-eyebrow">Вопросы</p>
+        <h2 class="mrb-h2">Что обычно спрашивают</h2>
+      </div>
+
+      <div class="mrb-faq mrb-reveal">
+        <details>
+          <summary>
+            Сколько времени нужно именно мне?
+            <svg class="mrb-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mrb-faq-answer">
+            Зависит от текущего уровня и целевого балла. Вилка честная: от 2–3 месяцев,
+            если база есть, до года и больше с нуля. Назвать точный срок без диагностики
+            невозможно — любой, кто называет, просто продаёт.
+          </p>
+        </details>
+        <details>
+          <summary>
+            Онлайн или офлайн?
+            <svg class="mrb-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mrb-faq-answer">
+            И так, и так. Очно — в Астане на левом берегу, онлайн — из любого города
+            Казахстана. Программа и преподаватель одинаковые, формат выбираешь сам.
+          </p>
+        </details>
+        <details>
+          <summary>
+            Что, если я не наберу нужный балл?
+            <svg class="mrb-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mrb-faq-answer">
+            Балл зависит и от подготовки, и от стартового уровня, поэтому гарантировать
+            конкретную цифру некорректно. Что мы делаем: на диагностике называем реальный
+            срок до цели и не берём на интенсив тех, кому по уровню рано —
+            таким сначала предлагаем Pre-IELTS.
+          </p>
+        </details>
+        <details>
+          <summary>
+            Можно ли начать с нуля?
+            <svg class="mrb-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mrb-faq-answer">
+            Да, но начинать нужно с Pre-IELTS, а не с интенсива. Сначала общий уровень
+            языка, потом экзаменационные стратегии. Иначе время и деньги уйдут впустую.
+          </p>
+        </details>
+        <details>
+          <summary>
+            Как проходит диагностика?
+            <svg class="mrb-faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </summary>
+          <p class="mrb-faq-answer">
+            Это разговор на 30–40 минут: короткие задания на определение уровня,
+            беседа на английском для оценки Speaking, разбор по критериям IELTS.
+            В конце — план подготовки и срок. Бесплатно, без обязательств.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. ФИНАЛЬНЫЙ CTA ============ -->
+  <section class="mrb-section mrb-final">
+    <div class="mrb-wrap">
+      <h2 class="mrb-h2 mrb-reveal">Начни с того, что узнаешь свой реальный уровень</h2>
+      <p class="mrb-lead mrb-reveal">
+        Диагностика бесплатная и ни к чему не обязывает. Даже если не пойдёшь учиться —
+        уйдёшь с планом подготовки и понятным сроком.
+      </p>
+      <div class="mrb-final-cta mrb-reveal">
+        <a class="mrb-btn" href="#popup:diagnostika" data-mrb-cta="final">Записаться на бесплатную диагностику</a>
+        <span class="mrb-final-note">30–40 минут · онлайн или в Астане</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky-панель. Появляется после 40% скролла, только на мобильных. -->
+  <div class="mrb-sticky" id="mrb-sticky" aria-hidden="true">
+    <a class="mrb-btn" href="#popup:diagnostika" tabindex="-1" data-mrb-cta="sticky">Бесплатная диагностика</a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.getElementById('mrb-root');
+  if (!root) return;
+  // Защита от повторной инициализации: редактор Тильды перерисовывает блок.
+  if (root.dataset.mrbInit === '1') return;
+  root.dataset.mrbInit = '1';
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Подстановка заголовка из ?h= для мультилендинга -----------
+     textContent, а не innerHTML — разметка из параметра не исполняется. */
+  try {
+    var q = new URLSearchParams(window.location.search);
+    var slots = { h: '[data-mrb-slot="h1"]', sub: '[data-mrb-slot="sub"]' };
+    Object.keys(slots).forEach(function (key) {
+      var raw = q.get(key);
+      if (!raw) return;                       // нет параметра -> остаётся дефолт из разметки
+      var val = raw.replace(/\s+/g, ' ').trim().slice(0, 160);
+      if (!val) return;
+      var el = root.querySelector(slots[key]);
+      if (el) el.textContent = val;
+    });
+  } catch (e) { /* старый браузер без URLSearchParams — просто остаётся дефолт */ }
+
+  /* --- Появление при скролле ----------------------------------
+     Наблюдаем СЕКЦИИ, а не отдельные элементы. Две причины:
+     1) элемент в горизонтальной ленте (4-й факт в полосе доверия)
+        никогда не попадает в вертикальный вьюпорт и иначе остался бы
+        невидимым навсегда;
+     2) быстрый флик-скролл проскакивает мимо отдельных элементов —
+        секция же гарантированно пересекает экран.
+     motion.csv: «Scope the ScrollTrigger to the section container». */
+  var reveals = root.querySelectorAll('.mrb-reveal');
+  if (reveals.length && !reduced && 'IntersectionObserver' in window) {
+    // Класс ставим только сейчас: до этого момента контент видим (важно для краулеров).
+    root.classList.add('mrb-js');
+
+    var showIn = function (scope) {
+      var items = scope.querySelectorAll('.mrb-reveal');
+      for (var j = 0; j < items.length; j++) {
+        // motion.csv: не растягивать stagger больше ~8 элементов
+        items[j].style.transitionDelay = (Math.min(j, 7) * 60) + 'ms';
+        items[j].classList.add('is-in');
+      }
+    };
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        showIn(entry.target);
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+    var groups = root.querySelectorAll('section');
+    for (var g = 0; g < groups.length; g++) io.observe(groups[g]);
+
+    // Страховка: всё, что осталось скрытым выше текущей позиции скролла,
+    // показываем принудительно — контент не должен теряться ни при каком сценарии.
+    var sweep = function () {
+      var stragglers = root.querySelectorAll('.mrb-reveal:not(.is-in)');
+      for (var k = 0; k < stragglers.length; k++) {
+        var sec = stragglers[k].closest('section');
+        if (sec && sec.getBoundingClientRect().top < window.innerHeight) {
+          stragglers[k].classList.add('is-in');
+        }
+      }
+    };
+    window.addEventListener('scroll', function () {
+      clearTimeout(sweep._t);
+      sweep._t = setTimeout(sweep, 200);
+    }, { passive: true });
+  }
+
+  /* --- Счётчики в полосе доверия ------------------------------ */
+  var counters = root.querySelectorAll('[data-mrb-count]');
+  if (counters.length && !reduced && 'IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        cio.unobserve(el);
+        var target = parseInt(el.getAttribute('data-mrb-count'), 10);
+        if (isNaN(target)) return;
+        var pre = el.getAttribute('data-mrb-prefix') || '';
+        var suf = el.getAttribute('data-mrb-suffix') || '';
+        var start = null, dur = 900;
+        function tick(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + Math.round(target * eased) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    for (var c = 0; c < counters.length; c++) cio.observe(counters[c]);
+  }
+
+  /* --- Sticky-CTA после 40% скролла --------------------------- */
+  var sticky = document.getElementById('mrb-sticky');
+  if (sticky) {
+    var link = sticky.querySelector('a');
+    var shown = false, ticking = false;
+    function setSticky(show) {
+      if (show === shown) return;
+      shown = show;
+      sticky.classList.toggle('is-visible', show);
+      sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+      // Скрытая панель не должна ловить фокус с клавиатуры.
+      if (link) link.tabIndex = show ? 0 : -1;
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        var doc = document.documentElement;
+        var scrollable = doc.scrollHeight - window.innerHeight;
+        if (scrollable <= 0) return setSticky(false);
+        var progress = (window.pageYOffset || doc.scrollTop) / scrollable;
+        // Прячем на финальном экране — там своя кнопка, две подряд мешают.
+        var final = root.querySelector('.mrb-final');
+        var atFinal = final && final.getBoundingClientRect().top < window.innerHeight * 0.8;
+        setSticky(progress >= 0.4 && !atFinal);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* --- Секция «Результаты» схлопывается, пока нет материалов --- */
+  root.querySelectorAll('[data-mrb-collapsible]').forEach(function (section) {
+    if (section.querySelectorAll('.mrb-result').length === 0) {
+      section.style.display = 'none';
+    }
+  });
+})();
+</script>

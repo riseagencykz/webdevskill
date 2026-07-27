@@ -1,0 +1,234 @@
+<!-- ============================================================
+     Mr B Academy — попап без квиза (вариант B, контрольный для А/Б)
+     HTML-блок T123 внутри попапа Тильды с именем `diagnostika-b`.
+
+     Тот же оффер и та же отправка, что и в popup-quiz.html,
+     но без трёх шагов: только имя + WhatsApp.
+     Различает варианты скрытое поле form_variant (quiz | simple).
+     ============================================================ -->
+
+<style>
+.mrbs{
+  --mrbs-teal:#0D9488; --mrbs-ink:#134E4A; --mrbs-body:#334155; --mrbs-muted:#64748B;
+  --mrbs-bg:#FFFFFF; --mrbs-border:#E2E8F0;
+  --mrbs-cta:#C2410C; --mrbs-cta-hover:#9A3412; --mrbs-danger:#DC2626;
+  --mrbs-radius:12px; --mrbs-tap:48px;
+  --mrbs-dur:260ms; --mrbs-ease:cubic-bezier(.22,.61,.36,1);
+
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:400;color:var(--mrbs-body);line-height:1.55;
+  max-width:520px;margin:0 auto;padding:8px 16px;
+  -webkit-font-smoothing:antialiased;
+}
+.mrbs *,.mrbs *::before,.mrbs *::after{box-sizing:border-box;}
+.mrbs button,.mrbs label{touch-action:manipulation;}
+
+.mrbs-title{margin:0 0 8px;font-size:1.375rem;font-weight:800;line-height:1.25;color:var(--mrbs-ink);letter-spacing:-.01em;}
+.mrbs-sub{margin:0 0 24px;font-size:.9375rem;color:var(--mrbs-muted);}
+
+.mrbs-field{margin-bottom:16px;}
+.mrbs-label{display:block;margin-bottom:6px;font-size:.875rem;font-weight:800;color:var(--mrbs-ink);}
+.mrbs-input{
+  display:block;width:100%;min-height:var(--mrbs-tap);padding:12px 16px;
+  font-family:inherit;font-size:1rem;color:var(--mrbs-ink);
+  background:var(--mrbs-bg);border:2px solid var(--mrbs-border);border-radius:var(--mrbs-radius);
+  transition:border-color var(--mrbs-dur) var(--mrbs-ease);
+  -webkit-appearance:none;appearance:none;
+}
+.mrbs-input:focus{outline:none;border-color:var(--mrbs-teal);}
+.mrbs-input:focus-visible{outline:3px solid var(--mrbs-teal);outline-offset:2px;}
+.mrbs-input[aria-invalid="true"]{border-color:var(--mrbs-danger);}
+/* Место под ошибку зарезервировано всегда — иначе её появление
+   сдвигает кнопку вниз (промахи по тапу + CLS). */
+.mrbs-error{
+  display:block;visibility:hidden;min-height:1.15em;
+  margin:6px 0 0;font-size:.8125rem;font-weight:800;color:var(--mrbs-danger);
+}
+.mrbs-error.is-shown{visibility:visible;}
+
+.mrbs-btn{
+  display:flex;align-items:center;justify-content:center;width:100%;
+  min-height:var(--mrbs-tap);padding:14px 24px;margin-top:8px;
+  font-family:inherit;font-size:1.0625rem;font-weight:800;line-height:1.2;
+  color:#fff;background:var(--mrbs-cta);
+  border:none;border-radius:var(--mrbs-radius);cursor:pointer;
+  transition:background var(--mrbs-dur) var(--mrbs-ease),opacity var(--mrbs-dur) var(--mrbs-ease);
+}
+.mrbs-btn:hover:not(:disabled){background:var(--mrbs-cta-hover);}
+.mrbs-btn:disabled{opacity:.6;cursor:not-allowed;}
+.mrbs-btn:focus-visible{outline:3px solid var(--mrbs-teal);outline-offset:3px;}
+
+.mrbs-note{margin:16px 0 0;font-size:.75rem;line-height:1.5;color:var(--mrbs-muted);text-align:center;}
+.mrbs .js-errorbox-all{margin-bottom:16px;}
+.mrbs .js-errorbox-all .t-form__errorbox-item{
+  padding:12px 14px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--mrbs-radius);
+  font-size:.875rem;font-weight:800;color:var(--mrbs-danger);
+}
+@media (prefers-reduced-motion:reduce){
+  .mrbs *,.mrbs *::before,.mrbs *::after{transition-duration:.01ms !important;}
+}
+@media screen and (max-width:480px){
+  .mrbs-title{font-size:1.1875rem;}
+  .mrbs{padding:4px 0;}
+}
+</style>
+
+<div class="mrbs" id="mrbs-root">
+  <h2 class="mrbs-title">Бесплатная диагностика уровня</h2>
+  <p class="mrbs-sub">30–40 минут. Определим уровень по критериям IELTS и соберём план подготовки.</p>
+
+  <form id="mrbs-form"
+        name="mrb-diagnostika-b"
+        role="form"
+        action=""
+        method="POST"
+        class="js-form-proccess t-form"
+        data-formactiontype="2"
+        data-inputbox=".mrbs-field"
+        novalidate>
+
+    <div class="js-errorbox-all t-form__errorbox-middle" style="display:none;">
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-all"></div>
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-req"></div>
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-string"></div>
+    </div>
+
+    <input type="hidden" name="utm_source"   value="">
+    <input type="hidden" name="utm_medium"   value="">
+    <input type="hidden" name="utm_campaign" value="">
+    <input type="hidden" name="utm_content"  value="">
+    <input type="hidden" name="utm_term"     value="">
+    <input type="hidden" name="ttclid"       value="">
+    <input type="hidden" name="page_url"     value="">
+    <input type="hidden" name="form_variant" value="simple">
+
+    <div class="mrbs-field">
+      <label class="mrbs-label" for="mrbs-name">Имя</label>
+      <input class="mrbs-input t-input js-tilda-rule"
+             type="text" id="mrbs-name" name="Name"
+             autocomplete="name" data-tilda-req="1" data-mrbs-req="1"
+             placeholder="Как к тебе обращаться">
+      <p class="mrbs-error" data-mrbs-error-for="mrbs-name">Напиши имя</p>
+    </div>
+
+    <div class="mrbs-field">
+      <label class="mrbs-label" for="mrbs-phone">WhatsApp</label>
+      <input class="mrbs-input t-input js-tilda-rule"
+             type="tel" id="mrbs-phone" name="Phone"
+             inputmode="tel" autocomplete="tel"
+             data-tilda-req="1" data-mrbs-req="1" data-tilda-rule="phone"
+             value="+7 (___) ___-__-__">
+      <p class="mrbs-error" data-mrbs-error-for="mrbs-phone">Введи номер полностью</p>
+    </div>
+
+    <button type="submit" class="mrbs-btn t-submit" id="mrbs-submit">Записаться на диагностику</button>
+
+    <p class="mrbs-note">
+      Нажимая кнопку, ты соглашаешься на обработку персональных данных.
+      Диагностика бесплатная и ни к чему не обязывает.
+    </p>
+  </form>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.getElementById('mrbs-root');
+  if (!root || root.dataset.mrbsInit === '1') return;
+  root.dataset.mrbsInit = '1';
+
+  var form   = document.getElementById('mrbs-form');
+  var submit = document.getElementById('mrbs-submit');
+
+  /* --- UTM / ttclid / адрес страницы --- */
+  try {
+    var q = new URLSearchParams(window.location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'].forEach(function (k) {
+      var field = form.querySelector('input[name="' + k + '"]');
+      if (!field) return;
+      var val = q.get(k) || '';
+      try {
+        if (val) sessionStorage.setItem('mrb_' + k, val);
+        else val = sessionStorage.getItem('mrb_' + k) || '';
+      } catch (e) {}
+      field.value = val;
+    });
+    var pageField = form.querySelector('input[name="page_url"]');
+    if (pageField) pageField.value = window.location.href.slice(0, 500);
+  } catch (e) {}
+
+  function fieldValid(input) {
+    var val = (input.value || '').trim();
+    var good = input.type === 'tel'
+      ? val.replace(/\D/g, '').length === 11
+      : val.length > 0;
+    input.setAttribute('aria-invalid', good ? 'false' : 'true');
+    var err = root.querySelector('[data-mrbs-error-for="' + input.id + '"]');
+    if (err) err.classList.toggle('is-shown', !good);
+    return good;
+  }
+
+  root.addEventListener('blur', function (e) {
+    if (e.target.matches && e.target.matches('input[data-mrbs-req]')) fieldValid(e.target);
+  }, true);
+
+  /* --- Маска телефона --- */
+  var phone = document.getElementById('mrbs-phone');
+  if (phone) {
+    var TPL = '+7 (___) ___-__-__';
+    function maskValue(digits) {
+      var out = '', di = 0;
+      for (var i = 0; i < TPL.length; i++) {
+        if (TPL[i] === '_') out += di < digits.length ? digits[di++] : '_';
+        else out += TPL[i];
+      }
+      return out;
+    }
+    function caretPos(el) { var idx = el.value.indexOf('_'); return idx === -1 ? el.value.length : idx; }
+    phone.addEventListener('focus', function () {
+      if (!phone.value) phone.value = TPL;
+      requestAnimationFrame(function () { var p = caretPos(phone); phone.setSelectionRange(p, p); });
+    });
+    /* См. комментарий в popup-quiz.html: сначала снимаем «7» префикса +7,
+       затем «8» (междугородний). Ведущая «7» номера остаётся —
+       коды операторов РК начинаются с семёрки (701, 707, 747, 775). */
+    function subscriberDigits(value) {
+      var d = value.replace(/\D/g, '');
+      if (d.charAt(0) === '7') d = d.slice(1);
+      if (d.charAt(0) === '8') d = d.slice(1);
+      return d.slice(0, 10);
+    }
+    phone.addEventListener('input', function () {
+      phone.value = maskValue(subscriberDigits(phone.value));
+      var p = caretPos(phone);
+      phone.setSelectionRange(p, p);
+    });
+    phone.addEventListener('click', function () { var p = caretPos(phone); phone.setSelectionRange(p, p); });
+    phone.addEventListener('blur', function () { if (phone.value === TPL) phone.value = ''; });
+  }
+
+  form.addEventListener('submit', function (e) {
+    var ok = true;
+    form.querySelectorAll('input[data-mrbs-req]').forEach(function (i) { if (!fieldValid(i)) ok = false; });
+    if (!ok) { e.preventDefault(); e.stopPropagation(); return; }
+    submit.disabled = true;
+    submit.textContent = 'Отправляем…';
+    setTimeout(function () {
+      if (document.body.contains(submit)) {
+        submit.disabled = false;
+        submit.textContent = 'Записаться на диагностику';
+      }
+    }, 6000);
+  });
+
+  var tries = 0;
+  (function initTilda() {
+    if (window.tildaForm && typeof window.tildaForm.init === 'function') {
+      try { window.tildaForm.init(form); } catch (e) {}
+      return;
+    }
+    if (++tries < 40) setTimeout(initTilda, 150);
+  })();
+})();
+</script>

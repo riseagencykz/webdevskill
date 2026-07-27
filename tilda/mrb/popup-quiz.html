@@ -1,0 +1,497 @@
+<!-- ============================================================
+     Mr B Academy — попап-квиз (вариант A, основной)
+     HTML-блок T123 ВНУТРИ попап-блока Тильды с именем `diagnostika`.
+
+     3 шага по одному вопросу + контакты. Ответы уходят в AmoCRM
+     полями через штатную форму Тильды — своего сабмита здесь нет.
+
+     ВАЖНО: разметка формы воспроизводит структуру Тильды
+     (js-form-proccess, data-formactiontype, t-input, js-tilda-rule).
+     Отправка работает ТОЛЬКО на опубликованной странице —
+     в превью и в редакторе tildaForm не инициализирован.
+     ============================================================ -->
+
+<style>
+.mrbq{
+  --mrbq-teal:#0D9488; --mrbq-teal-dark:#0F766E;
+  --mrbq-ink:#134E4A; --mrbq-body:#334155; --mrbq-muted:#64748B;
+  --mrbq-bg:#FFFFFF; --mrbq-surface:#F0FDFA; --mrbq-border:#E2E8F0;
+  --mrbq-cta:#C2410C; --mrbq-cta-hover:#9A3412;
+  --mrbq-danger:#DC2626;
+  --mrbq-radius:12px;
+  --mrbq-tap:48px;
+  --mrbq-dur:260ms; --mrbq-ease:cubic-bezier(.22,.61,.36,1);
+
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:400;color:var(--mrbq-body);line-height:1.55;
+  max-width:520px;margin:0 auto;padding:8px 16px;
+  -webkit-font-smoothing:antialiased;
+}
+/* Заголовок шага получает фокус программно — только чтобы скринридер
+   объявил новый вопрос. Рамку фокуса здесь показывать не нужно:
+   это не интерактивный элемент и с клавиатуры на него не попасть. */
+.mrbq-q:focus{outline:none;}
+.mrbq *,.mrbq *::before,.mrbq *::after{box-sizing:border-box;}
+.mrbq a,.mrbq button,.mrbq label{touch-action:manipulation;}
+
+/* --- Прогресс --- */
+.mrbq-progress{margin-bottom:24px;}
+.mrbq-progress-bar{height:4px;background:var(--mrbq-border);border-radius:999px;overflow:hidden;}
+.mrbq-progress-fill{
+  height:100%;width:25%;background:var(--mrbq-teal);border-radius:999px;
+  transition:width var(--mrbq-dur) var(--mrbq-ease);
+}
+.mrbq-progress-text{
+  display:block;margin-top:8px;font-size:.75rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--mrbq-muted);
+}
+
+/* --- Шаги --- */
+.mrbq-step{display:none;}
+.mrbq-step.is-active{display:block;}
+.mrbq-q{
+  margin:0 0 20px;font-size:1.375rem;font-weight:800;line-height:1.25;
+  color:var(--mrbq-ink);letter-spacing:-.01em;
+}
+.mrbq-hint{margin:-12px 0 20px;font-size:.875rem;color:var(--mrbq-muted);}
+
+/* --- Варианты ответа --- */
+.mrbq-options{display:flex;flex-direction:column;gap:10px;margin:0 0 24px;padding:0;list-style:none;border:0;}
+.mrbq-options legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.mrbq-option{position:relative;display:block;}
+.mrbq-option input{
+  position:absolute;opacity:0;width:1px;height:1px;
+}
+.mrbq-option span{
+  display:flex;align-items:center;gap:12px;
+  min-height:var(--mrbq-tap);padding:14px 16px;
+  background:var(--mrbq-bg);border:2px solid var(--mrbq-border);border-radius:var(--mrbq-radius);
+  font-size:1rem;font-weight:800;color:var(--mrbq-ink);
+  cursor:pointer;
+  transition:border-color var(--mrbq-dur) var(--mrbq-ease),background var(--mrbq-dur) var(--mrbq-ease);
+}
+.mrbq-option span::before{
+  content:'';flex:0 0 auto;width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--mrbq-border);
+  transition:border-color var(--mrbq-dur) var(--mrbq-ease),box-shadow var(--mrbq-dur) var(--mrbq-ease);
+}
+.mrbq-option:hover span{border-color:var(--mrbq-teal);background:var(--mrbq-surface);}
+.mrbq-option input:checked+span{border-color:var(--mrbq-teal);background:var(--mrbq-surface);}
+.mrbq-option input:checked+span::before{
+  border-color:var(--mrbq-teal);box-shadow:inset 0 0 0 4px var(--mrbq-teal);
+}
+.mrbq-option input:focus-visible+span{outline:3px solid var(--mrbq-teal);outline-offset:3px;}
+
+/* --- Поля контактов --- */
+.mrbq-field{margin-bottom:16px;}
+.mrbq-label{display:block;margin-bottom:6px;font-size:.875rem;font-weight:800;color:var(--mrbq-ink);}
+.mrbq-input{
+  display:block;width:100%;min-height:var(--mrbq-tap);
+  padding:12px 16px;
+  font-family:inherit;font-size:1rem;color:var(--mrbq-ink);
+  background:var(--mrbq-bg);border:2px solid var(--mrbq-border);border-radius:var(--mrbq-radius);
+  transition:border-color var(--mrbq-dur) var(--mrbq-ease);
+  -webkit-appearance:none;appearance:none;
+}
+.mrbq-input:focus{outline:none;border-color:var(--mrbq-teal);}
+.mrbq-input:focus-visible{outline:3px solid var(--mrbq-teal);outline-offset:2px;}
+.mrbq-input[aria-invalid="true"]{border-color:var(--mrbq-danger);}
+/* Место под ошибку зарезервировано всегда: иначе её появление
+   сдвигает кнопки вниз — пользователь промахивается по тапу, растёт CLS. */
+.mrbq-error{
+  display:block;visibility:hidden;min-height:1.15em;
+  margin:6px 0 0;font-size:.8125rem;font-weight:800;color:var(--mrbq-danger);
+}
+.mrbq-error.is-shown{visibility:visible;}
+
+/* --- Кнопки --- */
+.mrbq-actions{display:flex;gap:10px;align-items:center;}
+.mrbq-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:var(--mrbq-tap);padding:14px 24px;flex:1 1 auto;
+  font-family:inherit;font-size:1.0625rem;font-weight:800;line-height:1.2;
+  color:#fff;background:var(--mrbq-cta);
+  border:none;border-radius:var(--mrbq-radius);cursor:pointer;
+  transition:background var(--mrbq-dur) var(--mrbq-ease),opacity var(--mrbq-dur) var(--mrbq-ease);
+}
+.mrbq-btn:hover:not(:disabled){background:var(--mrbq-cta-hover);}
+.mrbq-btn:disabled{opacity:.6;cursor:not-allowed;}
+.mrbq-btn:focus-visible{outline:3px solid var(--mrbq-teal);outline-offset:3px;}
+.mrbq-back{
+  flex:0 0 auto;min-height:var(--mrbq-tap);padding:14px 18px;
+  font-family:inherit;font-size:.9375rem;font-weight:800;
+  color:var(--mrbq-muted);background:transparent;
+  border:2px solid var(--mrbq-border);border-radius:var(--mrbq-radius);cursor:pointer;
+  transition:border-color var(--mrbq-dur) var(--mrbq-ease),color var(--mrbq-dur) var(--mrbq-ease);
+}
+.mrbq-back:hover{border-color:var(--mrbq-teal);color:var(--mrbq-ink);}
+.mrbq-back:focus-visible{outline:3px solid var(--mrbq-teal);outline-offset:3px;}
+
+.mrbq-note{margin:16px 0 0;font-size:.75rem;line-height:1.5;color:var(--mrbq-muted);text-align:center;}
+
+/* Общий блок ошибок Тильды */
+.mrbq .js-errorbox-all{margin-bottom:16px;}
+.mrbq .js-errorbox-all .t-form__errorbox-item{
+  padding:12px 14px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--mrbq-radius);
+  font-size:.875rem;font-weight:800;color:var(--mrbq-danger);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mrbq *,.mrbq *::before,.mrbq *::after{transition-duration:.01ms !important;}
+}
+@media screen and (max-width:480px){
+  .mrbq-q{font-size:1.1875rem;}
+  .mrbq{padding:4px 0;}
+}
+</style>
+
+<div class="mrbq" id="mrbq-root">
+
+  <div class="mrbq-progress">
+    <div class="mrbq-progress-bar">
+      <div class="mrbq-progress-fill" id="mrbq-fill"></div>
+    </div>
+    <span class="mrbq-progress-text" id="mrbq-step-text">Шаг 1 из 4</span>
+  </div>
+
+  <!-- Разметка формы Тильды. ID/имя менять вместе с настройками формы в Тильде. -->
+  <form id="mrbq-form"
+        name="mrb-diagnostika"
+        role="form"
+        action=""
+        method="POST"
+        class="js-form-proccess t-form"
+        data-formactiontype="2"
+        data-inputbox=".mrbq-field"
+        novalidate>
+
+    <!-- Общий контейнер ошибок Тильды -->
+    <div class="js-errorbox-all t-form__errorbox-middle" style="display:none;">
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-all"></div>
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-req"></div>
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-email"></div>
+      <div class="t-form__errorbox-item js-rule-error js-rule-error-string"></div>
+    </div>
+
+    <!-- ===== Скрытые поля: UTM, ttclid, страница ===== -->
+    <input type="hidden" name="utm_source"   value="">
+    <input type="hidden" name="utm_medium"   value="">
+    <input type="hidden" name="utm_campaign" value="">
+    <input type="hidden" name="utm_content"  value="">
+    <input type="hidden" name="utm_term"     value="">
+    <input type="hidden" name="ttclid"       value="">
+    <input type="hidden" name="page_url"     value="">
+    <input type="hidden" name="form_variant" value="quiz">
+
+    <!-- ===== Шаг 1: цель ===== -->
+    <div class="mrbq-step is-active" data-mrbq-step="1">
+      <h2 class="mrbq-q">Какая у тебя цель?</h2>
+      <fieldset class="mrbq-options">
+        <legend>Цель</legend>
+        <label class="mrbq-option">
+          <input type="radio" name="Цель" value="Сдать IELTS" data-mrbq-req="1">
+          <span>Сдать IELTS</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Цель" value="Поступить за рубеж">
+          <span>Поступить за рубеж</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Цель" value="Работа и переезд">
+          <span>Работа и переезд</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Цель" value="Для себя">
+          <span>Для себя</span>
+        </label>
+      </fieldset>
+      <div class="mrbq-actions">
+        <button type="button" class="mrbq-btn" data-mrbq-next>Дальше</button>
+      </div>
+    </div>
+
+    <!-- ===== Шаг 2: срок ===== -->
+    <div class="mrbq-step" data-mrbq-step="2">
+      <h2 class="mrbq-q">Когда нужен результат?</h2>
+      <fieldset class="mrbq-options">
+        <legend>Срок</legend>
+        <label class="mrbq-option">
+          <input type="radio" name="Срок" value="В течение 1-3 месяцев" data-mrbq-req="1">
+          <span>В течение 1–3 месяцев</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Срок" value="3-6 месяцев">
+          <span>3–6 месяцев</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Срок" value="Позже">
+          <span>Позже</span>
+        </label>
+      </fieldset>
+      <div class="mrbq-actions">
+        <button type="button" class="mrbq-back" data-mrbq-back>Назад</button>
+        <button type="button" class="mrbq-btn" data-mrbq-next>Дальше</button>
+      </div>
+    </div>
+
+    <!-- ===== Шаг 3: уровень ===== -->
+    <div class="mrbq-step" data-mrbq-step="3">
+      <h2 class="mrbq-q">Какой сейчас уровень?</h2>
+      <p class="mrbq-hint">Отвечай как есть — от этого зависит, какой трек предложим.</p>
+      <fieldset class="mrbq-options">
+        <legend>Уровень</legend>
+        <label class="mrbq-option">
+          <input type="radio" name="Уровень" value="С нуля" data-mrbq-req="1">
+          <span>С нуля</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Уровень" value="Базовый">
+          <span>Базовый</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Уровень" value="Средний">
+          <span>Средний</span>
+        </label>
+        <label class="mrbq-option">
+          <input type="radio" name="Уровень" value="Уже сдавал IELTS">
+          <span>Уже сдавал IELTS</span>
+        </label>
+      </fieldset>
+      <div class="mrbq-actions">
+        <button type="button" class="mrbq-back" data-mrbq-back>Назад</button>
+        <button type="button" class="mrbq-btn" data-mrbq-next>Дальше</button>
+      </div>
+    </div>
+
+    <!-- ===== Шаг 4: контакты ===== -->
+    <div class="mrbq-step" data-mrbq-step="4">
+      <h2 class="mrbq-q">Куда отправить план подготовки?</h2>
+      <p class="mrbq-hint">Свяжемся в WhatsApp и подберём время диагностики.</p>
+
+      <div class="mrbq-field">
+        <label class="mrbq-label" for="mrbq-name">Имя</label>
+        <input class="mrbq-input t-input js-tilda-rule"
+               type="text"
+               id="mrbq-name"
+               name="Name"
+               autocomplete="name"
+               data-tilda-req="1"
+               data-mrbq-req="1"
+               placeholder="Как к тебе обращаться">
+        <p class="mrbq-error" data-mrbq-error-for="mrbq-name">Напиши имя</p>
+      </div>
+
+      <div class="mrbq-field">
+        <label class="mrbq-label" for="mrbq-phone">WhatsApp</label>
+        <input class="mrbq-input t-input js-tilda-rule"
+               type="tel"
+               id="mrbq-phone"
+               name="Phone"
+               inputmode="tel"
+               autocomplete="tel"
+               data-tilda-req="1"
+               data-mrbq-req="1"
+               data-tilda-rule="phone"
+               value="+7 (___) ___-__-__">
+        <p class="mrbq-error" data-mrbq-error-for="mrbq-phone">Введи номер полностью</p>
+      </div>
+
+      <div class="mrbq-actions">
+        <button type="button" class="mrbq-back" data-mrbq-back>Назад</button>
+        <button type="submit" class="mrbq-btn t-submit" id="mrbq-submit">Записаться на диагностику</button>
+      </div>
+
+      <p class="mrbq-note">
+        Нажимая кнопку, ты соглашаешься на обработку персональных данных.
+        Диагностика бесплатная и ни к чему не обязывает.
+      </p>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.getElementById('mrbq-root');
+  if (!root || root.dataset.mrbqInit === '1') return;
+  root.dataset.mrbqInit = '1';
+
+  var form   = document.getElementById('mrbq-form');
+  var steps  = [].slice.call(root.querySelectorAll('.mrbq-step'));
+  var fill   = document.getElementById('mrbq-fill');
+  var label  = document.getElementById('mrbq-step-text');
+  var submit = document.getElementById('mrbq-submit');
+  var total  = steps.length;
+  var current = 0;
+
+  /* ---------- Скрытые поля: UTM, ttclid, адрес страницы ---------- */
+  try {
+    var q = new URLSearchParams(window.location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'].forEach(function (k) {
+      var field = form.querySelector('input[name="' + k + '"]');
+      if (!field) return;
+      // ttclid TikTok кладёт в ?ttclid=, но он может потеряться при переходах —
+      // поэтому дублируем в sessionStorage и восстанавливаем оттуда.
+      var val = q.get(k) || '';
+      try {
+        if (val) sessionStorage.setItem('mrb_' + k, val);
+        else val = sessionStorage.getItem('mrb_' + k) || '';
+      } catch (e) {}
+      field.value = val;
+    });
+    var pageField = form.querySelector('input[name="page_url"]');
+    if (pageField) pageField.value = window.location.href.slice(0, 500);
+  } catch (e) {}
+
+  /* ---------- Навигация по шагам ---------- */
+  function render() {
+    steps.forEach(function (s, i) { s.classList.toggle('is-active', i === current); });
+    fill.style.width = Math.round(((current + 1) / total) * 100) + '%';
+    label.textContent = 'Шаг ' + (current + 1) + ' из ' + total;
+    // Фокус на заголовок шага — иначе при переключении фокус остаётся на кнопке.
+    var q = steps[current].querySelector('.mrbq-q');
+    if (q) { q.setAttribute('tabindex', '-1'); q.focus({ preventScroll: true }); }
+  }
+
+  function stepValid(idx) {
+    var step = steps[idx];
+    // Радиогруппа: помечена data-mrbq-req на первом варианте
+    var radio = step.querySelector('input[type="radio"][data-mrbq-req]');
+    if (radio) {
+      var name = radio.getAttribute('name');
+      return !!form.querySelector('input[name="' + name + '"]:checked');
+    }
+    // Текстовые поля последнего шага
+    var ok = true;
+    step.querySelectorAll('input[data-mrbq-req]').forEach(function (input) {
+      if (!fieldValid(input)) ok = false;
+    });
+    return ok;
+  }
+
+  function fieldValid(input) {
+    var val = (input.value || '').trim();
+    var good = input.type === 'tel'
+      ? val.replace(/\D/g, '').length === 11   // 7XXXXXXXXXX
+      : val.length > 0;
+    input.setAttribute('aria-invalid', good ? 'false' : 'true');
+    var err = root.querySelector('[data-mrbq-error-for="' + input.id + '"]');
+    if (err) err.classList.toggle('is-shown', !good);
+    return good;
+  }
+
+  root.addEventListener('click', function (e) {
+    var next = e.target.closest('[data-mrbq-next]');
+    var back = e.target.closest('[data-mrbq-back]');
+    if (next) {
+      if (!stepValid(current)) {
+        // Подсветить незаполненное, но не блокировать грубо
+        steps[current].querySelectorAll('input[data-mrbq-req]').forEach(fieldValid);
+        var group = steps[current].querySelector('.mrbq-options');
+        if (group) {
+          group.animate(
+            [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' },
+             { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }],
+            { duration: 240 }
+          );
+        }
+        return;
+      }
+      if (current < total - 1) { current++; render(); }
+    }
+    if (back && current > 0) { current--; render(); }
+  });
+
+  // Выбрал вариант — сразу дальше. Экономит тап на холодном трафике.
+  root.addEventListener('change', function (e) {
+    if (e.target.type !== 'radio') return;
+    if (current >= total - 1) return;
+    setTimeout(function () { if (stepValid(current)) { current++; render(); } }, 180);
+  });
+
+  // ux-guidelines.csv -> Inline Validation: проверяем на blur, а не только на сабмите
+  root.addEventListener('blur', function (e) {
+    if (e.target.matches && e.target.matches('input[data-mrbq-req]')) fieldValid(e.target);
+  }, true);
+
+  /* ---------- Маска телефона +7 (___) ___-__-__ ---------- */
+  var phone = document.getElementById('mrbq-phone');
+  if (phone) {
+    var TPL = '+7 (___) ___-__-__';
+    function maskValue(digits) {
+      // digits — без ведущей 7
+      var out = '', di = 0;
+      for (var i = 0; i < TPL.length; i++) {
+        if (TPL[i] === '_') { out += di < digits.length ? digits[di++] : '_'; }
+        else out += TPL[i];
+      }
+      return out;
+    }
+    function caretPos(el) {
+      var v = el.value, idx = v.indexOf('_');
+      return idx === -1 ? v.length : idx;
+    }
+    /* Достаём 10 цифр абонентской части.
+       Порядок проверок важен: сначала снимаем «7» нашего же префикса +7,
+       затем «8» — междугородний префикс, который многие набирают по привычке.
+       Ведущую «7» самого номера трогать нельзя: коды операторов РК —
+       701, 707, 747, 775 и т.д., то есть начинаются именно с семёрки. */
+    function subscriberDigits(value) {
+      var d = value.replace(/\D/g, '');
+      if (d.charAt(0) === '7') d = d.slice(1);
+      if (d.charAt(0) === '8') d = d.slice(1);
+      return d.slice(0, 10);
+    }
+    function onInput() {
+      phone.value = maskValue(subscriberDigits(phone.value));
+      var p = caretPos(phone);
+      phone.setSelectionRange(p, p);
+    }
+    phone.addEventListener('focus', function () {
+      if (!phone.value) phone.value = TPL;
+      requestAnimationFrame(function () { var p = caretPos(phone); phone.setSelectionRange(p, p); });
+    });
+    phone.addEventListener('input', onInput);
+    phone.addEventListener('click', function () { var p = caretPos(phone); phone.setSelectionRange(p, p); });
+    phone.addEventListener('blur', function () {
+      if (phone.value === TPL) phone.value = '';
+    });
+  }
+
+  /* ---------- Отправка ----------
+     Сабмит выполняет Тильда (js-form-proccess). Мы только не пускаем
+     заведомо невалидную форму и переводим кнопку в состояние отправки. */
+  form.addEventListener('submit', function (e) {
+    if (!stepValid(total - 1)) {
+      e.preventDefault();
+      e.stopPropagation();
+      steps[total - 1].querySelectorAll('input[data-mrbq-req]').forEach(fieldValid);
+      return;
+    }
+    submit.disabled = true;
+    submit.textContent = 'Отправляем…';
+    // Если Тильда вернёт ошибку и оставит нас на странице — вернуть кнопку.
+    setTimeout(function () {
+      if (document.body.contains(submit)) {
+        submit.disabled = false;
+        submit.textContent = 'Записаться на диагностику';
+      }
+    }, 6000);
+  });
+
+  /* ---------- Инициализация формы Тильды ----------
+     На опубликованной странице tildaForm появляется не мгновенно. */
+  var tries = 0;
+  (function initTilda() {
+    if (window.tildaForm && typeof window.tildaForm.init === 'function') {
+      try { window.tildaForm.init(form); } catch (e) {}
+      return;
+    }
+    if (++tries < 40) setTimeout(initTilda, 150);
+  })();
+
+  render();
+})();
+</script>
