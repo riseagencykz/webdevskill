@@ -104,6 +104,10 @@
 .mrb-hero-note{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--mrb-muted-fg);}
 .mrb-hero-note svg{flex:0 0 auto;color:var(--mrb-teal);}
 
+/* ЗАПОЛНИТЬ: подсветка мест, где нужно проставить цену диагностики.
+   После замены удалить класс mrb-fill вместе с этим правилом. */
+.mrb-fill{background:#FEF3C7;padding:0 6px;border-radius:4px;color:#92400E;font-weight:800;}
+
 /* Полоса доверия — часть первого экрана */
 .mrb-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0;margin:36px 0 0;list-style:none;}
 .mrb-trust-item{background:rgba(255,255,255,.7);border:1px solid var(--mrb-border-teal);border-radius:var(--mrb-radius-sm);padding:14px 12px;text-align:center;}
@@ -213,26 +217,26 @@
       <h1 class="mrb-h1" data-mrb-slot="h1">Сдать IELTS на нужный балл — за 10 недель</h1>
 
       <p class="mrb-hero-sub" data-mrb-slot="sub">
-        Преподаватель с опытом 15+ лет и экзаменаторским бэкграундом
-        Cambridge Assessment. Мини-группы до 6 человек.
+        Ментор школы — Бекжан, экс-главный экзаменатор сети НИШ.
+        Преподаватели работают по его методике, мини-группы до 6 человек.
       </p>
 
       <div class="mrb-hero-cta">
-        <a class="mrb-btn" href="#popup:myform">Записаться на бесплатную диагностику</a>
+        <a class="mrb-btn" href="#popup:myform">Записаться на диагностику уровня</a>
         <span class="mrb-hero-note">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-          30–40 минут, бесплатно, без обязательств
+          30–40 минут · <span class="mrb-fill">ЦЕНА</span> ₸ · с планом подготовки
         </span>
       </div>
 
       <ul class="mrb-trust">
         <li class="mrb-trust-item">
-          <span class="mrb-trust-num" data-mrb-count="15" data-mrb-suffix="+">15+</span>
-          <span class="mrb-trust-label">лет преподавания</span>
+          <span class="mrb-trust-num">НИШ</span>
+          <span class="mrb-trust-label">экс-главный экзаменатор сети</span>
         </li>
         <li class="mrb-trust-item">
           <span class="mrb-trust-num">Cambridge</span>
-          <span class="mrb-trust-label">экзаменаторский бэкграунд</span>
+          <span class="mrb-trust-label">экзаменаторский бэкграунд ментора</span>
         </li>
         <li class="mrb-trust-item">
           <span class="mrb-trust-num" data-mrb-count="6" data-mrb-prefix="до ">до 6</span>
@@ -251,8 +255,8 @@
     <div class="mrb-wrap">
       <div class="mrb-section-head mrb-reveal">
         <p class="mrb-eyebrow">Главное</p>
-        <h2 class="mrb-h2">Что даёт бесплатная диагностика</h2>
-        <p class="mrb-lead">Это не пробный урок и не презентация курса. Это разбор твоего уровня по критериям IELTS.</p>
+        <h2 class="mrb-h2">Что даёт диагностика уровня</h2>
+        <p class="mrb-lead">Это не пробный урок и не продающий созвон. Это платный разбор твоего уровня по критериям IELTS — с готовым планом на выходе.</p>
       </div>
 
       <div class="mrb-card mrb-reveal">
@@ -264,7 +268,7 @@
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
           <div><p class="mrb-check-title">Покажем, где именно теряются баллы</p>
-          <p class="mrb-check-desc">Разбор с позиции экзаменатора: что снижает оценку в Speaking и Writing.</p></div>
+          <p class="mrb-check-desc">Разбор по тем же критериям, по которым работают экзаменаторы: что снижает оценку в Speaking и Writing.</p></div>
         </div>
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
@@ -273,10 +277,19 @@
         </div>
 
         <ul class="mrb-terms">
-          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Бесплатно</li>
           <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>30–40 минут</li>
+          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg><span class="mrb-fill">ЦЕНА</span>&nbsp;₸</li>
           <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Без обязательств</li>
         </ul>
+
+        <!-- Замена снятия риска: раньше его держало слово «бесплатно».
+             Для платной диагностики работает объяснение, за что берут деньги. -->
+        <p class="mrb-small" style="margin-top:20px;">
+          Диагностика платная, потому что это полноценная работа преподавателя
+          по экзаменаторской методике, а не разговор ради продажи курса.
+          План подготовки остаётся у тебя в любом случае — даже если учиться
+          пойдёшь не к нам.
+        </p>
       </div>
 
       <!-- Цены показываем: отсекают «ищу бесплатно» и работают на квал -->
@@ -295,7 +308,7 @@
 
       <div class="mrb-card mrb-card--tint mrb-reveal" style="margin-top:16px;">
         <p class="mrb-p" style="font-weight:800;color:#134E4A;margin-bottom:16px;">
-          Какой трек нужен именно тебе — определяется на диагностике. Она бесплатная.
+          Какой трек нужен именно тебе — определяется на диагностике.
         </p>
         <a class="mrb-btn mrb-btn--full" href="#popup:myform">Подобрать трек на диагностике</a>
       </div>
@@ -309,31 +322,47 @@
         <div class="mrb-expert-photo mrb-reveal">
           <img class="mrb-expert-img"
                src="https://optim.tildacdn.pro/tild3161-3431-4662-a561-343762663430/-/format/webp/9cc2575e61ca02fe4937.jpeg.webp"
-               alt="Преподаватель Mr B Academy"
+               alt="Бекжан, ментор Mr B Academy"
                loading="lazy" decoding="async">
           <!-- Запасной силуэт: показывается, только если фото не загрузилось,
                чтобы вместо блока не осталась иконка битой картинки. -->
           <svg class="mrb-expert-fallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="display:none;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
         </div>
         <div class="mrb-reveal">
-          <p class="mrb-eyebrow">Кто ведёт</p>
-          <h2 class="mrb-h2">Преподаватель, который сам оценивал экзамен</h2>
-          <p class="mrb-lead">Разница между «знает английский» и «знает, как его оценивают на IELTS» — это и есть разница в баллах. Подготовка строится с позиции экзаменатора: видно не только ошибку, но и то, сколько она стоит.</p>
+          <p class="mrb-eyebrow">Ментор школы</p>
+          <h2 class="mrb-h2">Бекжан — человек, который сам оценивал экзамен</h2>
+          <p class="mrb-lead">Разница между «знает английский» и «знает, как его оценивают на IELTS» — это и есть разница в баллах. Бекжан выстроил программу школы с позиции экзаменатора и готовит преподавателей, которые по ней работают.</p>
           <ul class="mrb-expert-facts">
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Более 15 лет преподавания английского и подготовки к международным экзаменам</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Был главным экзаменатором по всей сети Назарбаев Интеллектуальных школ (НИШ)</span></li>
             <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Экзаменаторский бэкграунд Cambridge Assessment</span></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Мини-группы до 6 человек — каждый успевает говорить на занятии</span></li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Очно в Астане на левом берегу и онлайн по всему Казахстану</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Более 15 лет преподавания и подготовки к международным экзаменам</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Готовит преподавателей школы и задаёт стандарт разбора</span></li>
           </ul>
         </div>
       </div>
 
+      <!-- Кто работает с учениками. Блок важен для честности: занятия и
+           диагностику ведёт команда, а не лично ментор. -->
+      <div class="mrb-card mrb-card--tint mrb-reveal" style="margin-top:32px;">
+        <h3 class="mrb-h3">Кто работает с тобой</h3>
+        <p class="mrb-p">
+          Диагностику и занятия ведут преподаватели школы — те, кого Бекжан
+          готовит и чью работу проверяет. Программа, критерии оценки и формат
+          разбора у всех одинаковые, поэтому результат не зависит от того,
+          к кому ты попал в группу.
+        </p>
+        <ul class="mrb-expert-facts" style="margin-top:12px;">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Мини-группы до 6 человек — каждый успевает говорить на занятии</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Очно в Астане на левом берегу и онлайн по всему Казахстану</span></li>
+        </ul>
+      </div>
+
       <div class="mrb-final mrb-reveal">
         <h3 class="mrb-h3">Начни с того, что узнаешь свой реальный уровень</h3>
-        <p>Диагностика бесплатная и ни к чему не обязывает. Даже если не пойдёшь учиться — уйдёшь с планом подготовки и понятным сроком.</p>
+        <p>Диагностика ни к чему не обязывает. Даже если не пойдёшь учиться — уйдёшь с планом подготовки и понятным сроком.</p>
         <div class="mrb-final-cta">
-          <a class="mrb-btn" href="#popup:myform">Записаться на бесплатную диагностику</a>
-          <span class="mrb-final-note">30–40 минут · онлайн или в Астане</span>
+          <a class="mrb-btn" href="#popup:myform">Записаться на диагностику уровня</a>
+          <span class="mrb-final-note">30–40 минут · <span class="mrb-fill">ЦЕНА</span> ₸ · онлайн или в Астане</span>
         </div>
       </div>
     </div>
@@ -356,7 +385,7 @@
 
   <!-- Sticky-панель, появляется после 40% скролла. Только мобильные. -->
   <div class="mrb-sticky" id="mrb-sticky" aria-hidden="true">
-    <a class="mrb-btn" href="#popup:myform" tabindex="-1">Бесплатная диагностика</a>
+    <a class="mrb-btn" href="#popup:myform" tabindex="-1">Записаться на диагностику</a>
   </div>
 
 </div>
