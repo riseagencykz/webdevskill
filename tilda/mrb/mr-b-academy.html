@@ -90,22 +90,28 @@
     linear-gradient(180deg,var(--mrb-surface) 0%,var(--mrb-bg) 100%);
   padding-top:clamp(28px,7vw,64px);padding-bottom:clamp(28px,6vw,48px);
 }
-/* Строка логотипа вычитается из высоты центрируемой части, иначе первый
-   экран перестал бы умещаться в 390×844 — запас там всего сорок пикселей. */
-.mrb-hero{--mrb-logo-row:62px;}
+/* ===== Логотип =====
+   РАЗМЕР ЛОГОТИПА МЕНЯЕТСЯ ЗДЕСЬ, одним числом.
+   --mrb-logo-h — высота логотипа. Ширина считается сама по пропорциям
+   файла, поэтому трогать её не нужно.
+   Всё остальное (отступ снизу и высота первого экрана) пересчитывается
+   автоматически — иначе экран перестал бы умещаться в 390×844. */
+.mrb-hero{
+  --mrb-logo-h:42px;                                   /* десктоп */
+  --mrb-logo-row:calc(var(--mrb-logo-h) + 20px);
+}
+@media screen and (max-width:480px){
+  .mrb-hero{--mrb-logo-h:36px;}                        /* телефон */
+}
+
 .mrb-hero-inner{min-height:calc(100svh - 96px - var(--mrb-logo-row));display:flex;flex-direction:column;justify-content:center;}
 @supports not (height:100svh){.mrb-hero-inner{min-height:calc(100vh - 96px - var(--mrb-logo-row));}}
 
-/* ===== Логотип ===== */
-.mrb-logo-row{display:flex;align-items:center;min-height:42px;margin-bottom:20px;}
-.mrb-logo{height:42px;width:auto;max-width:240px;object-fit:contain;display:block;}
+.mrb-logo-row{display:flex;align-items:center;min-height:var(--mrb-logo-h);margin-bottom:20px;}
+.mrb-logo{height:var(--mrb-logo-h);width:auto;max-width:280px;object-fit:contain;display:block;}
 /* Запасная надпись: если файл не отдался, вместо иконки битой картинки
    остаётся читаемое название. */
 .mrb-logo-text{font-size:1.25rem;font-weight:800;color:var(--mrb-ink);letter-spacing:-.01em;}
-@media screen and (max-width:480px){
-  .mrb-logo{height:36px;}
-  .mrb-logo-row{min-height:36px;}
-}
 .mrb-badge{
   display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
   padding:6px 14px;margin-bottom:20px;
