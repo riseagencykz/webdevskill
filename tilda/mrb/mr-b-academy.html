@@ -134,6 +134,10 @@
 .mrb-expert{display:grid;gap:28px;align-items:start;}
 .mrb-expert-photo{width:100%;aspect-ratio:4/5;border-radius:var(--mrb-radius);overflow:hidden;background:linear-gradient(160deg,var(--mrb-surface),#E2F5F1);border:1px solid var(--mrb-border-teal);display:flex;align-items:center;justify-content:center;}
 .mrb-expert-photo svg{width:33%;height:auto;color:var(--mrb-teal);opacity:.5;}
+/* Контейнер задаёт пропорцию 4:5, cover обрезает фото под неё при любом
+   исходном соотношении сторон. Если лицо окажется срезано — двигать
+   object-position (например center 20% — выше, center 60% — ниже). */
+.mrb-expert-img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;}
 .mrb-expert-facts{margin:20px 0 0;padding:0;list-style:none;}
 .mrb-expert-facts li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--mrb-border);font-size:.9375rem;line-height:1.5;color:var(--mrb-body);}
 .mrb-expert-facts li svg{flex:0 0 auto;color:var(--mrb-teal);margin-top:2px;}
@@ -303,8 +307,13 @@
     <div class="mrb-wrap">
       <div class="mrb-expert">
         <div class="mrb-expert-photo mrb-reveal">
-          <!-- ЗАМЕНИТЬ на фото преподавателя 4:5 -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          <img class="mrb-expert-img"
+               src="https://optim.tildacdn.pro/tild3161-3431-4662-a561-343762663430/-/format/webp/9cc2575e61ca02fe4937.jpeg.webp"
+               alt="Преподаватель Mr B Academy"
+               loading="lazy" decoding="async">
+          <!-- Запасной силуэт: показывается, только если фото не загрузилось,
+               чтобы вместо блока не осталась иконка битой картинки. -->
+          <svg class="mrb-expert-fallback" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" style="display:none;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
         </div>
         <div class="mrb-reveal">
           <p class="mrb-eyebrow">Кто ведёт</p>
@@ -458,6 +467,21 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     onScroll();
+  }
+
+  /* ============ Фото преподавателя ============
+     Если картинка не отдалась (сменили адрес, упал CDN) — убираем её
+     и показываем силуэт, иначе в блоке повиснет иконка битого файла. */
+  var expertImg = root.querySelector('.mrb-expert-img');
+  if (expertImg) {
+    var showFallback = function () {
+      expertImg.style.display = 'none';
+      var fb = root.querySelector('.mrb-expert-fallback');
+      if (fb) fb.style.display = 'block';
+    };
+    expertImg.addEventListener('error', showFallback);
+    // Картинка могла не загрузиться ещё до навешивания обработчика
+    if (expertImg.complete && expertImg.naturalWidth === 0) showFallback();
   }
 
   /* ============ Метки источника в форму попапа ============
