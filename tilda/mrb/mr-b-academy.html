@@ -90,8 +90,22 @@
     linear-gradient(180deg,var(--mrb-surface) 0%,var(--mrb-bg) 100%);
   padding-top:clamp(28px,7vw,64px);padding-bottom:clamp(28px,6vw,48px);
 }
-.mrb-hero-inner{min-height:calc(100svh - 96px);display:flex;flex-direction:column;justify-content:center;}
-@supports not (height:100svh){.mrb-hero-inner{min-height:calc(100vh - 96px);}}
+/* Строка логотипа вычитается из высоты центрируемой части, иначе первый
+   экран перестал бы умещаться в 390×844 — запас там всего сорок пикселей. */
+.mrb-hero{--mrb-logo-row:52px;}
+.mrb-hero-inner{min-height:calc(100svh - 96px - var(--mrb-logo-row));display:flex;flex-direction:column;justify-content:center;}
+@supports not (height:100svh){.mrb-hero-inner{min-height:calc(100vh - 96px - var(--mrb-logo-row));}}
+
+/* ===== Логотип ===== */
+.mrb-logo-row{display:flex;align-items:center;min-height:32px;margin-bottom:20px;}
+.mrb-logo{height:32px;width:auto;max-width:190px;object-fit:contain;display:block;}
+/* Запасная надпись: если файл не отдался, вместо иконки битой картинки
+   остаётся читаемое название. */
+.mrb-logo-text{font-size:1.25rem;font-weight:800;color:var(--mrb-ink);letter-spacing:-.01em;}
+@media screen and (max-width:480px){
+  .mrb-logo{height:28px;}
+  .mrb-logo-row{min-height:28px;}
+}
 .mrb-badge{
   display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
   padding:6px 14px;margin-bottom:20px;
@@ -206,6 +220,13 @@
 
   <!-- ============ БЛОК 1. ПЕРВЫЙ ЭКРАН ============ -->
   <section class="mrb-hero">
+    <div class="mrb-wrap mrb-logo-row">
+      <img class="mrb-logo"
+           src="https://optim.tildacdn.pro/tild3834-3133-4263-b661-306130636235/-/format/webp/noroot.png.webp"
+           alt="Mr B Academy" decoding="async">
+      <span class="mrb-logo-text" style="display:none;">Mr B Academy</span>
+    </div>
+
     <div class="mrb-wrap mrb-hero-inner">
       <span class="mrb-badge">Астана · левый берег + онлайн</span>
 
@@ -494,20 +515,23 @@
     onScroll();
   }
 
-  /* ============ Фото преподавателя ============
-     Если картинка не отдалась (сменили адрес, упал CDN) — убираем её
-     и показываем силуэт, иначе в блоке повиснет иконка битого файла. */
-  var expertImg = root.querySelector('.mrb-expert-img');
-  if (expertImg) {
-    var showFallback = function () {
-      expertImg.style.display = 'none';
-      var fb = root.querySelector('.mrb-expert-fallback');
-      if (fb) fb.style.display = 'block';
+  /* ============ Картинки с CDN ============
+     Если файл не отдался (сменили адрес, упал CDN) — прячем картинку
+     и показываем запасной элемент, иначе повиснет иконка битого файла. */
+  function swapOnError(imgSel, fallbackSel, fallbackDisplay) {
+    var img = root.querySelector(imgSel);
+    if (!img) return;
+    var show = function () {
+      img.style.display = 'none';
+      var fb = root.querySelector(fallbackSel);
+      if (fb) fb.style.display = fallbackDisplay;
     };
-    expertImg.addEventListener('error', showFallback);
+    img.addEventListener('error', show);
     // Картинка могла не загрузиться ещё до навешивания обработчика
-    if (expertImg.complete && expertImg.naturalWidth === 0) showFallback();
+    if (img.complete && img.naturalWidth === 0) show();
   }
+  swapOnError('.mrb-expert-img', '.mrb-expert-fallback', 'block');
+  swapOnError('.mrb-logo', '.mrb-logo-text', 'inline');
 
   /* ============ Метки источника в форму попапа ============
      Форма живёт в блоке попапа Тильды, а не здесь, поэтому скрытые поля
