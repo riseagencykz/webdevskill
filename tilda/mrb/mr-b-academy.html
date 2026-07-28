@@ -92,19 +92,19 @@
 }
 /* Строка логотипа вычитается из высоты центрируемой части, иначе первый
    экран перестал бы умещаться в 390×844 — запас там всего сорок пикселей. */
-.mrb-hero{--mrb-logo-row:52px;}
+.mrb-hero{--mrb-logo-row:62px;}
 .mrb-hero-inner{min-height:calc(100svh - 96px - var(--mrb-logo-row));display:flex;flex-direction:column;justify-content:center;}
 @supports not (height:100svh){.mrb-hero-inner{min-height:calc(100vh - 96px - var(--mrb-logo-row));}}
 
 /* ===== Логотип ===== */
-.mrb-logo-row{display:flex;align-items:center;min-height:32px;margin-bottom:20px;}
-.mrb-logo{height:32px;width:auto;max-width:190px;object-fit:contain;display:block;}
+.mrb-logo-row{display:flex;align-items:center;min-height:42px;margin-bottom:20px;}
+.mrb-logo{height:42px;width:auto;max-width:240px;object-fit:contain;display:block;}
 /* Запасная надпись: если файл не отдался, вместо иконки битой картинки
    остаётся читаемое название. */
 .mrb-logo-text{font-size:1.25rem;font-weight:800;color:var(--mrb-ink);letter-spacing:-.01em;}
 @media screen and (max-width:480px){
-  .mrb-logo{height:28px;}
-  .mrb-logo-row{min-height:28px;}
+  .mrb-logo{height:36px;}
+  .mrb-logo-row{min-height:36px;}
 }
 .mrb-badge{
   display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
@@ -136,6 +136,13 @@
 .mrb-check-title{margin:0 0 4px;font-size:1.0625rem;font-weight:800;color:var(--mrb-ink);line-height:1.35;}
 .mrb-check-desc{margin:0;font-size:.9375rem;line-height:1.5;color:var(--mrb-muted-fg);}
 
+/* Честная оговорка про границы формата */
+.mrb-honest{
+  margin:24px 0 0;padding:14px 16px;
+  background:var(--mrb-surface);border-left:3px solid var(--mrb-teal);
+  border-radius:0 var(--mrb-radius-sm) var(--mrb-radius-sm) 0;
+  font-size:.9375rem;line-height:1.5;color:var(--mrb-ink);
+}
 .mrb-terms{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0;padding:0;list-style:none;}
 .mrb-term{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--mrb-bg);border:1px solid var(--mrb-border-teal);border-radius:999px;font-size:.875rem;font-weight:800;color:var(--mrb-ink);}
 .mrb-term svg{color:var(--mrb-teal);flex:0 0 auto;}
@@ -279,19 +286,28 @@
       <div class="mrb-card mrb-reveal">
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-          <div><p class="mrb-check-title">Определим реальный уровень по критериям IELTS</p>
-          <p class="mrb-check-desc">Не «примерно intermediate», а оценка по четырём секциям в баллах.</p></div>
+          <div><p class="mrb-check-title">Оценим устную речь по критериям IELTS</p>
+          <p class="mrb-check-desc">Живой разговор на английском и разбор по тем же четырём критериям, что у экзаменатора: fluency, лексика, грамматика, произношение.</p></div>
         </div>
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-          <div><p class="mrb-check-title">Покажем, где именно теряются баллы</p>
-          <p class="mrb-check-desc">Разбор по тем же критериям, по которым работают экзаменаторы: что снижает оценку в Speaking и Writing.</p></div>
+          <div><p class="mrb-check-title">Определим ориентировочный уровень и разрыв до цели</p>
+          <p class="mrb-check-desc">Насколько ты сейчас далеко от нужного балла и какие ошибки тянут оценку вниз в первую очередь.</p></div>
         </div>
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
           <div><p class="mrb-check-title">Соберём индивидуальный план и назовём реальный срок</p>
           <p class="mrb-check-desc">Честно: от 2–3 месяцев, если база есть, до года и больше с нуля. Если до цели год — так и скажем.</p></div>
         </div>
+
+        <!-- Прямо проговариваем границы формата. Обещать «оценку по всем
+             четырём секциям» за 30–40 минут нельзя: полный пробный экзамен
+             идёт около трёх часов, и на созвоне это всплывёт. -->
+        <p class="mrb-honest">
+          Полный пробный экзамен со всеми четырьмя секциями идёт около трёх часов —
+          за 30–40 минут его не заменить, и мы не делаем вид, что заменяем.
+          Задача диагностики другая: понять стартовую точку и собрать план.
+        </p>
 
         <ul class="mrb-terms">
           <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>30–40 минут</li>
