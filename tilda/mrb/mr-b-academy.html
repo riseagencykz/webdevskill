@@ -1,11 +1,17 @@
 <!-- ============================================================
      Mr B Academy — лендинг под TikTok UGC-трафик
      ОДИН БЛОК ДЛЯ ТИЛЬДЫ. Скопировать файл целиком и вставить
-     в блок T123 «HTML-код». Больше ничего настраивать не нужно —
-     попап с квизом встроен сюда же.
+     в блок T123 «HTML-код».
 
      Три блока: 1) первый экран  2) диагностика и цены  3) эксперт и CTA.
      Ниже — футер с реквизитами.
+
+     ВСЕ КНОПКИ ОТКРЫВАЮТ ПОПАП ТИЛЬДЫ #popup:myform.
+     Попап нужно создать отдельным блоком и задать ему имя myform
+     (Настройки блока попапа → Идентификатор / Popup name).
+
+     UTM-метки и ttclid этот блок подставляет в форму попапа сам —
+     см. секцию «Метки источника» в скрипте внизу.
 
      Всё внутри .mrb, классы с префиксом mrb-, JS в IIFE.
      Глобальных стилей и переменных нет.
@@ -25,7 +31,6 @@
   /* Единственный акцент — только на CTA. Затемнён с #EA580C:
      белый текст на нём давал 3.56:1 и не проходил AA. Здесь 5.18:1. */
   --mrb-cta:#C2410C; --mrb-cta-hover:#9A3412;
-  --mrb-danger:#DC2626;
   --mrb-fs-h1:clamp(2rem,7.2vw,3.5rem);
   --mrb-fs-h2:clamp(1.5rem,5.2vw,2.5rem);
   --mrb-fs-h3:clamp(1.125rem,3.6vw,1.5rem);
@@ -38,14 +43,14 @@
   --mrb-shadow-cta:0 6px 20px -8px rgba(194,65,12,.5);
   --mrb-tap:48px;
   --mrb-dur:340ms; --mrb-ease:cubic-bezier(.22,.61,.36,1);
-  --mrb-z-sticky:900; --mrb-z-modal:100000;
+  --mrb-z-sticky:900;
 
   font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   font-weight:400;color:var(--mrb-body);background:var(--mrb-bg);
   line-height:1.6;-webkit-font-smoothing:antialiased;text-size-adjust:100%;
 }
 .mrb *,.mrb *::before,.mrb *::after{box-sizing:border-box;}
-.mrb a,.mrb button,.mrb label{touch-action:manipulation;}
+.mrb a,.mrb button{touch-action:manipulation;}
 
 .mrb-wrap{max-width:var(--mrb-maxw);margin:0 auto;padding-left:var(--mrb-gutter);padding-right:var(--mrb-gutter);}
 .mrb-section{padding-top:var(--mrb-section-y);padding-bottom:var(--mrb-section-y);}
@@ -71,10 +76,11 @@
   cursor:pointer;box-shadow:var(--mrb-shadow-cta);
   transition:background var(--mrb-dur) var(--mrb-ease),transform var(--mrb-dur) var(--mrb-ease);
 }
-.mrb-btn:hover{background:var(--mrb-cta-hover);transform:translateY(-1px);color:#fff;}
+.mrb-btn:hover,.mrb-btn:focus{background:var(--mrb-cta-hover);color:#fff;text-decoration:none;}
+.mrb-btn:hover{transform:translateY(-1px);}
 .mrb-btn:active{transform:translateY(0);}
 .mrb-btn--full{display:flex;width:100%;}
-.mrb :where(a,button,input):focus-visible{outline:3px solid var(--mrb-teal);outline-offset:3px;border-radius:6px;}
+.mrb :where(a,button):focus-visible{outline:3px solid var(--mrb-teal);outline-offset:3px;border-radius:6px;}
 
 /* ===== БЛОК 1. Первый экран ===== */
 .mrb-hero{
@@ -98,7 +104,7 @@
 .mrb-hero-note{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--mrb-muted-fg);}
 .mrb-hero-note svg{flex:0 0 auto;color:var(--mrb-teal);}
 
-/* Полоса доверия — часть первого экрана, отдельной секцией не выносим */
+/* Полоса доверия — часть первого экрана */
 .mrb-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0;margin:36px 0 0;list-style:none;}
 .mrb-trust-item{background:rgba(255,255,255,.7);border:1px solid var(--mrb-border-teal);border-radius:var(--mrb-radius-sm);padding:14px 12px;text-align:center;}
 .mrb-trust-num{display:block;font-size:clamp(1.25rem,4.4vw,1.75rem);font-weight:800;line-height:1;color:var(--mrb-teal-dark);letter-spacing:-.02em;}
@@ -162,101 +168,6 @@
 .mrb-js .mrb-reveal{opacity:0;transform:translateY(14px);}
 .mrb-js .mrb-reveal.is-in{opacity:1;transform:none;transition:opacity var(--mrb-dur) var(--mrb-ease),transform var(--mrb-dur) var(--mrb-ease);}
 
-/* ============ ПОПАП С КВИЗОМ ============ */
-.mrb-modal{
-  position:fixed;inset:0;z-index:var(--mrb-z-modal);
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;visibility:hidden;
-  transition:opacity var(--mrb-dur) var(--mrb-ease),visibility var(--mrb-dur);
-}
-.mrb-modal.is-open{opacity:1;visibility:visible;}
-.mrb-modal-backdrop{position:absolute;inset:0;background:rgba(8,25,23,.6);}
-.mrb-modal-card{
-  position:relative;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;
-  background:var(--mrb-bg);border-radius:18px 18px 0 0;
-  padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));
-  transform:translateY(24px);transition:transform var(--mrb-dur) var(--mrb-ease);
-  -webkit-overflow-scrolling:touch;
-}
-.mrb-modal.is-open .mrb-modal-card{transform:translateY(0);}
-.mrb-modal-close{
-  position:absolute;top:10px;right:10px;width:var(--mrb-tap);height:var(--mrb-tap);
-  display:flex;align-items:center;justify-content:center;
-  background:transparent;border:none;border-radius:50%;
-  color:var(--mrb-muted-fg);cursor:pointer;
-  transition:background var(--mrb-dur) var(--mrb-ease),color var(--mrb-dur) var(--mrb-ease);
-}
-.mrb-modal-close:hover{background:var(--mrb-surface);color:var(--mrb-ink);}
-
-.mrb-progress{margin:0 44px 22px 0;}
-.mrb-progress-bar{height:4px;background:var(--mrb-border);border-radius:999px;overflow:hidden;}
-.mrb-progress-fill{height:100%;width:25%;background:var(--mrb-teal);border-radius:999px;transition:width var(--mrb-dur) var(--mrb-ease);}
-.mrb-progress-text{display:block;margin-top:8px;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mrb-muted-fg);}
-
-.mrb-step{display:none;}
-.mrb-step.is-active{display:block;}
-.mrb-q{margin:0 0 20px;font-size:1.3125rem;font-weight:800;line-height:1.25;color:var(--mrb-ink);letter-spacing:-.01em;}
-/* Фокус ставится программно, только чтобы скринридер объявил новый вопрос. */
-.mrb-q:focus{outline:none;}
-.mrb-hint{margin:-12px 0 20px;font-size:.875rem;color:var(--mrb-muted-fg);}
-
-.mrb-options{display:flex;flex-direction:column;gap:10px;margin:0 0 24px;padding:0;border:0;}
-.mrb-options legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
-.mrb-option{position:relative;display:block;}
-.mrb-option input{position:absolute;opacity:0;width:1px;height:1px;}
-.mrb-option span{
-  display:flex;align-items:center;gap:12px;min-height:var(--mrb-tap);padding:14px 16px;
-  background:var(--mrb-bg);border:2px solid var(--mrb-border);border-radius:12px;
-  font-size:1rem;font-weight:800;color:var(--mrb-ink);cursor:pointer;
-  transition:border-color var(--mrb-dur) var(--mrb-ease),background var(--mrb-dur) var(--mrb-ease);
-}
-.mrb-option span::before{content:'';flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid var(--mrb-border);transition:border-color var(--mrb-dur) var(--mrb-ease),box-shadow var(--mrb-dur) var(--mrb-ease);}
-.mrb-option:hover span{border-color:var(--mrb-teal);background:var(--mrb-surface);}
-.mrb-option input:checked+span{border-color:var(--mrb-teal);background:var(--mrb-surface);}
-.mrb-option input:checked+span::before{border-color:var(--mrb-teal);box-shadow:inset 0 0 0 4px var(--mrb-teal);}
-.mrb-option input:focus-visible+span{outline:3px solid var(--mrb-teal);outline-offset:3px;}
-
-.mrb-field{margin-bottom:16px;}
-.mrb-label{display:block;margin-bottom:6px;font-size:.875rem;font-weight:800;color:var(--mrb-ink);}
-.mrb-input{
-  display:block;width:100%;min-height:var(--mrb-tap);padding:12px 16px;
-  font-family:inherit;font-size:1rem;color:var(--mrb-ink);
-  background:var(--mrb-bg);border:2px solid var(--mrb-border);border-radius:12px;
-  transition:border-color var(--mrb-dur) var(--mrb-ease);
-  -webkit-appearance:none;appearance:none;
-}
-.mrb-input:focus{outline:none;border-color:var(--mrb-teal);}
-.mrb-input[aria-invalid="true"]{border-color:var(--mrb-danger);}
-/* Место под ошибку зарезервировано всегда: иначе её появление сдвигает
-   кнопки вниз — пользователь промахивается по тапу, растёт CLS. */
-.mrb-error{display:block;visibility:hidden;min-height:1.15em;margin:6px 0 0;font-size:.8125rem;font-weight:800;color:var(--mrb-danger);}
-.mrb-error.is-shown{visibility:visible;}
-
-/* Согласие на обработку персональных данных */
-.mrb-consent{display:flex;gap:12px;align-items:flex-start;margin:4px 0 18px;cursor:pointer;}
-.mrb-consent input{
-  flex:0 0 auto;width:22px;height:22px;margin:1px 0 0;
-  accent-color:var(--mrb-teal);cursor:pointer;
-}
-.mrb-consent-text{font-size:.8125rem;line-height:1.5;color:var(--mrb-muted-fg);}
-.mrb-consent-text a{color:var(--mrb-teal-dark);font-weight:800;text-decoration:underline;text-underline-offset:2px;}
-.mrb-consent input[aria-invalid="true"]{outline:2px solid var(--mrb-danger);outline-offset:2px;}
-
-.mrb-actions{display:flex;gap:10px;align-items:center;}
-.mrb-actions .mrb-btn{flex:1 1 auto;}
-.mrb-back{
-  flex:0 0 auto;min-height:var(--mrb-tap);padding:14px 18px;
-  font-family:inherit;font-size:.9375rem;font-weight:800;
-  color:var(--mrb-muted-fg);background:transparent;
-  border:2px solid var(--mrb-border);border-radius:12px;cursor:pointer;
-  transition:border-color var(--mrb-dur) var(--mrb-ease),color var(--mrb-dur) var(--mrb-ease);
-}
-.mrb-back:hover{border-color:var(--mrb-teal);color:var(--mrb-ink);}
-.mrb-note{margin:16px 0 0;font-size:.75rem;line-height:1.5;color:var(--mrb-muted-fg);text-align:center;}
-
-.mrb .js-errorbox-all{margin-bottom:16px;}
-.mrb .js-errorbox-all .t-form__errorbox-item{padding:12px 14px;background:#FEF2F2;border:1px solid #FECACA;border-radius:12px;font-size:.875rem;font-weight:800;color:var(--mrb-danger);}
-
 @media (prefers-reduced-motion:reduce){
   .mrb *,.mrb *::before,.mrb *::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
   .mrb-js .mrb-reveal{opacity:1;transform:none;}
@@ -275,14 +186,11 @@
 @media screen and (max-width:480px){
   .mrb-card{padding:20px;}
   .mrb-hero-sub{max-width:none;}
-  .mrb-q{font-size:1.1875rem;}
 }
 @media screen and (min-width:641px){
   .mrb-sticky{display:none;}
   /* Растянутая на всю карточку кнопка нужна только под палец на мобильном */
   .mrb-btn--full{display:inline-flex;width:auto;}
-  .mrb-modal{align-items:center;padding:24px;}
-  .mrb-modal-card{border-radius:18px;padding:32px;}
   .mrb-footer-in{flex-direction:row;justify-content:space-between;align-items:flex-end;}
 }
 @media screen and (min-width:981px){
@@ -306,7 +214,7 @@
       </p>
 
       <div class="mrb-hero-cta">
-        <button type="button" class="mrb-btn" data-mrb-open>Записаться на бесплатную диагностику</button>
+        <a class="mrb-btn" href="#popup:myform">Записаться на бесплатную диагностику</a>
         <span class="mrb-hero-note">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
           30–40 минут, бесплатно, без обязательств
@@ -385,7 +293,7 @@
         <p class="mrb-p" style="font-weight:800;color:#134E4A;margin-bottom:16px;">
           Какой трек нужен именно тебе — определяется на диагностике. Она бесплатная.
         </p>
-        <button type="button" class="mrb-btn mrb-btn--full" data-mrb-open>Подобрать трек на диагностике</button>
+        <a class="mrb-btn mrb-btn--full" href="#popup:myform">Подобрать трек на диагностике</a>
       </div>
     </div>
   </section>
@@ -415,7 +323,7 @@
         <h3 class="mrb-h3">Начни с того, что узнаешь свой реальный уровень</h3>
         <p>Диагностика бесплатная и ни к чему не обязывает. Даже если не пойдёшь учиться — уйдёшь с планом подготовки и понятным сроком.</p>
         <div class="mrb-final-cta">
-          <button type="button" class="mrb-btn" data-mrb-open>Записаться на бесплатную диагностику</button>
+          <a class="mrb-btn" href="#popup:myform">Записаться на бесплатную диагностику</a>
           <span class="mrb-final-note">30–40 минут · онлайн или в Астане</span>
         </div>
       </div>
@@ -439,125 +347,9 @@
 
   <!-- Sticky-панель, появляется после 40% скролла. Только мобильные. -->
   <div class="mrb-sticky" id="mrb-sticky" aria-hidden="true">
-    <button type="button" class="mrb-btn" tabindex="-1" data-mrb-open>Бесплатная диагностика</button>
+    <a class="mrb-btn" href="#popup:myform" tabindex="-1">Бесплатная диагностика</a>
   </div>
 
-  <!-- ============ ПОПАП С КВИЗОМ ============ -->
-  <div class="mrb-modal" id="mrb-modal" role="dialog" aria-modal="true" aria-labelledby="mrb-modal-title">
-    <div class="mrb-modal-backdrop" data-mrb-close></div>
-    <div class="mrb-modal-card">
-      <button type="button" class="mrb-modal-close" data-mrb-close aria-label="Закрыть">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-
-      <div class="mrb-progress" id="mrb-progress">
-        <div class="mrb-progress-bar"><div class="mrb-progress-fill" id="mrb-fill"></div></div>
-        <span class="mrb-progress-text" id="mrb-step-text">Шаг 1 из 4</span>
-      </div>
-
-      <!-- Разметка формы Тильды: отправку делает Тильда, лид уходит в AmoCRM -->
-      <form id="mrb-form" name="mrb-diagnostika" role="form" action="" method="POST"
-            class="js-form-proccess t-form" data-formactiontype="2" data-inputbox=".mrb-field" novalidate>
-
-        <div class="js-errorbox-all t-form__errorbox-middle" style="display:none;">
-          <div class="t-form__errorbox-item js-rule-error js-rule-error-all"></div>
-          <div class="t-form__errorbox-item js-rule-error js-rule-error-req"></div>
-          <div class="t-form__errorbox-item js-rule-error js-rule-error-string"></div>
-        </div>
-
-        <input type="hidden" name="utm_source"   value="">
-        <input type="hidden" name="utm_medium"   value="">
-        <input type="hidden" name="utm_campaign" value="">
-        <input type="hidden" name="utm_content"  value="">
-        <input type="hidden" name="utm_term"     value="">
-        <input type="hidden" name="ttclid"       value="">
-        <input type="hidden" name="page_url"     value="">
-
-        <!-- Шаг 1 -->
-        <div class="mrb-step is-active" data-mrb-step>
-          <h2 class="mrb-q" id="mrb-modal-title">Какая у тебя цель?</h2>
-          <fieldset class="mrb-options"><legend>Цель</legend>
-            <label class="mrb-option"><input type="radio" name="Цель" value="Сдать IELTS" data-mrb-req><span>Сдать IELTS</span></label>
-            <label class="mrb-option"><input type="radio" name="Цель" value="Поступить за рубеж"><span>Поступить за рубеж</span></label>
-            <label class="mrb-option"><input type="radio" name="Цель" value="Работа и переезд"><span>Работа и переезд</span></label>
-            <label class="mrb-option"><input type="radio" name="Цель" value="Для себя"><span>Для себя</span></label>
-          </fieldset>
-          <div class="mrb-actions"><button type="button" class="mrb-btn" data-mrb-next>Дальше</button></div>
-        </div>
-
-        <!-- Шаг 2 -->
-        <div class="mrb-step" data-mrb-step>
-          <h2 class="mrb-q">Когда нужен результат?</h2>
-          <fieldset class="mrb-options"><legend>Срок</legend>
-            <label class="mrb-option"><input type="radio" name="Срок" value="В течение 1-3 месяцев" data-mrb-req><span>В течение 1–3 месяцев</span></label>
-            <label class="mrb-option"><input type="radio" name="Срок" value="3-6 месяцев"><span>3–6 месяцев</span></label>
-            <label class="mrb-option"><input type="radio" name="Срок" value="Позже"><span>Позже</span></label>
-          </fieldset>
-          <div class="mrb-actions">
-            <button type="button" class="mrb-back" data-mrb-back>Назад</button>
-            <button type="button" class="mrb-btn" data-mrb-next>Дальше</button>
-          </div>
-        </div>
-
-        <!-- Шаг 3 -->
-        <div class="mrb-step" data-mrb-step>
-          <h2 class="mrb-q">Какой сейчас уровень?</h2>
-          <p class="mrb-hint">Отвечай как есть — от этого зависит, какой трек предложим.</p>
-          <fieldset class="mrb-options"><legend>Уровень</legend>
-            <label class="mrb-option"><input type="radio" name="Уровень" value="С нуля" data-mrb-req><span>С нуля</span></label>
-            <label class="mrb-option"><input type="radio" name="Уровень" value="Базовый"><span>Базовый</span></label>
-            <label class="mrb-option"><input type="radio" name="Уровень" value="Средний"><span>Средний</span></label>
-            <label class="mrb-option"><input type="radio" name="Уровень" value="Уже сдавал IELTS"><span>Уже сдавал IELTS</span></label>
-          </fieldset>
-          <div class="mrb-actions">
-            <button type="button" class="mrb-back" data-mrb-back>Назад</button>
-            <button type="button" class="mrb-btn" data-mrb-next>Дальше</button>
-          </div>
-        </div>
-
-        <!-- Шаг 4 -->
-        <div class="mrb-step" data-mrb-step>
-          <h2 class="mrb-q">Куда отправить план подготовки?</h2>
-          <p class="mrb-hint">Свяжемся в WhatsApp и подберём время диагностики.</p>
-          <div class="mrb-field">
-            <label class="mrb-label" for="mrb-name">Имя</label>
-            <input class="mrb-input t-input js-tilda-rule" type="text" id="mrb-name" name="Name"
-                   autocomplete="name" data-tilda-req="1" data-mrb-req placeholder="Как к тебе обращаться">
-            <p class="mrb-error" data-mrb-error-for="mrb-name">Напиши имя</p>
-          </div>
-          <div class="mrb-field">
-            <label class="mrb-label" for="mrb-phone">WhatsApp</label>
-            <input class="mrb-input t-input js-tilda-rule" type="tel" id="mrb-phone" name="Phone"
-                   inputmode="tel" autocomplete="tel" data-tilda-req="1" data-mrb-req
-                   data-tilda-rule="phone" value="+7 (___) ___-__-__">
-            <p class="mrb-error" data-mrb-error-for="mrb-phone">Введи номер полностью</p>
-          </div>
-
-          <!-- Согласие на сбор и обработку персональных данных.
-               Закон РК «О персональных данных и их защите» требует согласия
-               субъекта. Галочка НЕ предустановлена — предустановленная
-               согласием не считается. -->
-          <label class="mrb-consent" for="mrb-consent">
-            <input type="checkbox" id="mrb-consent" name="Согласие" value="Да" data-mrb-req>
-            <span class="mrb-consent-text">
-              Я согласен(на) на сбор и обработку моих персональных данных
-              и принимаю <a href="/privacy" target="_blank" rel="noopener">политику конфиденциальности</a>
-            </span>
-          </label>
-          <p class="mrb-error" data-mrb-error-for="mrb-consent" style="margin-top:-12px;margin-bottom:12px;">Нужно согласие на обработку данных</p>
-
-          <div class="mrb-actions">
-            <button type="button" class="mrb-back" data-mrb-back>Назад</button>
-            <button type="submit" class="mrb-btn t-submit" id="mrb-submit">Записаться на диагностику</button>
-          </div>
-          <p class="mrb-note">Диагностика бесплатная и ни к чему не обязывает.</p>
-        </div>
-      </form>
-
-      <!-- Виден только в редакторе/превью Тильды, где нет tildaForm. -->
-      <p class="mrb-note" id="mrb-preview-note" style="display:none;color:#C2410C;font-weight:800;"></p>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -641,7 +433,7 @@
   /* ============ Sticky-CTA после 40% скролла ============ */
   var sticky = document.getElementById('mrb-sticky');
   if (sticky) {
-    var sBtn = sticky.querySelector('button'), shown = false, ticking = false;
+    var sBtn = sticky.querySelector('a'), shown = false, ticking = false;
     var setSticky = function (show) {
       if (show === shown) return;
       shown = show;
@@ -668,191 +460,61 @@
     onScroll();
   }
 
-  /* ============ ПОПАП ============ */
-  var modal  = document.getElementById('mrb-modal');
-  var form   = document.getElementById('mrb-form');
-  var note   = document.getElementById('mrb-preview-note');
-  var fill   = document.getElementById('mrb-fill');
-  var stepTx = document.getElementById('mrb-step-text');
-  var submit = document.getElementById('mrb-submit');
-  var steps  = [].slice.call(root.querySelectorAll('[data-mrb-step]'));
-  var total  = steps.length;
-  var current = 0;
-  var lastFocused = null;
+  /* ============ Метки источника в форму попапа ============
+     Форма живёт в блоке попапа Тильды, а не здесь, поэтому скрытые поля
+     дописываем в неё сами: UTM, ttclid и адрес страницы.
+     Значения кладём в sessionStorage — параметр может потеряться
+     при переходе внутри сайта, а заявку человек оставит позже. */
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
 
-  function renderStep() {
-    steps.forEach(function (s, i) { s.classList.toggle('is-active', i === current); });
-    fill.style.width = Math.round(((current + 1) / total) * 100) + '%';
-    stepTx.textContent = 'Шаг ' + (current + 1) + ' из ' + total;
-    var h = steps[current].querySelector('.mrb-q');
-    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  function sourceData() {
+    var data = {}, qs;
+    try { qs = new URLSearchParams(window.location.search); } catch (e) { qs = null; }
+    KEYS.forEach(function (k) {
+      var v = qs ? (qs.get(k) || '') : '';
+      try {
+        if (v) sessionStorage.setItem('mrb_' + k, v);
+        else v = sessionStorage.getItem('mrb_' + k) || '';
+      } catch (e) {}
+      data[k] = v;
+    });
+    data.page_url = window.location.href.slice(0, 500);
+    return data;
   }
 
-  function openModal() {
-    lastFocused = document.activeElement;
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';   // блокируем прокрутку фона
-    renderStep();
-  }
-  function closeModal() {
-    modal.classList.remove('is-open');
-    document.body.style.overflow = '';
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  function fillForm(form) {
+    if (!form || form.dataset.mrbSrc === '1') return;
+    form.dataset.mrbSrc = '1';
+    var data = sourceData();
+    Object.keys(data).forEach(function (name) {
+      // Если поле с таким именем уже есть в форме — не дублируем, просто заполняем
+      var field = form.querySelector('[name="' + name + '"]');
+      if (field) { if (!field.value) field.value = data[name]; return; }
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = data[name];
+      form.appendChild(input);
+    });
   }
 
-  root.addEventListener('click', function (e) {
-    var t = e.target;
-    if (t.closest('[data-mrb-open]'))  { e.preventDefault(); openModal(); return; }
-    if (t.closest('[data-mrb-close]')) { e.preventDefault(); closeModal(); return; }
-    if (t.closest('[data-mrb-next]')) {
-      if (!stepValid(current)) { markInvalid(current); return; }
-      if (current < total - 1) { current++; renderStep(); }
-    }
-    if (t.closest('[data-mrb-back]') && current > 0) { current--; renderStep(); }
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
-  });
-
-  // Выбрал вариант — сразу дальше, экономит тап на холодном трафике
-  root.addEventListener('change', function (e) {
-    if (e.target.type !== 'radio' || current >= total - 1) return;
-    setTimeout(function () { if (stepValid(current)) { current++; renderStep(); } }, 180);
-  });
-  // Поставил галочку согласия — убираем подсветку ошибки сразу
-  root.addEventListener('change', function (e) {
-    if (e.target.type === 'checkbox') fieldValid(e.target);
-  });
-
-  function stepValid(idx) {
-    var step = steps[idx];
-    var radio = step.querySelector('input[type="radio"][data-mrb-req]');
-    if (radio) return !!form.querySelector('input[name="' + radio.getAttribute('name') + '"]:checked');
-    var ok = true;
-    step.querySelectorAll('input[data-mrb-req]').forEach(function (i) { if (!fieldValid(i)) ok = false; });
-    return ok;
+  function fillAllForms() {
+    var forms = document.querySelectorAll('form.js-form-proccess, form.t-form');
+    for (var i = 0; i < forms.length; i++) fillForm(forms[i]);
   }
-  function markInvalid(idx) {
-    steps[idx].querySelectorAll('input[data-mrb-req]').forEach(fieldValid);
-    var grp = steps[idx].querySelector('.mrb-options');
-    if (grp && grp.animate) {
-      grp.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' },
-                   { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 240 });
-    }
+
+  fillAllForms();
+  // Попап Тильды может подгружаться позже — добираем появившиеся формы
+  if ('MutationObserver' in window) {
+    var mo = new MutationObserver(function () { fillAllForms(); });
+    mo.observe(document.body, { childList: true, subtree: true });
+    // Наблюдатель нужен только на старте, дальше формы уже на месте
+    setTimeout(function () { mo.disconnect(); }, 15000);
   }
-  function fieldValid(input) {
-    var good;
-    if (input.type === 'checkbox') good = input.checked;
-    else if (input.type === 'tel') good = (input.value || '').replace(/\D/g, '').length === 11;
-    else good = (input.value || '').trim().length > 0;
-    input.setAttribute('aria-invalid', good ? 'false' : 'true');
-    var err = root.querySelector('[data-mrb-error-for="' + input.id + '"]');
-    if (err) err.classList.toggle('is-shown', !good);
-    return good;
-  }
-  // Валидация на blur, а не только на сабмите
-  root.addEventListener('blur', function (e) {
-    if (e.target.matches && e.target.matches('input[data-mrb-req]:not([type=checkbox])')) fieldValid(e.target);
+  // И на всякий случай — в момент клика по кнопке, открывающей попап
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="#popup:"]');
+    if (link) setTimeout(fillAllForms, 300);
   }, true);
-
-  /* ============ Маска телефона +7 (___) ___-__-__ ============ */
-  var phone = document.getElementById('mrb-phone');
-  if (phone) {
-    var TPL = '+7 (___) ___-__-__';
-    var mask = function (d) {
-      var out = '', i = 0, k = 0;
-      for (; i < TPL.length; i++) out += TPL[i] === '_' ? (k < d.length ? d[k++] : '_') : TPL[i];
-      return out;
-    };
-    var caret = function () { var i = phone.value.indexOf('_'); return i === -1 ? phone.value.length : i; };
-    /* Порядок важен: сначала снимаем «7» нашего же префикса +7, затем «8» —
-       междугородний, который многие набирают по привычке. Ведущую «7» самого
-       номера трогать нельзя: коды операторов РК начинаются с семёрки
-       (701, 707, 747, 775). */
-    var digits = function (v) {
-      var d = v.replace(/\D/g, '');
-      if (d.charAt(0) === '7') d = d.slice(1);
-      if (d.charAt(0) === '8') d = d.slice(1);
-      return d.slice(0, 10);
-    };
-    phone.addEventListener('focus', function () {
-      if (!phone.value) phone.value = TPL;
-      requestAnimationFrame(function () { var p = caret(); phone.setSelectionRange(p, p); });
-    });
-    phone.addEventListener('input', function () {
-      phone.value = mask(digits(phone.value));
-      var p = caret(); phone.setSelectionRange(p, p);
-    });
-    phone.addEventListener('click', function () { var p = caret(); phone.setSelectionRange(p, p); });
-    phone.addEventListener('blur', function () { if (phone.value === TPL) phone.value = ''; });
-  }
-
-  /* ============ UTM, ttclid, адрес страницы ============ */
-  try {
-    var qs = new URLSearchParams(window.location.search);
-    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'].forEach(function (k) {
-      var f = form.querySelector('input[name="' + k + '"]');
-      if (!f) return;
-      var v = qs.get(k) || '';
-      // Параметр может потеряться при переходах внутри сайта — держим копию
-      try { if (v) sessionStorage.setItem('mrb_' + k, v); else v = sessionStorage.getItem('mrb_' + k) || ''; } catch (e) {}
-      f.value = v;
-    });
-    var pf = form.querySelector('input[name="page_url"]');
-    if (pf) pf.value = window.location.href.slice(0, 500);
-  } catch (e) {}
-
-  /* ============ Отправка ============
-
-     Заслон на фазе capture, на document. Он нужен именно здесь, а не
-     на самой форме: preventDefault останавливает только браузер, но НЕ
-     другие слушатели submit — обработчик Тильды всё равно отработал бы
-     и отправил заявку без согласия на обработку данных. А слушатель на
-     самой форме не спасёт: порядок подключения не гарантирован, Тильда
-     может подписаться раньше нас. Capture на document срабатывает до
-     того, как событие дойдёт до формы, при любом порядке. */
-  document.addEventListener('submit', function (e) {
-    if (e.target !== form) return;
-    if (stepValid(total - 1)) return;
-    e.preventDefault();
-    e.stopPropagation();          // до обработчика Тильды событие не дойдёт
-    markInvalid(total - 1);
-  }, true);
-
-  form.addEventListener('submit', function (e) {
-    /* Сюда попадаем только с валидной формой. Нативную отправку глушим:
-       без этого браузер сделал бы POST на ту же страницу, перезагрузил её —
-       и заявка потерялась бы молча. Обработчику Тильды это не мешает. */
-    e.preventDefault();
-
-    if (!window.tildaForm) {
-      /* Такое бывает только в редакторе и превью Тильды.
-         Показываем честное предупреждение, а не «Заявка принята»:
-         фальшивое подтверждение создало бы иллюзию, что лиды идут. */
-      note.textContent = 'Отправка работает только на опубликованной странице — здесь tildaForm недоступен.';
-      note.style.display = 'block';
-      return;
-    }
-
-    submit.disabled = true;
-    submit.textContent = 'Отправляем…';
-    setTimeout(function () {
-      if (!document.body.contains(submit)) return;
-      submit.disabled = false;
-      submit.textContent = 'Записаться на диагностику';
-    }, 8000);
-  });
-
-  /* ============ Инициализация формы Тильды ============
-     tildaForm появляется не мгновенно и ТОЛЬКО на опубликованной странице. */
-  var tries = 0;
-  (function initTilda() {
-    if (window.tildaForm && typeof window.tildaForm.init === 'function') {
-      try { window.tildaForm.init(form); } catch (e) {}
-      return;
-    }
-    if (++tries < 40) setTimeout(initTilda, 150);
-  })();
 })();
 </script>
