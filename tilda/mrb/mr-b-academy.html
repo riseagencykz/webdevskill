@@ -153,9 +153,28 @@
 .mrb-term{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--mrb-bg);border:1px solid var(--mrb-border-teal);border-radius:999px;font-size:.875rem;font-weight:800;color:var(--mrb-ink);}
 .mrb-term svg{color:var(--mrb-teal);flex:0 0 auto;}
 
-.mrb-price{display:flex;align-items:baseline;gap:8px;margin:12px 0 0;}
-.mrb-price-num{font-size:clamp(1.75rem,6vw,2.25rem);font-weight:800;color:var(--mrb-ink);line-height:1;letter-spacing:-.02em;}
-.mrb-price-per{font-size:.9375rem;color:var(--mrb-muted-fg);}
+/* Нумерованный кружок: треки и шаги «что дальше».
+   Фон — тёмная бирюза, а не основная: белая цифра на светлой давала
+   контраст 3.74 и не проходила AA. На этой — 5.47. */
+.mrb-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;margin-bottom:12px;
+  background:var(--mrb-teal-dark);color:#fff;border-radius:50%;
+  font-size:.9375rem;font-weight:800;
+}
+
+/* «Что будет после заявки» — снимает неизвестность после клика */
+.mrb-next{display:grid;gap:14px;margin:0;padding:0;list-style:none;}
+.mrb-next li{display:flex;gap:14px;align-items:flex-start;}
+.mrb-next .mrb-num{flex:0 0 auto;margin-bottom:0;width:26px;height:26px;font-size:.875rem;color:#fff;}
+.mrb-next b{display:block;color:var(--mrb-ink);font-weight:800;font-size:1rem;line-height:1.35;}
+/* Только описание шага, не цифру в кружке: селектор `.mrb-next span`
+   перекрывал бы белый цвет .mrb-num и цифра стала бы серой на бирюзовом. */
+.mrb-next div span{font-size:.9375rem;line-height:1.5;color:var(--mrb-muted-fg);}
+@media screen and (min-width:641px){
+  .mrb-next{grid-template-columns:repeat(3,1fr);gap:20px;}
+  .mrb-next li{flex-direction:column;gap:10px;}
+}
 
 /* ===== БЛОК 3. Эксперт ===== */
 .mrb-expert{display:grid;gap:28px;align-items:start;}
@@ -181,7 +200,13 @@
 .mrb-legal{margin:0;font-size:.8125rem;line-height:1.6;color:var(--mrb-muted-fg);}
 .mrb-legal b{color:var(--mrb-ink);font-weight:800;}
 .mrb-footer-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:0;list-style:none;}
-.mrb-footer-links a{font-size:.8125rem;font-weight:800;color:var(--mrb-teal-dark);text-decoration:underline;text-underline-offset:3px;}
+/* padding, а не голая строка: без него зона нажатия была 15 px — по ссылке
+   на политику сложно попасть пальцем, а открыть её человек вправе. */
+.mrb-footer-links a{
+  display:inline-block;padding:14px 0;
+  font-size:.8125rem;font-weight:800;color:var(--mrb-teal-dark);
+  text-decoration:underline;text-underline-offset:3px;
+}
 .mrb-footer-links a:hover{color:var(--mrb-ink);}
 
 /* ===== Sticky ===== */
@@ -321,36 +346,39 @@
           <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Без обязательств</li>
         </ul>
 
-        <!-- Замена снятия риска: раньше его держало слово «бесплатно».
-             Для платной диагностики работает объяснение, за что берут деньги. -->
+        <!-- Снятие риска одной строкой. Длинное оправдание цены при 3 000 ₸
+             работало против конверсии: чем больше оправданий, тем дороже
+             кажется. Оставлено только то, что снимает страх «зря заплачу». -->
         <p class="mrb-small" style="margin-top:20px;">
-          Диагностика платная, потому что это полноценная работа преподавателя
-          по экзаменаторской методике, а не разговор ради продажи курса.
           План подготовки остаётся у тебя в любом случае — даже если учиться
           пойдёшь не к нам.
         </p>
+
+        <div style="margin-top:24px;">
+          <a class="mrb-btn mrb-btn--full" href="#popup:myform">Записаться на диагностику</a>
+        </div>
       </div>
 
-      <!-- Цены показываем: отсекают «ищу бесплатно» и работают на квал -->
-      <div class="mrb-grid mrb-grid--2" style="margin-top:16px;">
-        <div class="mrb-card mrb-reveal">
+      <!-- Треки без цен. Сама логика перехода нужна: она снимает возражение
+           «а мне обещали 2 месяца» до менеджера. Роль фильтра «ищу бесплатно»,
+           которую раньше играл прайс, теперь выполняет платная диагностика. -->
+      <div class="mrb-grid mrb-grid--2 mrb-reveal" style="margin-top:32px;">
+        <div class="mrb-card">
+          <span class="mrb-num">1</span>
           <h3 class="mrb-h3">Pre-IELTS</h3>
-          <p class="mrb-small">Если базы пока нет — сначала общий уровень языка</p>
-          <div class="mrb-price"><span class="mrb-price-num">75 000 ₸</span><span class="mrb-price-per">/ месяц</span></div>
+          <p class="mrb-small">Если базы пока нет — сначала поднимаем общий уровень
+          языка. Прыгать сразу в интенсив бессмысленно: балл не вырастет.</p>
         </div>
-        <div class="mrb-card mrb-reveal">
+        <div class="mrb-card">
+          <span class="mrb-num">2</span>
           <h3 class="mrb-h3">IELTS Intensive</h3>
-          <p class="mrb-small">Подготовка под экзамен, 10 недель, группа до 6</p>
-          <div class="mrb-price"><span class="mrb-price-num">250 000 ₸</span><span class="mrb-price-per">/ курс</span></div>
+          <p class="mrb-small">Работа под экзамен: стратегии по секциям, критерии
+          оценивания, тайминг. 10 недель, мини-группа до 6 человек.</p>
         </div>
       </div>
-
-      <div class="mrb-card mrb-card--tint mrb-reveal" style="margin-top:16px;">
-        <p class="mrb-p" style="font-weight:800;color:#134E4A;margin-bottom:16px;">
-          Какой трек нужен именно тебе — определяется на диагностике.
-        </p>
-        <a class="mrb-btn mrb-btn--full" href="#popup:myform">Подобрать трек на диагностике</a>
-      </div>
+      <p class="mrb-small mrb-reveal" style="margin-top:16px;">
+        Какой трек твой и сколько он займёт — определяется на диагностике.
+      </p>
     </div>
   </section>
 
@@ -393,6 +421,29 @@
         <ul class="mrb-expert-facts" style="margin-top:12px;">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Мини-группы до 6 человек — каждый успевает говорить на занятии</span></li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Очно в Астане на левом берегу и онлайн по всему Казахстану</span></li>
+        </ul>
+      </div>
+
+      <!-- Что будет после клика. На холодном трафике неизвестность —
+           одна из главных причин не оставить заявку. -->
+      <div class="mrb-card mrb-reveal" style="margin-top:32px;">
+        <h3 class="mrb-h3" style="margin-bottom:20px;">Как это будет</h3>
+        <ul class="mrb-next">
+          <li>
+            <span class="mrb-num">1</span>
+            <div><b>Оставляешь заявку</b>
+            <span>Пара полей — имя и контакт.</span></div>
+          </li>
+          <li>
+            <span class="mrb-num">2</span>
+            <div><b>Согласуем время</b>
+            <span>Свяжемся и подберём удобный слот — онлайн или в Астане.</span></div>
+          </li>
+          <li>
+            <span class="mrb-num">3</span>
+            <div><b>Приходишь на разбор</b>
+            <span>30–40 минут, и уходишь с планом и понятным сроком.</span></div>
+          </li>
         </ul>
       </div>
 
