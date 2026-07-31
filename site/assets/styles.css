@@ -1,0 +1,355 @@
+/* ============================================================
+   Mr B Academy — общие стили сайта
+   Палитра и шрифт унаследованы от лендинга: контраст уже
+   выверен, а бренд должен читаться одинаково на всех носителях.
+   Обоснование значений — design-system/mrb/README.md
+   ============================================================ */
+
+:root{
+  --teal:#0D9488; --teal-dark:#0F766E; --teal-deep:#115E59;
+  --ink:#134E4A; --body:#334155; --muted:#64748B;
+  --bg:#FFFFFF; --surface:#F0FDFA; --surface-2:#F8FAFC;
+  --border:#E2E8F0; --border-teal:#99F6E4;
+  /* Единственный акцент — только на целевом действии */
+  --cta:#C2410C; --cta-hover:#9A3412;
+  --danger:#DC2626;
+
+  --fs-display:clamp(2.25rem,6vw,4rem);
+  --fs-h1:clamp(2rem,5vw,3.25rem);
+  --fs-h2:clamp(1.5rem,3.6vw,2.375rem);
+  --fs-h3:clamp(1.125rem,2.2vw,1.5rem);
+  --fs-lead:clamp(1.0625rem,1.6vw,1.25rem);
+
+  --gutter:clamp(16px,5vw,32px);
+  --section-y:clamp(56px,8vw,104px);
+  --maxw:1160px;
+  --radius:16px; --radius-sm:10px;
+  --shadow:0 1px 2px rgba(15,23,42,.04),0 10px 30px -16px rgba(15,23,42,.18);
+  --tap:48px;
+  --dur:320ms; --ease:cubic-bezier(.22,.61,.36,1);
+  --header-h:68px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:400;color:var(--body);background:var(--bg);
+  line-height:1.6;-webkit-font-smoothing:antialiased;text-size-adjust:100%;
+}
+a{color:var(--teal-dark);}
+img{max-width:100%;}
+a,button,summary,label{touch-action:manipulation;}
+
+:where(a,button,input,select,textarea,summary):focus-visible{
+  outline:3px solid var(--teal);outline-offset:3px;border-radius:6px;
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter);}
+.section{padding-top:var(--section-y);padding-bottom:var(--section-y);}
+.section--tint{background:var(--surface);}
+.section--soft{background:var(--surface-2);}
+
+/* ===== Типографика ===== */
+h1,h2,h3{color:var(--ink);margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.12;}
+h1{font-size:var(--fs-h1);}
+h2{font-size:var(--fs-h2);line-height:1.15;}
+h3{font-size:var(--fs-h3);line-height:1.3;}
+p{margin:0;}
+.display{font-size:var(--fs-display);}
+.lead{font-size:var(--fs-lead);line-height:1.5;color:var(--body);}
+.small{font-size:.875rem;color:var(--muted);}
+.eyebrow{
+  font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal-dark);margin:0 0 12px;
+}
+.section-head{max-width:660px;margin-bottom:clamp(28px,4vw,44px);}
+.section-head p{margin-top:14px;}
+.stack>*+*{margin-top:16px;}
+
+/* ===== Skip-link (ux-guidelines.csv: Skip Links) ===== */
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--cta);color:#fff;padding:12px 18px;font-weight:800;border-radius:0 0 8px 0;
+}
+.skip:focus{left:0;}
+
+/* ===== Шапка ===== */
+.header{
+  position:sticky;top:0;z-index:80;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.header-in{display:flex;align-items:center;gap:16px;min-height:var(--header-h);}
+.brand{display:flex;align-items:center;flex:0 0 auto;min-height:44px;text-decoration:none;}
+.brand img{height:34px;width:auto;max-width:200px;object-fit:contain;display:block;}
+.brand-text{font-size:1.125rem;font-weight:800;color:var(--ink);}
+
+.nav{display:none;margin-left:auto;}
+.nav ul{display:flex;align-items:center;gap:28px;list-style:none;margin:0;padding:0;}
+.nav a{
+  font-size:.9375rem;font-weight:800;color:var(--body);text-decoration:none;
+  padding:6px 0;border-bottom:2px solid transparent;transition:color var(--dur) var(--ease),border-color var(--dur) var(--ease);
+}
+.nav a:hover{color:var(--ink);}
+/* ux-guidelines.csv → Active State: текущая страница помечена явно */
+.nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--teal);}
+
+.header .btn{flex:0 0 auto;margin-left:auto;padding:11px 20px;min-height:44px;font-size:.9375rem;}
+.nav+.btn{margin-left:20px;}
+
+.burger{
+  margin-left:auto;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--ink);cursor:pointer;
+}
+.mobile-nav{display:none;border-top:1px solid var(--border);background:var(--bg);}
+.mobile-nav.is-open{display:block;}
+.mobile-nav ul{list-style:none;margin:0;padding:8px 0 16px;}
+.mobile-nav a{
+  display:block;min-height:var(--tap);padding:13px 0;
+  font-size:1.0625rem;font-weight:800;color:var(--ink);text-decoration:none;
+}
+.mobile-nav a[aria-current="page"]{color:var(--teal-dark);}
+.mobile-nav .btn{width:100%;margin-top:8px;}
+
+@media (min-width:900px){
+  .nav{display:block;}
+  .burger,.mobile-nav{display:none !important;}
+}
+
+/* ===== Кнопки ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:var(--tap);padding:14px 28px;
+  background:var(--cta);color:#fff;
+  font-family:inherit;font-size:1.0625rem;font-weight:800;line-height:1.2;
+  text-decoration:none;text-align:center;border:none;border-radius:var(--radius-sm);
+  cursor:pointer;box-shadow:0 6px 20px -8px rgba(194,65,12,.5);
+  transition:background var(--dur) var(--ease),transform var(--dur) var(--ease);
+}
+.btn:hover{background:var(--cta-hover);color:#fff;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn--ghost{
+  background:transparent;color:var(--ink);border:2px solid var(--border-teal);box-shadow:none;
+}
+.btn--ghost:hover{background:var(--surface);border-color:var(--teal);color:var(--ink);}
+.btn--full{display:flex;width:100%;}
+@media (min-width:641px){.btn--full{display:inline-flex;width:auto;}}
+
+/* ===== Сетки и карточки ===== */
+.grid{display:grid;gap:20px;}
+.grid--2{grid-template-columns:repeat(2,1fr);}
+.grid--3{grid-template-columns:repeat(3,1fr);}
+.grid--4{grid-template-columns:repeat(4,1fr);}
+@media (max-width:980px){.grid--3,.grid--4{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:640px){.grid--2,.grid--3,.grid--4{grid-template-columns:1fr;}}
+
+.card{
+  background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:clamp(20px,3vw,28px);box-shadow:var(--shadow);
+}
+.card--tint{background:var(--surface);border-color:var(--border-teal);box-shadow:none;}
+.card--flat{box-shadow:none;}
+.card h3{margin-bottom:10px;}
+
+.num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;margin-bottom:14px;
+  /* тёмная бирюза: белая цифра на светлой давала 3.74 и не проходила AA */
+  background:var(--teal-dark);color:#fff;border-radius:50%;
+  font-size:.9375rem;font-weight:800;
+}
+
+.check{display:flex;gap:13px;align-items:flex-start;}
+.check svg{flex:0 0 auto;width:22px;height:22px;color:var(--teal);margin-top:2px;}
+.check b{display:block;color:var(--ink);font-weight:800;font-size:1.0625rem;line-height:1.35;margin-bottom:3px;}
+.check span{font-size:.9375rem;line-height:1.5;color:var(--muted);}
+
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;list-style:none;margin:0;padding:0;}
+@media (max-width:640px){.facts{grid-template-columns:repeat(2,1fr);}}
+.facts li{
+  background:var(--bg);border:1px solid var(--border-teal);border-radius:var(--radius-sm);
+  padding:16px 14px;text-align:center;
+}
+.facts b{display:block;font-size:clamp(1.25rem,2.6vw,1.75rem);font-weight:800;color:var(--teal-dark);line-height:1;letter-spacing:-.02em;}
+.facts span{display:block;margin-top:7px;font-size:.8125rem;line-height:1.3;color:var(--muted);}
+
+.pills{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0;}
+.pills li{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  background:var(--bg);border:1px solid var(--border-teal);border-radius:999px;
+  font-size:.875rem;font-weight:800;color:var(--ink);
+}
+.pills svg{color:var(--teal);flex:0 0 auto;}
+
+/* Честная оговорка */
+.honest{
+  padding:15px 18px;background:var(--surface);border-left:3px solid var(--teal);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:.9375rem;line-height:1.55;color:var(--ink);
+}
+
+/* ===== Герой ===== */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 80% at 50% 0%,#ECFEFF 0%,rgba(236,254,255,0) 60%),
+    linear-gradient(180deg,var(--surface) 0%,var(--bg) 100%);
+  padding-top:clamp(40px,7vw,80px);padding-bottom:clamp(40px,7vw,80px);
+}
+.hero-grid{display:grid;gap:36px;align-items:center;}
+@media (min-width:981px){.hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;}}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;
+  background:rgba(13,148,136,.10);border:1px solid var(--border-teal);border-radius:999px;
+  font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-dark);
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.hero-note{display:flex;align-items:center;gap:8px;font-size:.8125rem;color:var(--muted);}
+.hero-note svg{flex:0 0 auto;color:var(--teal);}
+@media (max-width:640px){
+  .hero-cta{flex-direction:column;align-items:stretch;}
+  .hero-cta .btn{width:100%;}
+  .hero-note{justify-content:center;}
+}
+
+/* ===== Портрет ===== */
+.portrait{
+  width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(160deg,var(--surface),#E2F5F1);
+  border:1px solid var(--border-teal);display:flex;align-items:center;justify-content:center;
+}
+/* Пропорции файла неизвестны — cover обрежет под 4:5 при любом исходнике.
+   Если лицо срезано, двигать object-position. */
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;}
+.portrait svg{width:32%;height:auto;color:var(--teal);opacity:.5;}
+
+/* ===== Список фактов эксперта ===== */
+.facts-list{list-style:none;margin:0;padding:0;}
+.facts-list li{
+  display:flex;gap:12px;align-items:flex-start;padding:13px 0;
+  border-top:1px solid var(--border);font-size:.9375rem;line-height:1.5;
+}
+/* Размер обязателен: у <svg> без width/height дефолт 300×150,
+   и он распирал строку за пределы экрана. */
+.facts-list li svg{flex:0 0 auto;width:20px;height:20px;color:var(--teal);margin-top:2px;}
+.facts-list li span{min-width:0;}
+/* На странице контактов здесь лежат телефон, WhatsApp и почта — главные
+   действия страницы. Без padding зона нажатия была 17px. */
+.facts-list a{display:inline-block;min-height:44px;padding:11px 0;}
+
+/* ===== Шаги ===== */
+.steps{display:grid;gap:16px;list-style:none;margin:0;padding:0;}
+@media (min-width:781px){.steps{grid-template-columns:repeat(3,1fr);gap:24px;}}
+.steps li{display:flex;gap:14px;align-items:flex-start;}
+@media (min-width:781px){.steps li{flex-direction:column;gap:12px;}}
+.steps .num{flex:0 0 auto;margin-bottom:0;width:28px;height:28px;font-size:.9375rem;}
+.steps b{display:block;color:var(--ink);font-weight:800;font-size:1.0625rem;line-height:1.35;}
+.steps div span{display:block;margin-top:4px;font-size:.9375rem;line-height:1.5;color:var(--muted);}
+
+/* ===== FAQ ===== */
+.faq{border-top:1px solid var(--border);}
+.faq details{border-bottom:1px solid var(--border);}
+.faq summary{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  min-height:var(--tap);padding:18px 0;cursor:pointer;list-style:none;
+  font-size:1.0625rem;font-weight:800;color:var(--ink);line-height:1.4;
+}
+.faq summary::-webkit-details-marker{display:none;}
+.faq-icon{flex:0 0 auto;width:22px;height:22px;margin-top:2px;color:var(--teal);transition:transform var(--dur) var(--ease);}
+.faq details[open] .faq-icon{transform:rotate(45deg);}
+.faq p{padding:0 0 20px;max-width:64ch;}
+
+/* ===== Финальный призыв ===== */
+.cta-band{
+  background:linear-gradient(160deg,var(--ink) 0%,#0B3B37 100%);
+  border-radius:var(--radius);padding:clamp(32px,6vw,56px);text-align:center;color:#E6FFFA;
+}
+.cta-band h2{color:#fff;}
+.cta-band p{color:#B6E5DE;max-width:46ch;margin:14px auto 0;}
+.cta-band .btn{margin-top:26px;}
+.cta-band .note{display:block;margin-top:12px;font-size:.8125rem;color:#8FCFC7;}
+
+/* ===== Футер ===== */
+.footer{border-top:1px solid var(--border);background:var(--surface-2);padding:44px 0 32px;}
+.footer-grid{display:grid;gap:28px;}
+@media (min-width:781px){.footer-grid{grid-template-columns:1.4fr 1fr 1fr;}}
+.footer h4{margin:0 0 12px;font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-dark);}
+.footer ul{list-style:none;margin:0;padding:0;}
+.footer li{font-size:.9375rem;color:var(--muted);}
+/* Ссылки в футере — это телефон, WhatsApp и почта, по ним реально жмут.
+   Голая строка давала зону нажатия 17px, поэтому добавлен padding. */
+.footer li a{display:inline-block;min-height:44px;padding:13px 0;}
+.footer a{color:var(--body);text-decoration:none;font-weight:800;}
+.footer a:hover{color:var(--ink);text-decoration:underline;}
+.legal{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:.8125rem;line-height:1.6;color:var(--muted);}
+.legal b{color:var(--ink);}
+.legal a{
+  /* padding, иначе зона нажатия ~15px и по ссылке трудно попасть пальцем */
+  display:inline-block;min-height:44px;padding:12px 0;color:var(--teal-dark);text-decoration:underline;text-underline-offset:3px;
+}
+
+/* ===== Появление при скролле =====
+   Начальное состояние ставит JS (класс .js на <html>), поэтому без JS
+   и для краулеров весь контент виден сразу. */
+.js .reveal{opacity:0;transform:translateY(14px);}
+.js .reveal.is-in{opacity:1;transform:none;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  html{scroll-behavior:auto;}
+  .js .reveal{opacity:1;transform:none;}
+}
+
+/* ===== Модальное окно с формой ===== */
+.modal{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity var(--dur) var(--ease),visibility var(--dur);
+}
+.modal.is-open{opacity:1;visibility:visible;}
+.modal-backdrop{position:absolute;inset:0;background:rgba(8,25,23,.6);}
+.modal-card{
+  position:relative;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;
+  background:var(--bg);border-radius:18px 18px 0 0;
+  padding:26px 20px calc(26px + env(safe-area-inset-bottom,0px));
+  transform:translateY(24px);transition:transform var(--dur) var(--ease);
+}
+.modal.is-open .modal-card{transform:translateY(0);}
+@media (min-width:641px){
+  .modal{align-items:center;padding:24px;}
+  .modal-card{border-radius:18px;padding:34px;}
+}
+.modal-close{
+  position:absolute;top:10px;right:10px;width:var(--tap);height:var(--tap);
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;border:none;border-radius:50%;color:var(--muted);cursor:pointer;
+}
+.modal-close:hover{background:var(--surface);color:var(--ink);}
+.modal h2{font-size:1.375rem;margin-bottom:8px;padding-right:44px;}
+.modal h2:focus{outline:none;}
+
+.field{margin-bottom:14px;}
+.field label{display:block;margin-bottom:6px;font-size:.875rem;font-weight:800;color:var(--ink);}
+.field input,.field select{
+  display:block;width:100%;min-height:var(--tap);padding:12px 15px;
+  font-family:inherit;font-size:1rem;color:var(--ink);background:var(--bg);
+  border:2px solid var(--border);border-radius:12px;
+  transition:border-color var(--dur) var(--ease);-webkit-appearance:none;appearance:none;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+.field input[aria-invalid="true"]{border-color:var(--danger);}
+/* Место под ошибку зарезервировано: иначе её появление сдвигает кнопку
+   под пальцем и растёт CLS */
+.err{display:block;visibility:hidden;min-height:1.15em;margin-top:6px;font-size:.8125rem;font-weight:800;color:var(--danger);}
+.err.is-shown{visibility:visible;}
+
+.consent{display:flex;gap:12px;align-items:flex-start;margin:4px 0 6px;cursor:pointer;}
+.consent input{flex:0 0 auto;width:22px;height:22px;margin:1px 0 0;accent-color:var(--teal);cursor:pointer;}
+.consent span{font-size:.8125rem;line-height:1.5;color:var(--muted);}
+.consent a{color:var(--teal-dark);font-weight:800;}
+
+.form-note{margin-top:14px;font-size:.75rem;line-height:1.5;color:var(--muted);text-align:center;}
+.form-ok{text-align:center;padding:18px 0;}
+.form-ok svg{color:var(--teal);margin-bottom:14px;}
