@@ -266,7 +266,7 @@
   <div class="wrap rv">
     <div class="kicker">Пульты управления</div>
     <h2>Включите баню по дороге домой</h2>
-    <p class="muted" style="margin:14px 0 0;max-width:40em">Два пульта на всю линейку, каждый в двух мощностях — до 18 кВт и до 30 кВт.</p>
+    <p class="muted" style="margin:14px 0 0;max-width:40em">Два пульта на всю линейку печей: понятный сенсорный BB90 или Classy WiFi с управлением со смартфона.</p>
     <div class="grid" style="grid-template-columns:repeat(2,1fr)" id="pultsGrid"></div>
   </div>
 </section>
@@ -353,8 +353,8 @@
     <div class="kicker" style="color:#999">Для бизнеса · дилерская программа</div>
     <h2>Продаёте банное оборудование?<br>Стройте бизнес на Dolomiti</h2>
     <div class="dark-stats">
-      <div><div class="n">до [X]%</div><div class="l">маржа дилера + скидочная сетка от объёма</div></div>
-      <div><div class="n">2–5 дней</div><div class="l">отгрузка со склада в РК — без денег в контейнере</div></div>
+      <div><div class="n">По запросу</div><div class="l">дилерская цена и скидочная сетка от объёма</div></div>
+      <div><div class="n">1–7 дней</div><div class="l">доставка со склада в РК — без денег в контейнере</div></div>
       <div><div class="n">1 регион</div><div class="l">защита территории — один дилер на регион</div></div>
     </div>
     <div class="dealer-grid">
@@ -521,10 +521,14 @@ const SERIES=[
   specs:[["Модель","SD270E"],["Мощность","27 кВт"],["Напряжение","3~400В"],["Объём парной","28–45 м³"],["Сервис","фронтальная замена ТЭНов"],["Цвет","чёрный"]]}
 ];
 const PULTS=[
- {img:"img/pult-bb90.webp",contain:1,name:"BB90 · до 18 кВт",desc:"Выносной пульт: просто, надёжно, без лишнего. 3~400В.",price:"от 65 000 ₸"},
- {img:"img/pult-bb90.webp",contain:1,name:"BB90 · до 30 кВт",desc:"Тот же пульт для коммерческих печей повышенной мощности. 3~400В.",price:"от 78 000 ₸"},
- {img:"img/pult-classy.webp",contain:0,name:"CL32 WiFi · до 18 кВт",desc:"Сенсорный пульт с управлением со смартфона: включите баню по дороге домой. 3~400В.",price:"от 125 000 ₸"},
- {img:"img/pult-classy.webp",contain:0,name:"CL50 WiFi · до 30 кВт",desc:"WiFi-управление для коммерческих печей до 30 кВт. 3~400В.",price:"от 148 000 ₸"}
+ {img:"img/pult-bb90.webp",contain:1,name:"BB90",
+  desc:"Сенсорный дисплей: свет, вентиляция, таймер, температура. Простое и надёжное управление парной.",
+  specs:[["Регулировка нагрева","40–110 °C"],["Мощность","до 12 кВт"],["Напряжение","3~400В"]],
+  price:"от 65 000 ₸"},
+ {img:"img/pult-classy.webp",contain:0,name:"Classy WiFi",
+  desc:"Wi-Fi и приложение: дистанционное управление сауной со смартфона — включите баню по дороге домой.",
+  specs:[["Регулировка нагрева","40–110 °C, сенсорная"],["Мощность","CL32 — до 18 кВт · CL50 — до 30 кВт"],["Напряжение","3~400В"]],
+  price:"от 125 000 ₸"}
 ];
 
 const grid=document.getElementById('catalogGrid');
@@ -546,8 +550,9 @@ function renderCatalog(min,max){
 renderCatalog();
 
 document.getElementById('pultsGrid').innerHTML=PULTS.map(p=>`
-  <div class="card" style="cursor:default"><div class="ph${p.contain?' contain':''}" style="aspect-ratio:1"><img src="${p.img}" alt="Пульт ${p.name}" loading="lazy"></div>
+  <div class="card" style="cursor:default"><div class="ph${p.contain?' contain':''}" style="aspect-ratio:1"><img src="${p.img}" alt="Пульт управления сауной ${p.name}" loading="lazy"></div>
   <h3>${p.name}</h3><p class="muted" style="font-size:.92rem">${p.desc}</p>
+  <div>${p.specs.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('')}</div>
   <div class="price">${p.price}</div></div>`).join('');
 
 document.querySelectorAll('#chips .chip').forEach(c=>c.onclick=()=>{
@@ -578,7 +583,8 @@ function openPopup(s){
   document.getElementById('pImg').innerHTML=`<img src="${s.img}" alt="Печь Dolomiti ${s.name}">`;document.getElementById('pImg').classList.toggle('contain',!!s.contain);
   document.getElementById('pSpecs').innerHTML=s.specs.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('');
   document.getElementById('pModels').innerHTML=`<div class="row"><span>${s.name} · ${s.power}</span><span>${s.price}</span></div>`;
-  document.getElementById('pPults').textContent=(parseFloat(String(s.power).replace(',','.'))>18)?'BB90 до 30 кВт · CL50 WiFi':'BB90 до 18 кВт · CL32 WiFi';
+  const kw=parseFloat(String(s.power).replace(',','.'));
+  document.getElementById('pPults').textContent=kw>18?'Classy WiFi (CL50, до 30 кВт)':(kw>12?'Classy WiFi (CL32, до 18 кВт)':'BB90 · Classy WiFi (CL32)');
   document.getElementById('pHidden').value=s.name;
   document.getElementById('pWa').href=`https://wa.me/77019482840?text=${encodeURIComponent('Здравствуйте, интересует печь '+s.name)}`;
   document.getElementById('overlay').classList.add('open');
@@ -591,11 +597,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup();});
 const FAQS=[
  ["Как подобрать мощность печи?","Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.","Подбор"],
  ["Какое нужно электропитание?","Вся линейка работает от трёхфазной сети 3~400В. Мощность и напряжение указаны в карточке каждой модели.","Электрика"],
- ["Нужен ли отдельный пульт управления?","У части моделей управление встроено. Для остальных нужен выносной пульт: BB90 или CL WiFi с управлением со смартфона. Оба — в версиях до 18 кВт и до 30 кВт, выбирается по мощности печи.","Управление"],
+ ["Нужен ли отдельный пульт управления?","У части моделей управление встроено. Для остальных нужен выносной пульт: BB90 (до 12 кВт) или Classy WiFi с управлением со смартфона — CL32 до 18 кВт и CL50 до 30 кВт. Подбирается по мощности печи.","Управление"],
  ["Какая гарантия и есть ли сервис в Казахстане?","На все печи — 1 год. На ТЭНы: 1 год для частной бани и 3 месяца при коммерческой эксплуатации. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа.","Сервис"],
  ["Как быстро доставите?","Печи в наличии в Алматы. Доставка по Казахстану — 1–7 дней.","Доставка"],
  ["Можно посмотреть печи вживую?","Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.","Шоурум"],
- ["Хочу продавать печи Dolomiti в своём магазине","Отлично! У нас дилерская программа с защитой территории и маржой до [X]%. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.","Дилерам"]
+ ["Хочу продавать печи Dolomiti в своём магазине","Отлично! У нас дилерская программа с защитой территории и дилерскими ценами — условия высылаем по запросу. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.","Дилерам"]
 ];
 const faqList=document.getElementById('faqList');
 faqList.innerHTML=FAQS.map((f,i)=>`<div class="faq-item">
