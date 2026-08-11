@@ -175,6 +175,12 @@
   .acc{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;background:var(--line);border:.5px solid var(--line);margin-top:40px}
   .acc>div{background:var(--white);padding:20px;font-size:.9rem;text-align:center}
   .acc .ph{aspect-ratio:1;margin-bottom:12px}
+  /* mobile menu */
+  .mobile-menu{display:none;flex-direction:column;border-top:.5px solid var(--line);background:var(--white)}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{padding:15px var(--pad);border-bottom:.5px solid var(--line);font-size:1rem}
+  .mobile-menu a:active{background:var(--gray)}
+  .mobile-menu .mm-phone{font-weight:700;border-bottom:none}
   @media(max-width:1000px){
     .menu{display:none}
     .burger{display:block;margin-left:auto}
@@ -185,8 +191,53 @@
     .acc{grid-template-columns:repeat(3,1fr)}
     .popup .ph{aspect-ratio:16/9;position:static}
     .mbar{display:grid}
-    body{padding-bottom:56px}
+    body{padding-bottom:58px}
     .foot{grid-template-columns:1fr}
+  }
+  /* ---------- телефоны ---------- */
+  @media(max-width:640px){
+    section{padding:44px var(--pad)}
+    h1{font-size:clamp(1.75rem,7.5vw,2.4rem)}
+    h2{font-size:clamp(1.4rem,6vw,1.9rem)}
+    .hero{padding-top:28px}
+    .hero .sub{font-size:1.02rem;margin:16px 0 24px}
+    .hero-img{aspect-ratio:3/4;max-height:none}
+    .hero-cta{flex-direction:column;align-items:stretch}
+    .hero-cta .btn{width:100%}
+    .trust{gap:6px 18px;margin-top:26px;font-size:.82rem}
+    /* каталог и карточки в одну колонку */
+    .grid,.grid[style]{grid-template-columns:1fr !important}
+    .card{padding:20px}
+    .card .ph{aspect-ratio:4/3}
+    .cat-head{padding:20px 20px 14px}
+    .cat-head span:first-child{font-size:1.05rem}
+    /* чипсы — горизонтальный скролл без переноса */
+    .chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 calc(var(--pad)*-1);padding:0 var(--pad) 8px}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{padding:11px 18px;font-size:.9rem}
+    /* калькулятор */
+    .calc{padding:20px;gap:12px}
+    .calc .f{flex:1 1 30%}
+    .calc input{width:100%}
+    .calc-res{flex-basis:100%;min-width:0;padding-top:4px}
+    /* попап на весь экран */
+    .overlay{padding:0}
+    .popup{max-width:none;min-height:100%}
+    .popup .ph{aspect-ratio:4/3}
+    .popup-body{max-height:none;padding:22px 20px 40px}
+    .popup h3{font-size:1.4rem}
+    .popup-close{width:44px;height:44px}
+    /* прочее */
+    .acc{grid-template-columns:repeat(2,1fr)}
+    .cols4{grid-template-columns:1fr}
+    .certs a{width:calc(50% - 5px)}
+    .dark-stats{gap:22px}
+    .dark-stats .l{max-width:none}
+    .row{font-size:.9rem;padding:10px 0}
+    .faq-q{gap:12px;padding:18px 0}
+    .faq-ico{width:34px;height:34px}
+    .faq-q h3{font-size:.98rem}
+    .btn{padding:15px 24px}
   }
 </style>
 </head>
@@ -205,9 +256,15 @@
       <a class="nav-wa" href="https://wa.me/77019482840" target="_blank" aria-label="WhatsApp">WhatsApp</a>
       <a class="btn sm" href="#podbor">Купить печь</a>
       <a class="btn sm outline" href="#dealers">Стать дилером</a>
-      <button class="burger" aria-label="Меню">☰</button>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">☰</button>
     </div>
   </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
+    <a href="#accessories">Аксессуары</a><a href="#brand">О бренде</a><a href="#dealers">Стать дилером</a>
+    <a href="#contacts">Контакты</a>
+    <a class="mm-phone" href="tel:+77019482840">+7 701 948 28 40</a>
+  </nav>
 </header>
 
 <!-- Блок 1. Первый экран -->
@@ -523,14 +580,13 @@ const grid=document.getElementById('catalogGrid');
 function renderCatalog(min,max){
   grid.innerHTML='';
   const list=SERIES.filter(s=>min==null||(s.max>min&&s.min<max));
-  const plural=n=>{const a=n%10,b=n%100;return n+(a===1&&b!==11?' модель':(a>=2&&a<=4&&(b<10||b>=20)?' модели':' моделей'));};
   let cur=null;
   list.forEach(s=>{
     if(s.series!==cur){
       cur=s.series;
       const h=document.createElement('div');
       h.className='cat-head';
-      h.innerHTML=`<span>${s.series}</span><span class="muted">${plural(list.filter(x=>x.series===cur).length)}</span>`;
+      h.innerHTML=`<span>${s.series}</span>`;
       grid.appendChild(h);
     }
     const d=document.createElement('div');d.className='card';
@@ -621,6 +677,16 @@ document.addEventListener('pointermove',e=>{
   t.style.setProperty('--fx',(e.clientX-r.left)+'px');
   t.style.setProperty('--fy',(e.clientY-r.top)+'px');
 });
+
+const burger=document.getElementById('burger'), mmenu=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  const open=mmenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+  burger.textContent=open?'✕':'☰';
+});
+mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  mmenu.classList.remove('open'); burger.textContent='☰'; burger.setAttribute('aria-expanded','false');
+}));
 
 function fakeSubmit(f){alert('Прототип: заявка «'+(f.model?f.model.value||'подбор':'подбор')+'» ушла бы на e-mail + WhatsApp с метками (тип: '+f.lead_type.value+').');return false;}
 
