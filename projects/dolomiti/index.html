@@ -11,7 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"ТОО «Dolomiti»","legalName":"Товарищество с ограниченной ответственностью «Dolomiti»","taxID":"260740019701",
-"url":"https://dolomiti.kz","telephone":"+77019482840","email":"artemzaharov2707@gmail.com",
+"url":"https://dolomiti.kz","telephone":"+77775555884","email":"artemzaharov2707@gmail.com",
+"contactPoint":[{"@type":"ContactPoint","telephone":"+77775555884","contactType":"sales","areaServed":"KZ","availableLanguage":"ru"},
+{"@type":"ContactPoint","telephone":"+77775555883","contactType":"technical support","areaServed":"KZ","availableLanguage":"ru"}],
 "address":{"@type":"PostalAddress","streetAddress":"ул. Ратушного, 40","addressLocality":"Алматы","addressCountry":"KZ"}}
 </script>
 <script type="application/ld+json">
@@ -51,9 +53,10 @@
   .logo span{font-weight:400;color:var(--muted)}
   .menu{display:flex;gap:22px;font-size:.92rem;flex:1;justify-content:center}
   .menu a:hover{opacity:.55}
-  .nav-cta{display:flex;gap:10px;align-items:center}
+  .nav-cta{display:flex;gap:14px;align-items:center}
   .burger{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer}
-  .nav-phone{font-size:.9rem;font-weight:600;white-space:nowrap}
+  .nav-phone{font-size:.9rem;font-weight:600;white-space:nowrap;line-height:1.2}
+  .nav-phone span{display:block;font-size:.66rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .nav-phone:hover,.nav-wa:hover{opacity:.55}
   .nav-wa{font-size:.9rem;text-decoration:underline;white-space:nowrap}
   @media(max-width:1560px){.nav-phone,.nav-wa{display:none}}
@@ -252,8 +255,9 @@
       <a href="#brand">О бренде</a><a href="#brand">База знаний</a><a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
-      <a class="nav-phone" href="tel:+77019482840">+7 701 948 28 40</a>
-      <a class="nav-wa" href="https://wa.me/77019482840" target="_blank" aria-label="WhatsApp">WhatsApp</a>
+      <a class="nav-phone" href="tel:+77775555884"><span>Продажи</span>+7 777 555 58 84</a>
+      <a class="nav-phone" href="tel:+77775555883"><span>Сервис</span>+7 777 555 58 83</a>
+      <a class="nav-wa" href="https://wa.me/77775555884" target="_blank" aria-label="WhatsApp">WhatsApp</a>
       <a class="btn sm" href="#podbor">Купить печь</a>
       <a class="btn sm outline" href="#dealers">Стать дилером</a>
       <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">☰</button>
@@ -263,7 +267,8 @@
     <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
     <a href="#accessories">Аксессуары</a><a href="#brand">О бренде</a><a href="#dealers">Стать дилером</a>
     <a href="#contacts">Контакты</a>
-    <a class="mm-phone" href="tel:+77019482840">+7 701 948 28 40</a>
+    <a class="mm-phone" href="tel:+77775555884">📈 Продажи — +7 777 555 58 84</a>
+    <a class="mm-phone" href="tel:+77775555883">🔧 Сервис — +7 777 555 58 83</a>
   </nav>
 </header>
 
@@ -276,7 +281,7 @@
       <p class="sub">Полная линейка от&nbsp;6 до&nbsp;27&nbsp;кВт — для домашней парной и&nbsp;коммерческой сауны. Гарантия 1&nbsp;год, ТЭНы в&nbsp;наличии в&nbsp;РК, доставка 1–7&nbsp;дней.</p>
       <div class="hero-cta">
         <a class="btn" href="#podbor">Подобрать печь</a>
-        <a class="btn outline" href="https://wa.me/77019482840?text=Здравствуйте!%20Интересуют%20печи%20Dolomiti" target="_blank">Написать в WhatsApp</a>
+        <a class="btn outline" href="https://wa.me/77775555884?text=Здравствуйте!%20Интересуют%20печи%20Dolomiti" target="_blank">Написать в WhatsApp</a>
       </div>
       <div class="trust">
         <span><b>CE · EAC · SGS</b> сертификация</span>
@@ -478,7 +483,9 @@
     </div>
     <div>
       <p><b>Контакты</b></p><br>
-      <p>+7 701 948 28 40<br>artemzaharov2707@gmail.com<br>Алматы, Ратушного 40</p><br>
+      <p><b>Продажи</b><br><a href="tel:+77775555884">+7 777 555 58 84</a></p>
+      <p style="margin-top:10px"><b>Сервис</b><br><a href="tel:+77775555883">+7 777 555 58 83</a></p>
+      <p style="margin-top:10px">artemzaharov2707@gmail.com<br>Алматы, Ратушного 40</p><br>
       <p><a href="https://instagram.com/" target="_blank" style="text-decoration:underline">Instagram</a></p>
     </div>
     <div>
@@ -489,8 +496,8 @@
 </footer>
 
 <div class="mbar">
-  <a class="call" href="tel:+77019482840">Позвонить</a>
-  <a class="wa" href="https://wa.me/77019482840" target="_blank">WhatsApp</a>
+  <a class="call" href="tel:+77775555884">Позвонить</a>
+  <a class="wa" href="https://wa.me/77775555884" target="_blank">WhatsApp</a>
 </div>
 
 <!-- Попап товара -->
@@ -640,7 +647,7 @@ function openPopup(s){
   const kw=parseFloat(String(s.power).replace(',','.'));
   document.getElementById('pPults').textContent=kw>18?'CL50WF-C (до 30 кВт)':(kw>9?'CL32WF-C (до 18 кВт)':'BB90 (до 9 кВт) · CL32WF-C');
   document.getElementById('pHidden').value=s.name;
-  document.getElementById('pWa').href=`https://wa.me/77019482840?text=${encodeURIComponent('Здравствуйте, интересует печь '+s.name)}`;
+  document.getElementById('pWa').href=`https://wa.me/77775555884?text=${encodeURIComponent('Здравствуйте, интересует печь '+s.name)}`;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
   if(window.animatePopupOpen)window.animatePopupOpen();
@@ -652,7 +659,7 @@ const FAQS=[
  ["Как подобрать мощность печи?","Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.","Подбор"],
  ["Какое нужно электропитание?","Вся линейка работает от трёхфазной сети 3~400В. Мощность и напряжение указаны в карточке каждой модели.","Электрика"],
  ["Нужен ли отдельный пульт управления?","У части моделей управление встроено. Для остальных нужен выносной пульт: BB90 (до 9 кВт) или Classy WiFi с управлением со смартфона — CL32WF-C до 18 кВт и CL50WF-C до 30 кВт. Подбирается по мощности печи.","Управление"],
- ["Какая гарантия и есть ли сервис в Казахстане?","На все печи — 1 год. На ТЭНы: 1 год для частной бани и 3 месяца при коммерческой эксплуатации. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа.","Сервис"],
+ ["Какая гарантия и есть ли сервис в Казахстане?","На все печи — 1 год. На ТЭНы: 1 год для частной бани и 3 месяца при коммерческой эксплуатации. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа. Сервисная служба: <a href='tel:+77775555883' style='text-decoration:underline'>+7 777 555 58 83</a>.","Сервис"],
  ["Как быстро доставите?","Печи в наличии в Алматы. Доставка по Казахстану — 1–7 дней.","Доставка"],
  ["Можно посмотреть печи вживую?","Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.","Шоурум"],
  ["Хочу продавать печи Dolomiti в своём магазине","Отлично! У нас есть дилерская программа с защитой территории — условия высылаем по запросу. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.","Дилерам"]
