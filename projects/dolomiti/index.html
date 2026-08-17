@@ -17,7 +17,7 @@
 "address":{"@type":"PostalAddress","streetAddress":"ул. Ратушного, 40","addressLocality":"Алматы","addressCountry":"KZ"}}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Product","name":"Электропечь для сауны Dolomiti Pillar",
+{"@context":"https://schema.org","@type":"Product","name":"Электропечь для сауны Dolomiti",
 "brand":{"@type":"Brand","name":"Dolomiti&F"},
 "offers":{"@type":"AggregateOffer","priceCurrency":"KZT","lowPrice":"380000","offerCount":"11","availability":"https://schema.org/InStock"}}
 </script>
@@ -289,7 +289,7 @@
         <span><b>Kaspi</b> / рассрочка</span>
       </div>
     </div>
-    <div class="ph hero-img rv"><img src="img/hero-pillar.webp" alt="Электропечь Dolomiti Pillar в парной"></div>
+    <div class="ph hero-img rv"><img src="img/hero-crown.webp" alt="Электропечь Dolomiti Crown в парной"></div>
   </div>
 </section>
 
@@ -540,10 +540,10 @@ const SERIES=[
  {id:"cr90",img:"img/crown.webp",contain:1,series:"Crown",name:"CR90BE",power:"9 кВт",volt:"3~400В",vol:"8–13 м³",min:8,max:13,price:"430 000 ₸",
   desc:"Электрическая печь Crown отличается мягкими линиями, металлической эстетикой и внешним видом, напоминающим корону, что добавляет премиальный стиль интерьеру парной. Круглая конструкция позволяет ставить печь на пол или встраивать её в полок. Благодаря большой вместимости камней воду можно поддавать с разных сторон — печь даёт много тепла и пара и подходит как для семейной, так и для небольшой коммерческой сауны.",
   specs:[["Модель","CR90BE"],["Мощность","9 кВт"],["Напряжение","3~400В"],["Объём парной","8–13 м³"],["Вместимость камней","60 кг"],["Каменка","открытая"],["Управление","встроенное или внешний пульт"],["Цвет","чёрный"]]},
- {id:"ph60",img:"img/pillar.webp",contain:1,series:"Pillar-E",name:"PH60BE",power:"6 кВт",volt:"3~400В",vol:"5–8 м³",min:5,max:8,price:"380 000 ₸",
+ {id:"ph60",img:"",contain:1,series:"Pillar-E",name:"PH60BE",power:"6 кВт",volt:"3~400В",vol:"5–8 м³",min:5,max:8,price:"380 000 ₸",
   desc:"Печь Pillar-E работает с внешним управлением и требует пульта. Каменка ставится на пол в парной или встраивается в полок. Защитное ограждение из гнутой светлой древесины и нержавеющей стали предотвращает случайное прикосновение к горячей печи и подчёркивает стиль каменки.",
   specs:[["Модель","PH60BE"],["Мощность","6 кВт"],["Напряжение","3~400В"],["Объём парной","5–8 м³"],["Вместимость камней","60 кг"],["Габариты","320×320×950 мм"],["Управление","внешний пульт (обязателен)"],["Цвет","чёрный"]]},
- {id:"ph90",img:"img/pillar.webp",contain:1,series:"Pillar-E",name:"PH90BE",power:"9 кВт",volt:"3~400В",vol:"8–13 м³",min:8,max:13,price:"420 000 ₸",
+ {id:"ph90",img:"",contain:1,series:"Pillar-E",name:"PH90BE",power:"9 кВт",volt:"3~400В",vol:"8–13 м³",min:8,max:13,price:"420 000 ₸",
   desc:"Печь Pillar-E работает с внешним управлением и требует пульта. Каменка ставится на пол в парной или встраивается в полок. Защитное ограждение из гнутой светлой древесины и нержавеющей стали предотвращает случайное прикосновение к горячей печи и подчёркивает стиль каменки.",
   specs:[["Модель","PH90BE"],["Мощность","9 кВт"],["Напряжение","3~400В"],["Объём парной","8–13 м³"],["Вместимость камней","60 кг"],["Габариты","320×320×950 мм"],["Управление","внешний пульт (обязателен)"],["Цвет","чёрный"]]},
  {id:"sd90",img:"img/space.webp",contain:0,series:"Space Mini",name:"SD90E",power:"9 кВт",volt:"3~400В",vol:"8–13 м³",min:8,max:13,price:"420 000 ₸",
@@ -597,7 +597,7 @@ function renderCatalog(min,max){
       grid.appendChild(h);
     }
     const d=document.createElement('div');d.className='card';
-    d.innerHTML=`<div class="ph${s.contain?' contain':''}"><img src="${s.img}" alt="Печь Dolomiti ${s.name}" loading="lazy"></div>
+    d.innerHTML=`<div class="ph${s.contain?' contain':''}">${s.img?`<img src="${s.img}" alt="Печь Dolomiti ${s.name}" loading="lazy">`:`Фото ${s.name}<br>ожидается`}</div>
       <div><div class="card-series">${s.series}</div><h3>${s.name}</h3><div class="card-meta"><span>${s.power}</span><span>${s.volt}</span><span>${s.vol}</span></div></div>
       <span class="badge">${s.b2b?'Коммерческая серия':'В наличии в Алматы'}</span>
       <div class="price">${s.price}</div>
@@ -641,7 +641,7 @@ function openPopup(s){
   document.getElementById('pKicker').textContent=`${s.series} · ${s.power} · ${s.volt}`;
   document.getElementById('pTitle').textContent=s.name;
   document.getElementById('pDesc').textContent=s.desc;
-  document.getElementById('pImg').innerHTML=`<img src="${s.img}" alt="Печь Dolomiti ${s.name}">`;document.getElementById('pImg').classList.toggle('contain',!!s.contain);
+  document.getElementById('pImg').innerHTML=s.img?`<img src="${s.img}" alt="Печь Dolomiti ${s.name}">`:`Фото ${s.name} ожидается`;document.getElementById('pImg').classList.toggle('contain',!!s.contain);
   document.getElementById('pSpecs').innerHTML=s.specs.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('');
   document.getElementById('pModels').innerHTML=`<div class="row"><span>${s.name} · ${s.power}</span><span>${s.price}</span></div>`;
   const kw=parseFloat(String(s.power).replace(',','.'));
