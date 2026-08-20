@@ -23,11 +23,11 @@
     <button class="burger" data-burger type="button" aria-label="Меню" aria-expanded="false" aria-controls="mobile-nav">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <button class="btn" type="button" data-open-lead>Записаться</button>
+    <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener">Записаться</a>
   </div>
   <div class="mobile-nav" id="mobile-nav">
     <div class="wrap"><ul><li><a href="index.html">Главная</a></li><li><a href="programs.html">Программы</a></li><li><a href="about.html">О школе</a></li><li><a href="contacts.html">Контакты</a></li></ul>
-      <button class="btn" type="button" data-open-lead>Записаться на диагностику</button>
+      <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener">Записаться на пробный урок</a>
     </div>
   </div>
 </header>
@@ -49,28 +49,30 @@
       <p>Настоящая Политика определяет порядок сбора, обработки и защиты персональных данных
       пользователей сайта и разработана в соответствии с Законом Республики Казахстан
       от 21 мая 2013 года № 94-V «О персональных данных и их защите».</p>
-      <p>Оставляя заявку на сайте, вы даёте согласие на сбор и обработку своих персональных данных
-      на условиях, изложенных ниже.</p>
+      <p>Сайт не содержит формы сбора данных: кнопки ведут в мессенджер WhatsApp.
+      Обращаясь к нам через WhatsApp или по указанным контактам, вы передаёте свои данные
+      добровольно и даёте согласие на их обработку на условиях, изложенных ниже.</p>
 
       <h2 style="margin-top:26px;">1. Какие данные собираются</h2>
-      <p>Добровольно через форму заявки: имя, номер телефона (в том числе для связи в WhatsApp),
-      цель обучения и текущий уровень языка.</p>
-      <p>Автоматически: метки рекламной кампании (UTM), идентификатор клика рекламной площадки,
-      адрес страницы, с которой отправлена заявка, а также обезличенные данные веб-аналитики.</p>
+      <p>Добровольно в переписке: имя, номер телефона (он виден при обращении в WhatsApp),
+      а также сведения, которые вы сообщаете сами — цель обучения и текущий уровень языка.</p>
+      <p>Автоматически на сайте: метки рекламной кампании (UTM), идентификатор клика рекламной
+      площадки и обезличенные данные веб-аналитики. Метка кампании может добавляться
+      в текст первого сообщения в WhatsApp, чтобы мы понимали, из какой рекламы вы пришли.</p>
 
       <h2 style="margin-top:26px;">2. Зачем данные обрабатываются</h2>
-      <p>Связаться с вами и согласовать время диагностики; подобрать программу подготовки
+      <p>Связаться с вами и согласовать время занятия; подобрать программу подготовки
       и сообщить её условия; оказать образовательные услуги, если вы решите начать обучение;
       оценить эффективность рекламных кампаний в обезличенном виде.</p>
 
       <h2 style="margin-top:26px;">3. Правовое основание</h2>
-      <p>Ваше согласие, выраженное проставлением отметки при отправке формы, а также исполнение
-      договора об оказании образовательных услуг, если он заключён.</p>
+      <p>Ваше согласие, выраженное добровольным обращением к нам через WhatsApp или по указанным
+      контактам, а также исполнение договора об оказании образовательных услуг, если он заключён.</p>
 
       <h2 style="margin-top:26px;">4. Кому передаются данные</h2>
       <p>Оператор не продаёт персональные данные третьим лицам. Передача возможна сервисам,
-      обеспечивающим работу сайта и обработку заявок (хостинг и конструктор сайта, CRM-система,
-      сервисы веб-аналитики и рекламные площадки — в обезличенном виде), а также в случаях,
+      обеспечивающим работу сайта и обработку обращений (хостинг сайта, WhatsApp как канал связи,
+      CRM-система, сервисы веб-аналитики и рекламные площадки — в обезличенном виде), а также в случаях,
       прямо предусмотренных законодательством Республики Казахстан.</p>
 
       <h2 style="margin-top:26px;">5. Трансграничная передача</h2>
@@ -138,75 +140,6 @@
     </p>
   </div>
 </footer>
-<div class="modal" id="lead-modal" role="dialog" aria-modal="true" aria-labelledby="lead-title">
-  <div class="modal-backdrop" data-close-lead></div>
-  <div class="modal-card">
-    <button class="modal-close" type="button" data-close-lead aria-label="Закрыть">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-
-    <h2 id="lead-title">Записаться на диагностику</h2>
-    <p class="small" style="margin-bottom:20px;">30–40 минут · 3&nbsp;000&nbsp;₸ · с планом подготовки на выходе</p>
-
-    <form id="lead-form" novalidate>
-      <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value="">
-      <input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value="">
-      <input type="hidden" name="utm_term" value=""><input type="hidden" name="ttclid" value="">
-      <input type="hidden" name="page_url" value="">
-
-      <div class="field">
-        <label for="lead-name">Имя</label>
-        <input id="lead-name" name="name" type="text" autocomplete="name" data-req placeholder="Как к вам обращаться">
-        <span class="err" data-err-for="lead-name">Напишите имя</span>
-      </div>
-
-      <div class="field">
-        <label for="lead-phone">WhatsApp</label>
-        <input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" data-req value="+7 (___) ___-__-__">
-        <span class="err" data-err-for="lead-phone">Введите номер полностью</span>
-      </div>
-
-      <div class="field">
-        <label for="lead-goal">Цель</label>
-        <select id="lead-goal" name="goal">
-          <option>Сдать IELTS</option>
-          <option>Поступить за рубеж</option>
-          <option>Работа и переезд</option>
-          <option>Для себя</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="lead-level">Текущий уровень</label>
-        <select id="lead-level" name="level">
-          <option>С нуля</option>
-          <option>Базовый</option>
-          <option>Средний</option>
-          <option>Уже сдавал IELTS</option>
-        </select>
-      </div>
-
-      <!-- Согласие обязательно и НЕ предустановлено: предустановленная
-           галочка согласием по Закону РК не считается. -->
-      <label class="consent" for="lead-consent">
-        <input type="checkbox" id="lead-consent" name="consent" value="Да" data-req>
-        <span>Согласен(на) на обработку персональных данных и принимаю
-        <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span>
-      </label>
-      <span class="err" data-err-for="lead-consent" style="margin-bottom:10px;">Нужно согласие на обработку данных</span>
-
-      <button class="btn btn--full" type="submit" id="lead-submit">Записаться на диагностику</button>
-      <p class="form-note">Свяжемся в WhatsApp и подберём удобное время.</p>
-      <p class="form-note" id="lead-notice" style="display:none;color:var(--cta);font-weight:800;"></p>
-    </form>
-
-    <div class="form-ok" id="lead-ok" style="display:none;">
-      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
-      <h2 style="padding:0;">Заявка принята</h2>
-      <p class="small" style="margin-top:8px;">Свяжемся в WhatsApp и подберём время диагностики.</p>
-    </div>
-  </div>
-</div>
 <script src="assets/app.js"></script>
 </body>
 </html>

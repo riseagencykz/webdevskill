@@ -1,20 +1,9 @@
 /* ============================================================
    Mr B Academy — общий скрипт сайта
-   Меню, модальная форма, метки источника, маска телефона,
-   появление при скролле.
+   Меню, ссылки в WhatsApp, метки источника, появление при скролле.
    ============================================================ */
 (function () {
   'use strict';
-
-  /* ---------- КУДА ОТПРАВЛЯТЬ ЗАЯВКУ ----------
-     Пока адрес не задан, форма НЕ делает вид, что отправила: показывает
-     прямое предупреждение. Фальшивое «Заявка принята» создало бы
-     иллюзию, что лиды идут, когда их нет.
-
-     Варианты подключения:
-       1. свой обработчик / вебхук AmoCRM  -> впишите URL ниже;
-       2. форма Тильды в попапе            -> см. site/README.md.  */
-  var FORM_ENDPOINT = '';   // например 'https://example.kz/api/lead'
 
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
@@ -108,142 +97,54 @@
   swapOnError('[data-logo]', '[data-logo-text]', 'inline');
   swapOnError('[data-portrait]', '[data-portrait-fallback]', 'block');
 
-  /* ================= Модальная форма ================= */
-  var modal = document.getElementById('lead-modal');
-  if (!modal) return;
+  /* ================= WhatsApp =================
+     Формы на сайте нет — все кнопки ведут в мессенджер.
+     Номер и текст сообщения задаются здесь. */
+  var WA_PHONE = '77025648350';
+  var WA_TEXT  = 'Добрый день! Хочу записаться на пробный урок';
 
-  var form    = document.getElementById('lead-form');
-  var okBox   = document.getElementById('lead-ok');
-  var notice  = document.getElementById('lead-notice');
-  var submit  = document.getElementById('lead-submit');
-  var title   = modal.querySelector('h2');
-  var lastFocused = null;
+  /* Метки источника дописываем в текст сообщения: при переходе в WhatsApp
+     форма исчезает, а вместе с ней и вся атрибуция. Без этого не видно,
+     какой ролик приносит заявки. Поставьте false, чтобы убрать пометку. */
+  var WA_TAG_SOURCE = true;
 
-  function openModal() {
-    lastFocused = document.activeElement;
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';       // блокируем прокрутку фона
-    if (title) { title.setAttribute('tabindex', '-1'); title.focus({ preventScroll: true }); }
-  }
-  function closeModal() {
-    modal.classList.remove('is-open');
-    document.body.style.overflow = '';
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
-  }
-
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-open-lead]')) { e.preventDefault(); openModal(); return; }
-    if (e.target.closest('[data-close-lead]')) { e.preventDefault(); closeModal(); }
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
-  });
-
-  /* ---------- Метки источника ----------
-     Параметр может потеряться при переходе между страницами,
-     поэтому держим копию в sessionStorage. */
-  try {
-    var qs = new URLSearchParams(window.location.search);
+  function sourceData() {
+    var data = {}, qs;
+    try { qs = new URLSearchParams(window.location.search); } catch (e) { qs = null; }
     UTM_KEYS.forEach(function (k) {
-      var v = qs.get(k) || '';
+      var v = qs ? (qs.get(k) || '') : '';
+      // Параметр теряется при переходе между страницами — держим копию
       try {
         if (v) sessionStorage.setItem('mrb_' + k, v);
         else v = sessionStorage.getItem('mrb_' + k) || '';
       } catch (e) {}
-      var field = form.querySelector('[name="' + k + '"]');
-      if (field) field.value = v;
+      data[k] = v;
     });
-    var pageField = form.querySelector('[name="page_url"]');
-    if (pageField) pageField.value = window.location.href.slice(0, 500);
-  } catch (e) {}
-
-  /* ---------- Валидация ---------- */
-  function fieldValid(input) {
-    var good;
-    if (input.type === 'checkbox') good = input.checked;
-    else if (input.type === 'tel') good = (input.value || '').replace(/\D/g, '').length === 11;
-    else good = (input.value || '').trim().length > 0;
-    input.setAttribute('aria-invalid', good ? 'false' : 'true');
-    var err = form.querySelector('[data-err-for="' + input.id + '"]');
-    if (err) err.classList.toggle('is-shown', !good);
-    return good;
-  }
-  function formValid() {
-    var ok = true;
-    form.querySelectorAll('[data-req]').forEach(function (i) { if (!fieldValid(i)) ok = false; });
-    return ok;
-  }
-  // ux-guidelines.csv → Inline Validation: проверяем на blur, а не только на сабмите
-  form.addEventListener('blur', function (e) {
-    if (e.target.matches && e.target.matches('[data-req]:not([type=checkbox])')) fieldValid(e.target);
-  }, true);
-  form.addEventListener('change', function (e) {
-    if (e.target.type === 'checkbox') fieldValid(e.target);
-  });
-
-  /* ---------- Маска телефона ---------- */
-  var phone = document.getElementById('lead-phone');
-  if (phone) {
-    var TPL = '+7 (___) ___-__-__';
-    var mask = function (d) {
-      var out = '', i = 0, k = 0;
-      for (; i < TPL.length; i++) out += TPL[i] === '_' ? (k < d.length ? d[k++] : '_') : TPL[i];
-      return out;
-    };
-    var caret = function () { var i = phone.value.indexOf('_'); return i === -1 ? phone.value.length : i; };
-    /* Порядок важен: сначала снимаем «7» нашего же префикса +7, затем «8» —
-       междугородний. Ведущую «7» самого номера трогать нельзя: коды
-       операторов РК начинаются с семёрки (701, 707, 747, 775). */
-    var digits = function (v) {
-      var d = v.replace(/\D/g, '');
-      if (d.charAt(0) === '7') d = d.slice(1);
-      if (d.charAt(0) === '8') d = d.slice(1);
-      return d.slice(0, 10);
-    };
-    phone.addEventListener('focus', function () {
-      if (!phone.value) phone.value = TPL;
-      requestAnimationFrame(function () { var p = caret(); phone.setSelectionRange(p, p); });
-    });
-    phone.addEventListener('input', function () {
-      phone.value = mask(digits(phone.value));
-      var p = caret(); phone.setSelectionRange(p, p);
-    });
-    phone.addEventListener('click', function () { var p = caret(); phone.setSelectionRange(p, p); });
-    phone.addEventListener('blur', function () { if (phone.value === TPL) phone.value = ''; });
+    return data;
   }
 
-  /* ---------- Отправка ---------- */
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!formValid()) return;
-
-    if (!FORM_ENDPOINT) {
-      // Честно говорим, что адрес не задан, вместо фальшивого успеха
-      notice.textContent = 'Форма не подключена: укажите FORM_ENDPOINT в assets/app.js.';
-      notice.style.display = 'block';
-      return;
+  function waHref() {
+    var d = sourceData();
+    var text = WA_TEXT;
+    if (WA_TAG_SOURCE) {
+      // Короткая метка, а не список параметров: сообщение пишет человек,
+      // длинный технический хвост в нём выглядит странно.
+      var tag = d.utm_content || d.utm_campaign || d.utm_source || '';
+      if (tag) text += ' #' + tag.replace(/[^\w-]/g, '').slice(0, 24);
     }
+    return 'https://api.whatsapp.com/send/?phone=' + WA_PHONE +
+           '&text=' + encodeURIComponent(text) + '&type=phone_number&app_absent=0';
+  }
 
-    submit.disabled = true;
-    submit.textContent = 'Отправляем…';
-    notice.style.display = 'none';
+  var waLinks = document.querySelectorAll('[data-wa]');
+  for (var w2 = 0; w2 < waLinks.length; w2++) waLinks[w2].href = waHref();
 
-    var data = {};
-    new FormData(form).forEach(function (v, k) { data[k] = v; });
-
-    fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    }).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      form.style.display = 'none';
-      okBox.style.display = 'block';
-    }).catch(function () {
-      submit.disabled = false;
-      submit.textContent = 'Записаться на диагностику';
-      notice.textContent = 'Не удалось отправить. Попробуйте ещё раз или напишите нам в WhatsApp.';
-      notice.style.display = 'block';
-    });
+  /* Событие конверсии. Страницы «Спасибо» нет, поэтому пиксель должен
+     сработать на клике — иначе заявки в статистике не появятся.
+     Вызовы обёрнуты: если пиксель не подключён, ошибки не будет. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-wa]')) return;
+    try { if (window.ttq && ttq.track) ttq.track('Contact'); } catch (err) {}
+    try { if (window.fbq) fbq('track', 'Contact'); } catch (err) {}
   });
 })();

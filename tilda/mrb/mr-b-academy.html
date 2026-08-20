@@ -3,15 +3,15 @@
      ОДИН БЛОК ДЛЯ ТИЛЬДЫ. Скопировать файл целиком и вставить
      в блок T123 «HTML-код».
 
-     Три блока: 1) первый экран  2) диагностика и цены  3) эксперт и CTA.
+     Три блока: 1) первый экран  2) пробный урок  3) ментор и CTA.
      Ниже — футер с реквизитами.
 
-     ВСЕ КНОПКИ ОТКРЫВАЮТ ПОПАП ТИЛЬДЫ #popup:myform.
-     Попап нужно создать отдельным блоком и задать ему имя myform
-     (Настройки блока попапа → Идентификатор / Popup name).
+     ВСЕ КНОПКИ ВЕДУТ В WHATSAPP. Формы на странице нет.
+     Номер и текст сообщения задаются одной строкой в скрипте внизу
+     (переменные WA_PHONE и WA_TEXT).
 
-     UTM-метки и ttclid этот блок подставляет в форму попапа сам —
-     см. секцию «Метки источника» в скрипте внизу.
+     UTM-метки и ttclid дописываются в текст сообщения, иначе при
+     переходе в мессенджер атрибуция по креативам теряется.
 
      Всё внутри .mrb, классы с префиксом mrb-, JS в IIFE.
      Глобальных стилей и переменных нет.
@@ -277,10 +277,13 @@
       </p>
 
       <div class="mrb-hero-cta">
-        <a class="mrb-btn" href="#popup:myform">Записаться на диагностику уровня</a>
+        <a class="mrb-btn" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 018.24 8.24c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+          Записаться на пробный урок
+        </a>
         <span class="mrb-hero-note">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-          30–40 минут · 3&nbsp;000&nbsp;₸ · с планом подготовки
+          Бесплатно · ответим в WhatsApp
         </span>
       </div>
 
@@ -310,58 +313,41 @@
     <div class="mrb-wrap">
       <div class="mrb-section-head mrb-reveal">
         <p class="mrb-eyebrow">Главное</p>
-        <h2 class="mrb-h2">Что даёт диагностика уровня</h2>
-        <p class="mrb-lead">Это не пробный урок и не продающий созвон. Это платный разбор твоего уровня по критериям IELTS — с готовым планом на выходе.</p>
+        <h2 class="mrb-h2">Что будет на пробном уроке</h2>
+        <p class="mrb-lead">Бесплатно и ни к чему не обязывает. Никаких тестов заранее — просто приходите и занимаетесь.</p>
       </div>
 
       <div class="mrb-card mrb-reveal">
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-          <div><p class="mrb-check-title">Оценим устную речь по критериям IELTS</p>
-          <p class="mrb-check-desc">Живой разговор на английском и разбор по тем же четырём критериям, что у экзаменатора: fluency, лексика, грамматика, произношение.</p></div>
+          <div><p class="mrb-check-title">Позанимаетесь с преподавателем</p>
+          <p class="mrb-check-desc">Настоящее занятие по программе школы, а не презентация курса. Сразу видно, подходит вам формат или нет.</p></div>
         </div>
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-          <div><p class="mrb-check-title">Определим ориентировочный уровень и разрыв до цели</p>
-          <p class="mrb-check-desc">Насколько ты сейчас далеко от нужного балла и какие ошибки тянут оценку вниз в первую очередь.</p></div>
+          <div><p class="mrb-check-title">Посмотрим ваш уровень в разговоре</p>
+          <p class="mrb-check-desc">Без экзаменов и заданий заранее. Преподаватель поймёт уровень по обычной беседе на занятии.</p></div>
         </div>
         <div class="mrb-check">
           <svg class="mrb-check-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-          <div><p class="mrb-check-title">Соберём индивидуальный план и назовём реальный срок</p>
+          <div><p class="mrb-check-title">Скажем, какой трек нужен и сколько займёт</p>
           <p class="mrb-check-desc">Честно: от 2–3 месяцев, если база есть, до года и больше с нуля. Если до цели год — так и скажем.</p></div>
         </div>
 
-        <!-- Прямо проговариваем границы формата. Обещать «оценку по всем
-             четырём секциям» за 30–40 минут нельзя: полный пробный экзамен
-             идёт около трёх часов, и на созвоне это всплывёт. -->
-        <p class="mrb-honest">
-          Полный пробный экзамен со всеми четырьмя секциями идёт около трёх часов —
-          за 30–40 минут его не заменить, и мы не делаем вид, что заменяем.
-          Задача диагностики другая: понять стартовую точку и собрать план.
-        </p>
-
         <ul class="mrb-terms">
-          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>30–40 минут</li>
-          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>3&nbsp;000&nbsp;₸</li>
+          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Бесплатно</li>
           <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Без обязательств</li>
+          <li class="mrb-term"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Онлайн или в Астане</li>
         </ul>
 
-        <!-- Снятие риска одной строкой. Длинное оправдание цены при 3 000 ₸
-             работало против конверсии: чем больше оправданий, тем дороже
-             кажется. Оставлено только то, что снимает страх «зря заплачу». -->
-        <p class="mrb-small" style="margin-top:20px;">
-          План подготовки остаётся у тебя в любом случае — даже если учиться
-          пойдёшь не к нам.
-        </p>
-
         <div style="margin-top:24px;">
-          <a class="mrb-btn mrb-btn--full" href="#popup:myform">Записаться на диагностику</a>
+          <a class="mrb-btn mrb-btn--full" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener">Записаться на пробный урок</a>
         </div>
       </div>
 
       <!-- Треки без цен. Сама логика перехода нужна: она снимает возражение
            «а мне обещали 2 месяца» до менеджера. Роль фильтра «ищу бесплатно»,
-           которую раньше играл прайс, теперь выполняет платная диагностика. -->
+           которую раньше играл прайс, снята намеренно: цель — максимум заявок. -->
       <div class="mrb-grid mrb-grid--2 mrb-reveal" style="margin-top:32px;">
         <div class="mrb-card">
           <span class="mrb-num">1</span>
@@ -377,7 +363,7 @@
         </div>
       </div>
       <p class="mrb-small mrb-reveal" style="margin-top:16px;">
-        Какой трек твой и сколько он займёт — определяется на диагностике.
+        Какой трек ваш и сколько он займёт — скажем на пробном уроке.
       </p>
     </div>
   </section>
@@ -409,11 +395,11 @@
       </div>
 
       <!-- Кто работает с учениками. Блок важен для честности: занятия и
-           диагностику ведёт команда, а не лично ментор. -->
+           пробные уроки ведёт команда, а не лично ментор. -->
       <div class="mrb-card mrb-card--tint mrb-reveal" style="margin-top:32px;">
         <h3 class="mrb-h3">Кто работает с тобой</h3>
         <p class="mrb-p">
-          Диагностику и занятия ведут преподаватели школы — те, кого Бекжан
+          Пробные уроки и занятия ведут преподаватели школы — те, кого Бекжан
           готовит и чью работу проверяет. Программа, критерии оценки и формат
           разбора у всех одинаковые, поэтому результат не зависит от того,
           к кому ты попал в группу.
@@ -448,11 +434,11 @@
       </div>
 
       <div class="mrb-final mrb-reveal">
-        <h3 class="mrb-h3">Начни с того, что узнаешь свой реальный уровень</h3>
-        <p>Диагностика ни к чему не обязывает. Даже если не пойдёшь учиться — уйдёшь с планом подготовки и понятным сроком.</p>
+        <h3 class="mrb-h3">Приходите на пробный урок</h3>
+        <p>Пробный урок бесплатный и ни к чему не обязывает. Пишите в WhatsApp — подберём удобное время.</p>
         <div class="mrb-final-cta">
-          <a class="mrb-btn" href="#popup:myform">Записаться на диагностику уровня</a>
-          <span class="mrb-final-note">30–40 минут · 3&nbsp;000&nbsp;₸ · онлайн или в Астане</span>
+          <a class="mrb-btn" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener">Записаться на пробный урок</a>
+          <span class="mrb-final-note">Бесплатно · онлайн или в Астане</span>
         </div>
       </div>
     </div>
@@ -475,7 +461,7 @@
 
   <!-- Sticky-панель, появляется после 40% скролла. Только мобильные. -->
   <div class="mrb-sticky" id="mrb-sticky" aria-hidden="true">
-    <a class="mrb-btn" href="#popup:myform" tabindex="-1">Записаться на диагностику</a>
+    <a class="mrb-btn" data-wa href="https://api.whatsapp.com/send/?phone=77025648350" target="_blank" rel="noopener" tabindex="-1">Записаться на пробный урок</a>
   </div>
 
 </div>
@@ -606,11 +592,18 @@
   swapOnError('.mrb-expert-img', '.mrb-expert-fallback', 'block');
   swapOnError('.mrb-logo', '.mrb-logo-text', 'inline');
 
-  /* ============ Метки источника в форму попапа ============
-     Форма живёт в блоке попапа Тильды, а не здесь, поэтому скрытые поля
-     дописываем в неё сами: UTM, ttclid и адрес страницы.
-     Значения кладём в sessionStorage — параметр может потеряться
-     при переходе внутри сайта, а заявку человек оставит позже. */
+  /* ============ WhatsApp ============
+     Формы на странице нет — кнопки ведут в мессенджер.
+     Здесь задаются номер и текст сообщения. */
+  var WA_PHONE = '77025648350';
+  var WA_TEXT  = 'Добрый день! Хочу записаться на пробный урок';
+
+  /* Метки источника дописываем в текст сообщения: при переходе в WhatsApp
+     форма исчезает, а вместе с ней и вся атрибуция. Без этого не видно,
+     какой ролик приносит заявки, и оптимизировать нечего.
+     Чтобы убрать пометку из сообщения — поставьте false. */
+  var WA_TAG_SOURCE = true;
+
   var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
 
   function sourceData() {
@@ -618,49 +611,39 @@
     try { qs = new URLSearchParams(window.location.search); } catch (e) { qs = null; }
     KEYS.forEach(function (k) {
       var v = qs ? (qs.get(k) || '') : '';
+      // Параметр может потеряться при переходах внутри сайта — держим копию
       try {
         if (v) sessionStorage.setItem('mrb_' + k, v);
         else v = sessionStorage.getItem('mrb_' + k) || '';
       } catch (e) {}
       data[k] = v;
     });
-    data.page_url = window.location.href.slice(0, 500);
     return data;
   }
 
-  function fillForm(form) {
-    if (!form || form.dataset.mrbSrc === '1') return;
-    form.dataset.mrbSrc = '1';
-    var data = sourceData();
-    Object.keys(data).forEach(function (name) {
-      // Если поле с таким именем уже есть в форме — не дублируем, просто заполняем
-      var field = form.querySelector('[name="' + name + '"]');
-      if (field) { if (!field.value) field.value = data[name]; return; }
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = data[name];
-      form.appendChild(input);
-    });
+  function waHref() {
+    var d = sourceData();
+    var text = WA_TEXT;
+    if (WA_TAG_SOURCE) {
+      // Короткая метка, а не простыня параметров: сообщение пишет человек,
+      // и длинный технический хвост в нём выглядит странно.
+      var tag = d.utm_content || d.utm_campaign || d.utm_source || '';
+      if (tag) text += ' #' + tag.replace(/[^\w-]/g, '').slice(0, 24);
+    }
+    return 'https://api.whatsapp.com/send/?phone=' + WA_PHONE +
+           '&text=' + encodeURIComponent(text) + '&type=phone_number&app_absent=0';
   }
 
-  function fillAllForms() {
-    var forms = document.querySelectorAll('form.js-form-proccess, form.t-form');
-    for (var i = 0; i < forms.length; i++) fillForm(forms[i]);
-  }
+  var waLinks = root.querySelectorAll('[data-wa]');
+  for (var w = 0; w < waLinks.length; w++) waLinks[w].href = waHref();
 
-  fillAllForms();
-  // Попап Тильды может подгружаться позже — добираем появившиеся формы
-  if ('MutationObserver' in window) {
-    var mo = new MutationObserver(function () { fillAllForms(); });
-    mo.observe(document.body, { childList: true, subtree: true });
-    // Наблюдатель нужен только на старте, дальше формы уже на месте
-    setTimeout(function () { mo.disconnect(); }, 15000);
-  }
-  // И на всякий случай — в момент клика по кнопке, открывающей попап
-  document.addEventListener('click', function (e) {
-    var link = e.target.closest && e.target.closest('a[href^="#popup:"]');
-    if (link) setTimeout(fillAllForms, 300);
-  }, true);
+  /* Событие конверсии. Страницы «Спасибо» больше нет, поэтому пиксель
+     должен сработать на клике — иначе заявки в статистике не появятся.
+     Вызовы обёрнуты: если пиксель не подключён, ошибки не будет. */
+  root.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-wa]')) return;
+    try { if (window.ttq && ttq.track) ttq.track('Contact'); } catch (err) {}
+    try { if (window.fbq) fbq('track', 'Contact'); } catch (err) {}
+  });
 })();
 </script>
