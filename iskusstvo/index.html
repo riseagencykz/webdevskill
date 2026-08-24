@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Курс «Стань тату-мастером» — школа «Искусство», Алматы</title>
+<meta name="description" content="Профессия тату-мастера с нуля за курс в студии «Искусство» в Алматы. 6 лет опыта, 500+ учеников, практика на моделях, сертификат. Мини-группы и индивидуальный формат.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F5C842'/%3E%3Ctext x='16' y='24' font-family='Impact,sans-serif' font-size='24' text-anchor='middle' fill='%230A0A0A'%3E%D0%98%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Школа тату «Искусство» — лендинг курса «Стань тату-мастером»
+   Палитра и подача взяты с презентации школы: фирменный жёлтый,
+   чёрный, белый, крупные узкие заголовки.
+
+   ВАЖНО: белый текст на жёлтом даёт контраст 1.59 и нечитаем.
+   На жёлтом — только чёрный (12.47).
+   ============================================================ */
+:root{
+  --yellow:#F5C842; --yellow-dark:#E0B324;
+  --ink:#0A0A0A; --body:#3A3A3A; --grey:#6B6B6B;
+  --line:#E4E4E4; --soft:#F7F7F7;
+  --gutter:clamp(16px,5vw,32px);
+  --section-y:clamp(56px,8vw,110px);
+  --maxw:1180px;
+  --tap:48px;
+  --dur:280ms; --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{
+  margin:0;font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:400;color:var(--body);background:#fff;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-size-adjust:100%;
+}
+img{max-width:100%;display:block;}
+a,button{touch-action:manipulation;}
+:where(a,button,summary):focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter);}
+.section{padding-top:var(--section-y);padding-bottom:var(--section-y);}
+.section--ink{background:var(--ink);color:#D8D8D8;}
+.section--soft{background:var(--soft);}
+.section--yellow{background:var(--yellow);color:var(--ink);}
+
+/* ===== Типографика ===== */
+h1,h2,h3{font-family:'Oswald',Impact,sans-serif;font-weight:700;text-transform:uppercase;
+  color:var(--ink);margin:0;line-height:1.02;letter-spacing:.01em;}
+h1{font-size:clamp(2.4rem,8.5vw,5.5rem);}
+h2{font-size:clamp(1.9rem,5.5vw,3.4rem);line-height:1.05;}
+h3{font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.15;}
+.section--ink h1,.section--ink h2,.section--ink h3{color:#fff;}
+p{margin:0;}
+.lead{font-size:clamp(1.0625rem,1.9vw,1.3rem);line-height:1.5;}
+.small{font-size:.9375rem;color:var(--grey);}
+.section--ink .small{color:#A0A0A0;}
+.eyebrow{font-family:'Oswald',sans-serif;font-weight:500;font-size:.8125rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink);margin:0 0 14px;}
+.section--ink .eyebrow{color:var(--yellow);}
+.mark{background:var(--yellow);color:var(--ink);padding:0 .18em;}
+.head{max-width:720px;margin-bottom:clamp(30px,4vw,48px);}
+.head p{margin-top:16px;}
+
+/* ===== Кнопка ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:var(--tap);padding:16px 30px;
+  background:var(--yellow);color:var(--ink);
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:1.0625rem;
+  letter-spacing:.06em;text-transform:uppercase;text-decoration:none;text-align:center;
+  border:2px solid var(--ink);border-radius:0;cursor:pointer;
+  box-shadow:5px 5px 0 0 var(--ink);
+  transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 0 var(--ink);color:var(--ink);}
+.btn:active{transform:translate(5px,5px);box-shadow:none;}
+.btn--full{display:flex;width:100%;}
+@media (min-width:641px){.btn--full{display:inline-flex;width:auto;}}
+/* На чёрном фоне чёрная тень кнопки не видна — переключаем на жёлтую */
+.section--ink .btn,.hero .btn{border-color:var(--yellow);box-shadow:5px 5px 0 0 var(--yellow);}
+.section--ink .btn:hover,.hero .btn:hover{box-shadow:3px 3px 0 0 var(--yellow);}
+.section--yellow .btn{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:5px 5px 0 0 rgba(10,10,10,.25);}
+.section--yellow .btn:hover{color:#fff;}
+
+/* ===== Шапка ===== */
+.top{position:sticky;top:0;z-index:60;background:#fff;border-bottom:2px solid var(--ink);}
+.top-in{display:flex;align-items:center;gap:16px;min-height:64px;}
+.logo{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;}
+.logo-mark{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  width:38px;height:38px;padding:4px;border:2px solid var(--ink);
+  font-family:'Oswald',sans-serif;font-size:9px;font-weight:500;color:var(--ink);
+  place-items:center;line-height:1;
+}
+.logo-name{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink);font-size:1rem;}
+.top .btn{margin-left:auto;padding:11px 18px;font-size:.875rem;min-height:44px;box-shadow:3px 3px 0 0 var(--ink);}
+.top-phone{display:none;margin-left:auto;font-weight:800;color:var(--ink);text-decoration:none;
+  align-items:center;min-height:44px;}   /* по номеру тоже нажимают — держим 44 px */
+@media (min-width:781px){
+  .top-phone{display:inline-flex;}
+  .top .btn{margin-left:20px;}
+}
+/* На 320 px логотип и кнопка вместе не помещались — ужимаем оба */
+@media (max-width:400px){
+  .top-in{gap:10px;}
+  .logo-mark{width:32px;height:32px;font-size:7px;}
+  .logo-name{font-size:.8125rem;letter-spacing:.04em;}
+  .top .btn{padding:11px 12px;font-size:.75rem;letter-spacing:.04em;}
+}
+
+/* ===== Первый экран ===== */
+.hero{position:relative;background:var(--ink);color:#fff;overflow:hidden;
+  padding-top:clamp(40px,7vw,80px);padding-bottom:clamp(40px,7vw,80px);}
+.hero::after{content:'';position:absolute;right:-80px;top:-80px;width:340px;height:340px;
+  background:var(--yellow);opacity:.12;transform:rotate(45deg);}
+.hero-in{position:relative;z-index:1;}
+.hero h1{color:#fff;max-width:16ch;}
+.hero h1 .mark{display:inline-block;}
+.hero-sub{margin-top:22px;max-width:52ch;color:#CFCFCF;}
+.hero-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+.hero-note{font-size:.875rem;color:#A0A0A0;}
+@media (max-width:640px){
+  .hero-cta{flex-direction:column;align-items:stretch;}
+  .hero-cta .btn{width:100%;}
+  .hero-note{text-align:center;}
+}
+
+/* ===== Полоса фактов ===== */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0;padding:0;list-style:none;
+  border:2px solid var(--ink);background:#fff;}
+.facts li{padding:20px 16px;text-align:center;border-right:2px solid var(--ink);}
+.facts li:last-child{border-right:0;}
+.facts b{display:block;font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(1.5rem,4vw,2.25rem);color:var(--ink);line-height:1;}
+.facts span{display:block;margin-top:8px;font-size:.8125rem;line-height:1.3;color:var(--grey);}
+@media (max-width:640px){
+  .facts{grid-template-columns:repeat(2,1fr);}
+  .facts li{border-bottom:2px solid var(--ink);}
+  .facts li:nth-child(2n){border-right:0;}
+  .facts li:nth-last-child(-n+2){border-bottom:0;}
+}
+
+/* ===== Точка А → Б ===== */
+.ab{display:grid;gap:18px;}
+@media (min-width:781px){.ab{grid-template-columns:repeat(3,1fr);gap:24px;}}
+.ab-card{border:2px solid var(--ink);background:#fff;padding:24px;}
+.ab-photo{width:88px;height:88px;border-radius:50%;object-fit:cover;border:2px solid var(--ink);margin-bottom:16px;}
+.ab-name{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:1.25rem;color:var(--ink);margin-bottom:14px;}
+.ab-row{display:flex;gap:10px;align-items:flex-start;font-size:.9375rem;line-height:1.45;}
+.ab-row+.ab-row{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.ab-tag{flex:0 0 auto;font-family:'Oswald',sans-serif;font-weight:700;font-size:.75rem;
+  letter-spacing:.1em;padding:3px 7px;border:1.5px solid var(--ink);}
+.ab-tag--b{background:var(--yellow);}
+
+/* ===== Программа ===== */
+.steps{counter-reset:s;display:grid;gap:14px;margin:0;padding:0;list-style:none;}
+@media (min-width:781px){.steps{grid-template-columns:repeat(2,1fr);gap:18px;}}
+.steps li{counter-increment:s;display:flex;gap:16px;align-items:flex-start;
+  border:2px solid var(--ink);padding:20px;background:#fff;}
+.steps li::before{content:counter(s,decimal-leading-zero);flex:0 0 auto;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:1.5rem;color:var(--ink);
+  background:var(--yellow);border:2px solid var(--ink);padding:2px 8px;line-height:1.15;}
+.steps b{display:block;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:1.0625rem;color:var(--ink);margin-bottom:5px;}
+.steps span{font-size:.9375rem;line-height:1.5;color:var(--grey);}
+
+/* ===== Пакеты ===== */
+.packs{display:grid;gap:18px;}
+@media (min-width:781px){.packs{grid-template-columns:repeat(2,1fr);}}
+@media (min-width:1080px){.packs{grid-template-columns:repeat(4,1fr);gap:0;}}
+.pack{border:2px solid var(--ink);padding:24px;background:#fff;display:flex;flex-direction:column;}
+@media (min-width:1080px){
+  .pack{border-right-width:0;}
+  .pack:last-child{border-right-width:2px;}
+}
+.pack--hit{background:var(--yellow);}
+.pack-tag{font-family:'Oswald',sans-serif;font-weight:700;font-size:.6875rem;letter-spacing:.14em;
+  text-transform:uppercase;border:2px solid var(--ink);padding:3px 8px;align-self:flex-start;margin-bottom:14px;}
+.pack h3{margin-bottom:14px;}
+.pack ul{margin:0;padding:0;list-style:none;flex:1 1 auto;}
+.pack li{position:relative;padding-left:20px;margin-bottom:9px;font-size:.9375rem;line-height:1.45;color:var(--body);}
+.pack li::before{content:'';position:absolute;left:0;top:.55em;width:9px;height:2px;background:var(--ink);}
+.pack li b{color:var(--ink);}
+.pack--hit li{color:#2A2A2A;}
+
+/* ===== Мастера ===== */
+.masters{display:grid;gap:20px;}
+@media (min-width:781px){.masters{grid-template-columns:repeat(2,1fr);gap:28px;}}
+.master{border:2px solid var(--ink);background:#fff;padding:24px;display:flex;gap:20px;align-items:flex-start;}
+.master img{width:104px;height:104px;flex:0 0 auto;object-fit:cover;border:2px solid var(--ink);border-radius:50%;}
+.master h3{margin-bottom:6px;}
+@media (max-width:480px){.master{flex-direction:column;}}
+
+/* ===== Работы ===== */
+.works{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media (min-width:781px){.works{grid-template-columns:repeat(4,1fr);gap:14px;}}
+.works img{width:100%;aspect-ratio:3/4;object-fit:cover;border:2px solid var(--ink);}
+
+/* ===== FAQ ===== */
+.faq{border-top:2px solid var(--ink);}
+.faq details{border-bottom:2px solid var(--ink);}
+.faq summary{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;
+  min-height:var(--tap);padding:20px 0;cursor:pointer;list-style:none;
+  font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  font-size:clamp(1rem,2vw,1.1875rem);color:var(--ink);line-height:1.25;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq-plus{flex:0 0 auto;width:24px;height:24px;position:relative;margin-top:2px;}
+.faq-plus::before,.faq-plus::after{content:'';position:absolute;background:var(--ink);
+  transition:transform var(--dur) var(--ease);}
+.faq-plus::before{left:0;right:0;top:11px;height:3px;}
+.faq-plus::after{top:0;bottom:0;left:11px;width:3px;}
+.faq details[open] .faq-plus::after{transform:scaleY(0);}
+.faq p{padding:0 0 22px;max-width:66ch;font-size:1rem;line-height:1.6;}
+
+/* ===== Финал ===== */
+.final{text-align:center;}
+.final p{max-width:48ch;margin:16px auto 0;}
+.final .btn{margin-top:28px;}
+
+/* ===== Подвал ===== */
+.foot{background:var(--ink);color:#A0A0A0;padding:44px 0 30px;}
+.foot-grid{display:grid;gap:26px;}
+@media (min-width:781px){.foot-grid{grid-template-columns:1.3fr 1fr 1fr;}}
+.foot h4{font-family:'Oswald',sans-serif;font-weight:500;font-size:.75rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--yellow);margin:0 0 12px;}
+.foot ul{list-style:none;margin:0;padding:0;}
+.foot li{margin-bottom:2px;font-size:.9375rem;}
+.foot a{color:#fff;text-decoration:none;font-weight:800;display:inline-block;min-height:44px;padding:11px 0;}
+.foot a:hover{color:var(--yellow);}
+.foot-legal{margin-top:28px;padding-top:20px;border-top:1px solid #2A2A2A;font-size:.8125rem;color:#7A7A7A;}
+
+/* ===== Липкая кнопка на мобильных ===== */
+.sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.96);border-top:2px solid var(--ink);
+  transform:translateY(115%);transition:transform var(--dur) var(--ease);pointer-events:none;
+}
+.sticky.on{transform:translateY(0);pointer-events:auto;}
+.sticky .btn{width:100%;box-shadow:3px 3px 0 0 var(--ink);}
+@media (min-width:781px){.sticky{display:none;}}
+
+/* ===== Появление ===== */
+.js .rv{opacity:0;transform:translateY(16px);}
+.js .rv.in{opacity:1;transform:none;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  .js .rv{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#top" aria-label="Искусство — школа тату и пирсинга">
+      <span class="logo-mark" aria-hidden="true"><i>И</i><i>С</i><i>К</i><i>У</i><i>С</i><i>С</i><i>Т</i><i>В</i><i>О</i></span>
+      <span class="logo-name">Искусство</span>
+    </a>
+    <a class="top-phone" href="tel:+77773231144">+7 777 323 11 44</a>
+    <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Записаться</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ ПЕРВЫЙ ЭКРАН ============ -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <p class="eyebrow" style="color:var(--yellow);">Алматы · студия «Искусство»</p>
+      <h1>Профессия <span class="mark">тату-мастера</span> с нуля</h1>
+      <p class="lead hero-sub">
+        Курс «Стань тату-мастером»: от первой линии на искусственной коже
+        до работы с живым клиентом под контролем действующего мастера.
+        Не отдельные техники — профессия целиком.
+      </p>
+      <div class="hero-cta">
+        <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 018.24 8.24c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+          Узнать про курс
+        </a>
+        <span class="hero-note">Ответим в WhatsApp · график составим под вас</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ФАКТЫ ============ -->
+  <section style="padding:clamp(28px,4vw,44px) 0;">
+    <div class="wrap">
+      <ul class="facts rv">
+        <li><b data-count="6">6</b><span>лет студии</span></li>
+        <li><b data-count="500" data-suffix="+">500+</b><span>учеников обучено</span></li>
+        <li><b>12</b><span>уроков в курсе</span></li>
+        <li><b>Да</b><span>сертификат в конце</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ТОЧКА А → Б ============ -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Точка А → точка Б</p>
+        <h2>Наши мастера начинали<br>с этого же курса</h2>
+        <p class="lead">Это не отзывы со стороны. Люди, которые сегодня работают в студии
+        и обучают новых учеников, сами пришли сюда с нуля.</p>
+      </div>
+
+      <div class="ab">
+        <article class="ab-card rv">
+          <img class="ab-photo" src="assets/img/master_asya.jpg" alt="Ася, старший мастер студии «Искусство»" loading="lazy" decoding="async">
+          <p class="ab-name">Ася</p>
+          <div class="ab-row"><span class="ab-tag">А</span><span>Пришла на курс тату-мастера с нуля</span></div>
+          <div class="ab-row"><span class="ab-tag ab-tag--b">Б</span><span><b>Старший мастер студии.</b> Чёрно-белые, графика, орнаментал, флористика, аниме</span></div>
+        </article>
+
+        <article class="ab-card rv">
+          <img class="ab-photo" src="assets/img/master_aruzhan.jpg" alt="Аружан, старший мастер студии «Искусство»" loading="lazy" decoding="async">
+          <p class="ab-name">Аружан</p>
+          <div class="ab-row"><span class="ab-tag">А</span><span>Пришла на курс тату-мастера с нуля</span></div>
+          <div class="ab-row"><span class="ab-tag ab-tag--b">Б</span><span><b>Старший мастер студии.</b> Графика, цветной, микрореализм, акварель</span></div>
+        </article>
+
+        <article class="ab-card rv">
+          <img class="ab-photo" src="assets/img/ab_eleonora.jpg" alt="Элеонора, младший мастер студии «Искусство»" loading="lazy" decoding="async">
+          <p class="ab-name">Элеонора</p>
+          <div class="ab-row"><span class="ab-tag">А</span><span>Пришла на курс тату-мастера с нуля</span></div>
+          <div class="ab-row"><span class="ab-tag ab-tag--b">Б</span><span><b>Младший мастер студии.</b> Выпускница 2025 года</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ПРОГРАММА ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Как устроен курс</p>
+        <h2>От первой линии<br>до живого клиента</h2>
+        <p class="lead">12 уроков. Сначала теория и безопасность, потом руки на искусственной коже,
+        и только затем — реальные модели под контролем мастера.</p>
+      </div>
+
+      <ul class="steps">
+        <li class="rv"><div><b>Теория</b><span>Основы татуировки, противопоказания, стерилизация и дезинфекция.
+        Этапы сеанса, уход за татуировкой, классификация игл.</span></div></li>
+        <li class="rv"><div><b>Искусственная кожа</b><span>Подготовка рабочего места, трансферный принтер,
+        постановка руки, основные техники.</span></div></li>
+        <li class="rv"><div><b>Свои эскизы</b><span>Разработка собственных эскизов и их отработка.
+        Плюс одна дополнительная техника на выбор.</span></div></li>
+        <li class="rv"><div><b>Практика на моделях</b><span>Работа с реальными моделями.
+        Мастер курирует на каждом этапе — вы не остаётесь один на один с клиентом.</span></div></li>
+        <li class="rv"><div><b>Итог</b><span>Итоговое тестирование знаний и сертификат
+        об окончании курса.</span></div></li>
+        <li class="rv" style="background:var(--yellow);"><div><b>График — под вас</b>
+        <span style="color:#2A2A2A;">Расписание уроков обсуждается индивидуально и составляется
+        совместно с учеником. Не нужно бросать работу или учёбу.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ПАКЕТЫ ============ -->
+  <section class="section section--soft">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Форматы</p>
+        <h2>Четыре формата обучения</h2>
+        <p class="lead">Отличаются размером группы, глубиной программы и скоростью.
+        Какой подойдёт именно вам — подскажем в переписке.</p>
+      </div>
+
+      <div class="packs">
+        <article class="pack rv">
+          <h3>Базовый</h3>
+          <ul>
+            <li>Группа до 5 человек</li>
+            <li>2 урока теории</li>
+            <li>5 уроков практики на искусственной коже</li>
+            <li>3 урока практики на моделях</li>
+          </ul>
+        </article>
+
+        <article class="pack pack--hit rv">
+          <span class="pack-tag">Чаще берут</span>
+          <h3>Продвинутый</h3>
+          <ul>
+            <li>Группа до 3 человек</li>
+            <li>2 урока теории</li>
+            <li>5 уроков практики на искусственной коже</li>
+            <li>3 урока практики на моделях</li>
+            <li>+2 урока в стиле на выбор ученика</li>
+            <li>Углублённое изучение</li>
+            <li><b>Тату-машинка в подарок</b></li>
+          </ul>
+        </article>
+
+        <article class="pack rv">
+          <h3>Индивидуальный</h3>
+          <ul>
+            <li>Обучение тет-а-тет</li>
+            <li>Вся программа продвинутого</li>
+            <li>Индивидуальный разбор ошибок</li>
+            <li>Персональное курирование</li>
+            <li><b>Тату-машинка в подарок</b></li>
+          </ul>
+        </article>
+
+        <article class="pack rv">
+          <h3>Ускоренный · 2 недели</h3>
+          <ul>
+            <li>2 дня теории</li>
+            <li>3 дня на искусственной коже</li>
+            <li>3 дня практики на моделях</li>
+            <li>Для тех, кому нужно быстро войти в профессию</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="rv" style="margin-top:28px;">
+        <a class="btn btn--full" data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Подобрать формат</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ МАСТЕРА ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Кто учит</p>
+        <h2>Действующие мастера,<br>а не теоретики</h2>
+        <p class="lead">Учат те, кто каждый день сам работает с клиентами в этой же студии.</p>
+      </div>
+      <div class="masters">
+        <article class="master rv">
+          <img src="assets/img/master_aruzhan.jpg" alt="Мастер Аружан" loading="lazy" decoding="async">
+          <div>
+            <h3>Аружан</h3>
+            <p class="small" style="margin-bottom:10px;">Старший мастер · 5 лет в профессии</p>
+            <p>Графика, цветной, микрореализм, акварель.</p>
+          </div>
+        </article>
+        <article class="master rv">
+          <img src="assets/img/master_asya.jpg" alt="Мастер Ася" loading="lazy" decoding="async">
+          <div>
+            <h3>Ася</h3>
+            <p class="small" style="margin-bottom:10px;">Старший мастер · 4 года в профессии</p>
+            <p>Чёрно-белые, графика, орнаментал, флористика, аниме.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ РАБОТЫ УЧЕНИКОВ ============ -->
+  <section class="section section--ink">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Результат</p>
+        <h2>Это делали ученики</h2>
+        <p class="lead" style="color:#CFCFCF;">Работы выпускников 2025–2026 годов — сделаны на курсе,
+        на живых моделях, под контролем мастера.</p>
+      </div>
+      <div class="works rv">
+        <img src="assets/img/work1.jpg" alt="Работа ученика: лапка" loading="lazy" decoding="async">
+        <img src="assets/img/work2.jpg" alt="Работа ученика: цветная графика" loading="lazy" decoding="async">
+        <img src="assets/img/work3.jpg" alt="Работа ученика: цветочный орнамент" loading="lazy" decoding="async">
+        <img src="assets/img/work4.jpg" alt="Работа ученика: звезда" loading="lazy" decoding="async">
+        <img src="assets/img/work5.jpg" alt="Работа ученика: римские цифры" loading="lazy" decoding="async">
+        <img src="assets/img/work6.jpg" alt="Работа ученика: надпись на ключице" loading="lazy" decoding="async">
+        <img src="assets/img/work7.jpg" alt="Работа ученика: игральная карта" loading="lazy" decoding="async">
+        <img src="assets/img/work8.jpg" alt="Работа ученика: графика на предплечье" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ВОЗРАЖЕНИЯ ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="eyebrow">Вопросы</p>
+        <h2>Что обычно спрашивают</h2>
+      </div>
+      <div class="faq rv">
+        <details>
+          <summary>Я никогда не рисовал. У меня получится?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>Курс рассчитан на людей с нуля — именно так пришли Ася, Аружан и Элеонора,
+          которые сегодня работают мастерами в студии. Ставим руку с первых занятий
+          на искусственной коже, а художественную часть разбираем по ходу.</p>
+        </details>
+        <details>
+          <summary>Сколько это займёт по времени?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>Основной курс — 12 уроков, ускоренный — 8 занятий за две недели.
+          Точный график составляется индивидуально: подстраиваемся под вашу работу или учёбу.</p>
+        </details>
+        <details>
+          <summary>На ком буду практиковаться?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>Сначала — только искусственная кожа, никаких экспериментов на людях.
+          К моделям переходите, когда рука уже поставлена, и мастер курирует каждый этап работы.</p>
+        </details>
+        <details>
+          <summary>Что нужно купить перед началом?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>На обучении вы работаете на оборудовании и профессиональных материалах студии.
+          На продвинутом и индивидуальном форматах тату-машинка остаётся у вас в подарок.</p>
+        </details>
+        <details>
+          <summary>Сколько стоит и можно ли частями?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>Стоимость зависит от формата — базовый, продвинутый, индивидуальный или ускоренный.
+          Напишите в WhatsApp: назовём цену по вашему формату и расскажем про условия оплаты.</p>
+        </details>
+        <details>
+          <summary>Мне ещё нет 18. Возьмёте?<span class="faq-plus" aria-hidden="true"></span></summary>
+          <p>Обучение несовершеннолетних возможно только с согласия родителей —
+          напишите нам вместе с ними, обсудим формат.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ФИНАЛ ============ -->
+  <section class="section section--yellow">
+    <div class="wrap final">
+      <h2 class="rv">Профессия начинается<br>с одного сообщения</h2>
+      <p class="lead rv">Расскажем про форматы, цены и ближайший набор.
+      Никакой предоплаты, чтобы просто задать вопрос.</p>
+      <div class="rv">
+        <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      </div>
+      <p class="small rv" style="color:#3A3A3A;margin-top:16px;">
+        Алматы, ул. Макатаева 127 · ежедневно 11:00–22:00
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p style="font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;color:#fff;font-size:1.25rem;letter-spacing:.08em;">Искусство</p>
+        <p class="small" style="margin-top:10px;">Тату &amp; пирсинг студия и школа.<br>Алматы, с 2019 года.</p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+77773231144">+7 777 323 11 44</a></li>
+          <li><a data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://instagram.com/iskusstvo.school" target="_blank" rel="noopener">@iskusstvo.school</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Студия</h4>
+        <ul>
+          <li style="padding:11px 0;">г. Алматы, ул. Макатаева 127</li>
+          <li style="padding:0 0 11px;">Ежедневно 11:00–22:00</li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot-legal">
+      <!-- ЗАПОЛНИТЬ реквизиты и ссылку на политику конфиденциальности -->
+      © 2026 Школа тату и пирсинга «Искусство»
+    </p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky" aria-hidden="true">
+  <a class="btn" data-wa href="https://api.whatsapp.com/send/?phone=77773231144&amp;text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%20%D1%82%D0%B0%D1%82%D1%83-%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener" tabindex="-1">Записаться на курс</a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- WhatsApp ----------
+     Номер и текст сообщения задаются здесь. */
+  var WA_PHONE = '77773231144';
+  var WA_TEXT  = 'Здравствуйте! Хочу узнать про курс тату-мастера';
+  /* Метку креатива дописываем в сообщение: при переходе в мессенджер
+     UTM теряются, и становится не видно, какой ролик приносит заявки.
+     false — убрать пометку. */
+  var WA_TAG_SOURCE = true;
+
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function waHref() {
+    var qs, tag = '';
+    try { qs = new URLSearchParams(window.location.search); } catch (e) { qs = null; }
+    var vals = {};
+    KEYS.forEach(function (k) {
+      var v = qs ? (qs.get(k) || '') : '';
+      // Параметр может потеряться при переходах — держим копию
+      try {
+        if (v) sessionStorage.setItem('isk_' + k, v);
+        else v = sessionStorage.getItem('isk_' + k) || '';
+      } catch (e) {}
+      vals[k] = v;
+    });
+    var text = WA_TEXT;
+    if (WA_TAG_SOURCE) {
+      tag = vals.utm_content || vals.utm_campaign || vals.utm_source || '';
+      if (tag) text += ' #' + tag.replace(/[^\w-]/g, '').slice(0, 24);
+    }
+    return 'https://api.whatsapp.com/send/?phone=' + WA_PHONE +
+           '&text=' + encodeURIComponent(text) + '&type=phone_number&app_absent=0';
+  }
+  var links = document.querySelectorAll('[data-wa]');
+  for (var i = 0; i < links.length; i++) links[i].href = waHref();
+
+  /* Событие конверсии на клике: страницы «Спасибо» нет, иначе пиксель
+     не увидит ни одной заявки. Обёрнуто — без пикселя ошибки не будет. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-wa]')) return;
+    try { if (window.ttq && ttq.track) ttq.track('Contact'); } catch (err) {}
+    try { if (window.fbq) fbq('track', 'Contact'); } catch (err) {}
+  });
+
+  /* ---------- Появление при скролле ----------
+     Наблюдаем секции, а не элементы: быстрый флик-скролл проскакивает
+     отдельные элементы, и они остались бы невидимыми навсегда. */
+  if (!reduced && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (!x.isIntersecting) return;
+        var it = x.target.querySelectorAll('.rv');
+        for (var j = 0; j < it.length; j++) {
+          it[j].style.transitionDelay = (Math.min(j, 6) * 55) + 'ms';
+          it[j].classList.add('in');
+        }
+        io.unobserve(x.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+    var secs = document.querySelectorAll('section, footer');
+    for (var s = 0; s < secs.length; s++) io.observe(secs[s]);
+
+    // Страховка: ничего не должно остаться скрытым
+    var t;
+    window.addEventListener('scroll', function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var left = document.querySelectorAll('.rv:not(.in)');
+        for (var k = 0; k < left.length; k++) {
+          var h = left[k].closest('section, footer');
+          if (h && h.getBoundingClientRect().top < window.innerHeight) left[k].classList.add('in');
+        }
+      }, 200);
+    }, { passive: true });
+  }
+
+  /* ---------- Счётчики ---------- */
+  var cs = document.querySelectorAll('[data-count]');
+  if (cs.length && !reduced && 'IntersectionObserver' in window) {
+    var cio = new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (!x.isIntersecting) return;
+        var el = x.target; cio.unobserve(el);
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        if (isNaN(target)) return;
+        var suf = el.getAttribute('data-suffix') || '', st = null;
+        (function tick(ts) {
+          if (st === null) st = ts;
+          var p = Math.min((ts - st) / 900, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+        })(performance.now());
+      });
+    }, { threshold: 0.6 });
+    for (var c = 0; c < cs.length; c++) cio.observe(cs[c]);
+  }
+
+  /* ---------- Липкая кнопка после 35% ---------- */
+  var st = document.getElementById('sticky');
+  if (st) {
+    var btn = st.querySelector('a'), on = false, tick = false;
+    function set(v) {
+      if (v === on) return;
+      on = v;
+      st.classList.toggle('on', v);
+      st.setAttribute('aria-hidden', v ? 'false' : 'true');
+      if (btn) btn.tabIndex = v ? 0 : -1;   // скрытая панель не ловит фокус
+    }
+    function onScroll() {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () {
+        tick = false;
+        var d = document.documentElement, sc = d.scrollHeight - window.innerHeight;
+        if (sc <= 0) return set(false);
+        var fin = document.querySelector('.section--yellow');
+        var atEnd = fin && fin.getBoundingClientRect().top < window.innerHeight * 0.9;
+        set((window.pageYOffset || d.scrollTop) / sc >= 0.35 && !atEnd);
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+</body>
+</html>
