@@ -116,11 +116,15 @@ p{margin:0;}
    от края, буквы сеткой 3×3. Кольцо — абсолютное ::before, иначе оно
    стало бы десятым элементом grid и сломало сетку букв. */
 .logo-mark{position:relative;display:grid;grid-template-columns:repeat(3,1fr);
-  width:44px;height:44px;padding:10px;border-radius:50%;background:var(--yellow);
-  font-family:'Oswald',sans-serif;font-size:7.5px;font-weight:500;
+  width:46px;height:46px;padding:10.5px;border-radius:50%;background:var(--yellow);
+  /* Буквы знака — обычной ширины, как в оригинале. Oswald узкий,
+     он бы их сплющил, поэтому здесь основной шрифт, а не заголовочный */
+  font-family:'Manrope',Helvetica,Arial,sans-serif;font-size:8.5px;font-weight:500;
   color:var(--ink);place-items:center;line-height:1;flex:0 0 auto;}
-.logo-mark::before{content:'';position:absolute;inset:2.5px;
-  border:1.5px solid var(--ink);border-radius:50%;}
+/* Кольцо отступает от края примерно на 8 % диаметра — как в оригинале,
+   там жёлтое поле хорошо видно за кольцом */
+.logo-mark::before{content:'';position:absolute;inset:3.5px;
+  border:1.4px solid var(--ink);border-radius:50%;}
 .logo-name{font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
   letter-spacing:.16em;color:var(--ink);font-size:.9375rem;}
 .top-phone{display:none;margin-left:auto;align-items:center;min-height:44px;
