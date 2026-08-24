@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Курс «Стань тату-мастером» — школа «Искусство», Алматы</title>
 <meta name="description" content="Профессия тату-мастера с нуля за курс в студии «Искусство» в Алматы. 6 лет опыта, 500+ учеников, практика на моделях, сертификат. Мини-группы и индивидуальный формат.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FFD453'/%3E%3Ctext x='16' y='24' font-family='Impact,sans-serif' font-size='24' text-anchor='middle' fill='%23231F1F'%3E%D0%98%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23FFD453'/%3E%3Ccircle cx='16' cy='16' r='14.2' fill='none' stroke='%23231F1F' stroke-width='1.6'/%3E%3Ctext x='16' y='22.5' font-family='Helvetica,Arial,sans-serif' font-size='17' text-anchor='middle' fill='%23231F1F'%3E%D0%98%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
@@ -112,9 +112,15 @@ p{margin:0;}
   backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--rule);}
 .top-in{display:flex;align-items:center;gap:16px;min-height:66px;}
 .logo{display:flex;align-items:center;gap:11px;min-height:44px;text-decoration:none;}
-.logo-mark{display:grid;grid-template-columns:repeat(3,1fr);width:40px;height:40px;padding:5px;
-  border:1.5px solid var(--ink);font-family:'Oswald',sans-serif;font-size:8.5px;font-weight:500;
-  color:var(--ink);place-items:center;line-height:1;}
+/* Знак как в профиле школы: жёлтый круг, чёрное кольцо с отступом
+   от края, буквы сеткой 3×3. Кольцо — абсолютное ::before, иначе оно
+   стало бы десятым элементом grid и сломало сетку букв. */
+.logo-mark{position:relative;display:grid;grid-template-columns:repeat(3,1fr);
+  width:44px;height:44px;padding:10px;border-radius:50%;background:var(--yellow);
+  font-family:'Oswald',sans-serif;font-size:7.5px;font-weight:500;
+  color:var(--ink);place-items:center;line-height:1;flex:0 0 auto;}
+.logo-mark::before{content:'';position:absolute;inset:2.5px;
+  border:1.5px solid var(--ink);border-radius:50%;}
 .logo-name{font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
   letter-spacing:.16em;color:var(--ink);font-size:.9375rem;}
 .top-phone{display:none;margin-left:auto;align-items:center;min-height:44px;
@@ -126,7 +132,7 @@ p{margin:0;}
 }
 @media (max-width:400px){
   .top-in{gap:10px;}
-  .logo-mark{width:34px;height:34px;font-size:7px;padding:4px;}
+  .logo-mark{width:38px;height:38px;font-size:6.5px;padding:8px;}
   .logo-name{font-size:.8125rem;letter-spacing:.1em;}
   .top .btn{padding:10px 14px;font-size:.75rem;letter-spacing:.04em;}
 }
@@ -180,10 +186,6 @@ p{margin:0;}
 .ab-row b{color:var(--ink);}
 
 /* ===== Программа ===== */
-.prog{display:grid;gap:clamp(28px,4vw,56px);}
-@media (min-width:980px){.prog{grid-template-columns:200px 1fr;align-items:start;}}
-.prog-art{display:none;}
-@media (min-width:980px){.prog-art{display:block;width:150px;opacity:.9;}}
 .steps{display:grid;gap:14px;margin:0;padding:0;list-style:none;}
 @media (min-width:700px){.steps{grid-template-columns:repeat(2,1fr);gap:16px;}}
 .steps li{display:flex;gap:16px;align-items:flex-start;}
@@ -229,11 +231,9 @@ p{margin:0;}
   border:1px solid var(--rule);border-radius:var(--r);}
 
 /* ===== FAQ ===== */
-.faq-grid{display:grid;gap:clamp(24px,4vw,48px);}
-@media (min-width:980px){.faq-grid{grid-template-columns:1fr 220px;align-items:start;}}
-.faq-art{display:none;}
-@media (min-width:980px){.faq-art{display:block;width:170px;justify-self:end;opacity:.9;}}
-.faq{border-top:1px solid var(--rule);}
+/* Строки не на всю ширину: длинный вопрос в одну линию через 1200 px
+   читается плохо, глаз теряет начало следующей строки */
+.faq{border-top:1px solid var(--rule);max-width:900px;}
 .faq details{border-bottom:1px solid var(--rule);}
 .faq summary{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
   min-height:var(--tap);padding:22px 0;cursor:pointer;list-style:none;
@@ -387,10 +387,6 @@ p{margin:0;}
         и только затем — реальные модели под контролем мастера.</p>
       </div>
 
-      <div class="prog">
-        <div class="prog-art rv" aria-hidden="true">
-          <img src="assets/art/column.png" alt="" width="360" height="502" loading="lazy" decoding="async">
-        </div>
         <ul class="steps">
           <li class="card rv"><span class="n">1.</span><div><b>Теория</b><span>Основы татуировки, противопоказания, стерилизация и дезинфекция.
           Этапы сеанса, уход за татуировкой, классификация игл.</span></div></li>
@@ -405,7 +401,6 @@ p{margin:0;}
           <li class="card is-key rv"><span class="n">6.</span><div><b>График — под вас</b><span>Расписание уроков обсуждается индивидуально
           и составляется совместно с учеником. Не нужно бросать работу или учёбу.</span></div></li>
         </ul>
-      </div>
     </div>
   </section>
 
@@ -531,7 +526,6 @@ p{margin:0;}
         <p class="label">Вопросы</p>
         <h2>Что обычно спрашивают</h2>
       </div>
-      <div class="faq-grid">
         <div class="faq rv">
           <details>
             <summary>Я никогда не рисовал. У меня получится?<span class="faq-plus" aria-hidden="true"></span></summary>
@@ -565,10 +559,6 @@ p{margin:0;}
             напишите нам вместе с ними, обсудим формат.</p>
           </details>
         </div>
-        <div class="faq-art rv" aria-hidden="true">
-          <img src="assets/art/figure.png" alt="" width="300" height="814" loading="lazy" decoding="async">
-        </div>
-      </div>
     </div>
   </section>
 
