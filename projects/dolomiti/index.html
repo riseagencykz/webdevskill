@@ -77,7 +77,7 @@
   .certs a:hover{transform:translateY(-3px)}
   .certs img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
   .certs figcaption{font-size:.7rem;text-align:center;padding:4px 0;color:var(--muted)}
-  .hero-img{aspect-ratio:4/5;max-height:640px;width:100%}
+  .hero-img{aspect-ratio:3/4;max-height:680px;width:100%}
   /* chips + calc */
   .chips{display:flex;gap:10px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
   .chip{padding:12px 22px;border:1px solid var(--black);background:var(--white);cursor:pointer;font-size:.95rem;font-weight:500;white-space:nowrap;transition:all .18s}
@@ -86,7 +86,9 @@
   .calc{margin-top:36px;background:var(--gray);padding:clamp(22px,3vw,40px);display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
   .calc .f{display:flex;flex-direction:column;gap:6px;font-size:.82rem;color:var(--muted)}
   .calc input{width:110px;padding:13px 14px;border:.5px solid var(--line);background:var(--white);font-size:1rem;font-family:inherit}
-  .calc-res{font-size:1.05rem;font-weight:600;min-width:200px}
+  .calc-res{font-size:1.05rem;font-weight:500;min-width:200px}
+  .calc-res b{font-weight:700}
+  #calcBtn[hidden]{display:none}
   /* catalog */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);background:var(--white);border-top:.5px solid var(--line);border-left:.5px solid var(--line);margin-top:44px}
   .card{background:var(--white);padding:26px;display:flex;flex-direction:column;gap:14px;transition:background .2s;cursor:pointer;border-right:.5px solid var(--line);border-bottom:.5px solid var(--line)}
@@ -119,6 +121,12 @@
   .popup h4{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:26px 0 8px}
   form .fi{width:100%;padding:14px;border:.5px solid var(--line);background:var(--gray);font-size:1rem;font-family:inherit;margin-bottom:10px}
   .check{display:flex;gap:10px;font-size:.85rem;color:var(--muted);align-items:flex-start;margin:8px 0 14px}
+  .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,52px);margin-top:44px}
+  .brand-grid h3{margin-bottom:10px}
+  .brand-grid p{font-size:.95rem;color:#333}
+  .brand-photos{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:44px}
+  .brand-photos .ph{aspect-ratio:16/10}
+  @media(max-width:900px){.brand-grid{grid-template-columns:1fr}.brand-photos{grid-template-columns:1fr}}
   /* generic split */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:center}
   .cols4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:.5px solid var(--line);margin-top:44px}
@@ -255,8 +263,8 @@
       <a href="#brand">О бренде</a><a href="#brand">База знаний</a><a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
-      <a class="nav-phone" href="tel:+77775555884"><span>Продажи</span>+7 777 555 58 84</a>
-      <a class="nav-phone" href="tel:+77775555883"><span>Сервис</span>+7 777 555 58 83</a>
+      <a class="nav-phone" href="tel:+77775555884"><span>Отдел продаж</span>+7 777 555 58 84</a>
+      <a class="nav-phone" href="tel:+77775555883"><span>Сервисный центр</span>+7 777 555 58 83</a>
       <a class="nav-wa" href="https://wa.me/77775555884" target="_blank" aria-label="WhatsApp">WhatsApp</a>
       <a class="btn sm" href="#podbor">Купить печь</a>
       <a class="btn sm outline" href="#dealers">Стать дилером</a>
@@ -267,8 +275,8 @@
     <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
     <a href="#accessories">Аксессуары</a><a href="#brand">О бренде</a><a href="#dealers">Стать дилером</a>
     <a href="#contacts">Контакты</a>
-    <a class="mm-phone" href="tel:+77775555884">📈 Продажи — +7 777 555 58 84</a>
-    <a class="mm-phone" href="tel:+77775555883">🔧 Сервис — +7 777 555 58 83</a>
+    <a class="mm-phone" href="tel:+77775555884">📈 Отдел продаж — +7 777 555 58 84</a>
+    <a class="mm-phone" href="tel:+77775555883">🔧 Сервисный центр — +7 777 555 58 83</a>
   </nav>
 </header>
 
@@ -289,7 +297,7 @@
         <span><b>Kaspi</b> / рассрочка</span>
       </div>
     </div>
-    <div class="ph hero-img rv"><img src="img/hero-crown.webp" alt="Электропечь Dolomiti Crown в парной"></div>
+    <div class="ph hero-img contain rv"><img src="img/crown.webp" alt="Электропечь Dolomiti Crown"></div>
   </div>
 </section>
 
@@ -312,6 +320,7 @@
       <label class="f">Ширина, м<input type="number" id="cW" min="0" step="0.1" placeholder="1.5"></label>
       <label class="f">Высота, м<input type="number" id="cH" min="0" step="0.1" placeholder="2.1"></label>
       <div class="calc-res" id="calcRes">Объём: — м³</div>
+      <button class="btn" id="calcBtn" type="button" hidden>Показать подходящие печи</button>
     </div>
   </div>
 </section>
@@ -365,7 +374,6 @@
     <div class="kicker">Аксессуары</div>
     <h2>Соберём баню под ключ одним заказом</h2>
     <div class="acc">
-      <div><div class="ph">Фото</div>Камни для печи</div>
       <div><div class="ph contain"><img src="img/acc-bucket.webp" alt="Ведро для сауны Dolomiti" loading="lazy"></div>Вёдра</div>
       <div><div class="ph contain"><img src="img/acc-ladle.webp" alt="Черпак для сауны Dolomiti" loading="lazy"></div>Черпаки</div>
       <div><div class="ph contain"><img src="img/acc-headrest.webp" alt="Деревянный подголовник Dolomiti" loading="lazy"></div>Подголовники</div>
@@ -377,22 +385,34 @@
 
 <!-- Блок 8. О бренде -->
 <section style="background:var(--gray)" id="brand">
-  <div class="wrap split rv">
-    <div>
-      <div class="kicker">О бренде</div>
-      <h2>Мы не просто продаём печи — мы&nbsp;строим сауны</h2>
-      <p style="margin:16px 0">Dolomiti&amp;F — бренд Emaux Wellness Living: 30 лет основателя в wellness-индустрии, собственное производство и международная сертификация. А мы в Казахстане — не импортёры с прайсом: мы проектируем и строим парные и знаем, как печи работают в местных условиях — от частной бани до коммерческого комплекса.</p>
-      <div class="ph" style="aspect-ratio:16/8;margin:22px 0"><img src="img/object-1.webp" alt="Построенная сауна с оборудованием Dolomiti" loading="lazy"></div>
-      <div class="kicker" style="margin-top:26px">Из базы знаний</div>
-      <div class="row"><span>Как подобрать печь по объёму сауны</span><span>→</span></div>
-      <div class="row"><span>Открытая или закрытая каменка: что выбрать</span><span>→</span></div>
-      <div class="row"><span>Как выбрать контроллер: встроенный, выносной, WiFi</span><span>→</span></div>
+  <div class="wrap rv">
+    <div class="kicker">О компании Dolomiti&amp;F</div>
+    <h2>Мы не просто продаём печи — мы&nbsp;строим сауны</h2>
+    <p style="margin:16px 0;max-width:44em">В Казахстане мы не импортёры с прайсом: мы проектируем и строим парные и знаем, как печи работают в местных условиях — от частной бани до коммерческого комплекса.</p>
+    <div class="brand-grid">
+      <div>
+        <h3>Огромная страсть</h3>
+        <p>С огромной страстью к баням и саунам основатель Dolomiti&amp;F, проработавший в индустрии бань тридцать лет, решил создать собственный бренд. «Мы прилагаем огромные усилия для производства высококачественной продукции для саун и предоставления пользователям более широкого выбора», — говорит наш основатель.</p>
+      </div>
+      <div>
+        <h3>Высокое качество</h3>
+        <p>Продукция Dolomiti проходит долгий и тщательно контролируемый процесс производства, чтобы гарантировать лучшее качество каждого изделия. От выбора сырья до финальной проверки — мы гордимся тем, что поставляем превосходный продукт.</p>
+      </div>
+      <div>
+        <h3>Экологичная продукция</h3>
+        <p>Наша приверженность принципам устойчивого развития начинается с используемых материалов: перерабатываемые материалы безопасны для окружающей среды. Кроме того, в наших печах используются энергосберегающие технологии, что помогает снизить углеродный след и сэкономить энергию.</p>
+      </div>
     </div>
-    <div class="ph" style="aspect-ratio:3/4"><img src="img/sauna-steam.webp" alt="Парная с электропечью Dolomiti" loading="lazy"></div>
+    <div class="brand-photos">
+      <div class="ph"><img src="img/object-1.webp" alt="Сауна с оборудованием Dolomiti" loading="lazy"></div>
+      <div class="ph"><img src="img/sauna-steam.webp" alt="Парная с электропечью Dolomiti" loading="lazy"></div>
+    </div>
+    <div class="kicker" style="margin-top:44px">Из базы знаний</div>
+    <div class="row"><span>Как подобрать печь по объёму сауны</span><span>→</span></div>
+    <div class="row"><span>Открытая или закрытая каменка: что выбрать</span><span>→</span></div>
+    <div class="row"><span>Как выбрать контроллер: встроенный, выносной, WiFi</span><span>→</span></div>
   </div>
 </section>
-
-
 
 <!-- Блок 10. Дилерская секция (B2B в составе одностраничника) -->
 <section class="dark" id="dealers">
@@ -483,8 +503,8 @@
     </div>
     <div>
       <p><b>Контакты</b></p><br>
-      <p><b>Продажи</b><br><a href="tel:+77775555884">+7 777 555 58 84</a></p>
-      <p style="margin-top:10px"><b>Сервис</b><br><a href="tel:+77775555883">+7 777 555 58 83</a></p>
+      <p><b>Отдел продаж</b><br><a href="tel:+77775555884">+7 777 555 58 84</a></p>
+      <p style="margin-top:10px"><b>Сервисный центр</b><br><a href="tel:+77775555883">+7 777 555 58 83</a></p>
       <p style="margin-top:10px">artemzaharov2707@gmail.com<br>Алматы, Ратушного 40</p><br>
       <p><a href="https://instagram.com/" target="_blank" style="text-decoration:underline">Instagram</a></p>
     </div>
@@ -571,7 +591,7 @@ const SERIES=[
 const PULTS=[
  {img:"img/pult-bb90.webp",contain:1,name:"BB90",
   desc:"Контроллер с реле. Сенсорный дисплей: свет, вентиляция, таймер, температура.",
-  specs:[["Тип","контроллер с реле"],["Регулировка нагрева","40–110 °C"],["Мощность","до 9 кВт"],["Напряжение","3~400В"]],
+  specs:[["Тип","контроллер с реле"],["Регулировка нагрева","40–110 °C"],["Мощность","до 9 кВт"],["Напряжение","220-400 V / 1N - 3N ~ 32A"]],
   price:"300 000 ₸"},
  {img:"img/pult-classy.webp",contain:0,name:"CL32WF-C",
   desc:"Classy WiFi: дистанционное управление сауной со смартфона — включите баню по дороге домой.",
@@ -625,17 +645,32 @@ document.querySelectorAll('#chips .chip').forEach(c=>c.onclick=()=>{
   document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
 });
 
-['cL','cW','cH'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
+let calcRange=null;
+function recalcVolume(){
   const v=['cL','cW','cH'].map(i=>parseFloat(document.getElementById(i).value)||0);
   const vol=v[0]*v[1]*v[2];
   const res=document.getElementById('calcRes');
+  const btn=document.getElementById('calcBtn');
+  const chips=[...document.querySelectorAll('#chips .chip')];
   if(vol>0){
-    res.textContent=`Объём: ${vol.toFixed(1)} м³`;
-    const chips=[...document.querySelectorAll('#chips .chip')];
-    const match=chips.find(c=>{if(c.dataset.r==='all')return false;const[a,b]=c.dataset.r.split('-').map(Number);return vol>=a&&vol<=b;});
-    if(match)match.click();
-  } else res.textContent='Объём: — м³';
-}));
+    const match=chips.find(c=>{if(c.dataset.r==='all')return false;const[a,b]=c.dataset.r.split('-').map(Number);return vol>a&&vol<=b;});
+    calcRange=match?match.dataset.r:null;
+    res.innerHTML=`Объём парной: <b>${vol.toFixed(1)} м³</b>`+(match?` · подходят печи ${match.textContent}`:' · подберём индивидуально');
+    btn.hidden=false;
+    btn.textContent=match?'Показать подходящие печи':'Написать в WhatsApp';
+  } else {
+    calcRange=null; res.textContent='Объём: — м³'; btn.hidden=true;
+  }
+}
+['cL','cW','cH'].forEach(id=>document.getElementById(id).addEventListener('input',recalcVolume));
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  if(calcRange){
+    const chip=[...document.querySelectorAll('#chips .chip')].find(c=>c.dataset.r===calcRange);
+    if(chip)chip.click();
+  } else {
+    window.open('https://wa.me/77775555884?text='+encodeURIComponent('Здравствуйте! Помогите подобрать печь под мою парную.'),'_blank');
+  }
+});
 
 function openPopup(s){
   document.getElementById('pKicker').textContent=`${s.series} · ${s.power} · ${s.volt}`;
@@ -659,7 +694,7 @@ const FAQS=[
  ["Как подобрать мощность печи?","Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.","Подбор"],
  ["Какое нужно электропитание?","Вся линейка работает от трёхфазной сети 3~400В. Мощность и напряжение указаны в карточке каждой модели.","Электрика"],
  ["Нужен ли отдельный пульт управления?","У части моделей управление встроено. Для остальных нужен выносной пульт: BB90 (до 9 кВт) или Classy WiFi с управлением со смартфона — CL32WF-C до 18 кВт и CL50WF-C до 30 кВт. Подбирается по мощности печи.","Управление"],
- ["Какая гарантия и есть ли сервис в Казахстане?","На все печи — 1 год. На ТЭНы: 1 год для частной бани и 3 месяца при коммерческой эксплуатации. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа. Сервисная служба: <a href='tel:+77775555883' style='text-decoration:underline'>+7 777 555 58 83</a>.","Сервис"],
+ ["Какая гарантия и есть ли сервис в Казахстане?","На все печи — 1 год. На ТЭНы: 1 год для частной бани и 3 месяца при коммерческой эксплуатации. Склад ТЭНов и комплектующих — в Алматы, ремонт и замена без ожидания поставки из-за рубежа. Сервисный центр: <a href='tel:+77775555883' style='text-decoration:underline'>+7 777 555 58 83</a>.","Сервис"],
  ["Как быстро доставите?","Печи в наличии в Алматы. Доставка по Казахстану — 1–7 дней.","Доставка"],
  ["Можно посмотреть печи вживую?","Да, приезжайте в шоурум: Алматы, Ратушного 40. Лучше предварительно написать в WhatsApp.","Шоурум"],
  ["Хочу продавать печи Dolomiti в своём магазине","Отлично! У нас есть дилерская программа с защитой территории — условия высылаем по запросу. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.","Дилерам"]
