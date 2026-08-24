@@ -19,13 +19,22 @@ const assetRoot = join(repoRoot, 'cli', 'assets');
 const dirsToSync = ['data', 'scripts', 'templates'];
 const checkOnly = process.argv.includes('--check');
 
-// The 6 sibling sub-skills are bundled (as static copies) so `uipro init`
-// installs all 7 skills, not just the template-rendered orchestrator. Source
+// The 8 sibling sub-skills are bundled (as static copies) so `uipro init`
+// installs all 9 skills, not just the template-rendered orchestrator. Source
 // of truth is .claude/skills/ (the orchestrator ui-ux-pro-max is rendered from
 // templates at install time, so it is not mirrored here).
 const skillsSourceRoot = join(repoRoot, '.claude', 'skills');
 const skillsAssetRoot = join(assetRoot, 'skills');
-const subSkills = ['banner-design', 'brand', 'design', 'design-system', 'slides', 'ui-styling'];
+const subSkills = [
+  'banner-design',
+  'brand',
+  'design',
+  'design-system',
+  'github',
+  'slides',
+  'ui-styling',
+  'webdev',
+];
 
 // The repo's own .claude/skills/ui-ux-pro-max/{data,scripts} is a second,
 // independent copy of src/ui-ux-pro-max/{data,scripts} -- it's what Claude
@@ -182,7 +191,7 @@ async function syncAssets() {
     await syncDir(join(sourceRoot, dir), join(assetRoot, dir));
   }
 
-  // Sub-skills: copy text content only (fonts/binaries excluded) so all 7
+  // Sub-skills: copy text content only (fonts/binaries excluded) so all 9
   // skills ship in the package without bloating it with ~5.8MB of fonts.
   const skillsTarget = assertInsideRepo(skillsAssetRoot);
   if (await exists(skillsTarget)) {
@@ -197,7 +206,9 @@ async function syncAssets() {
     await syncDir(join(sourceRoot, dir), join(orchestratorSkillTargetRoot, dir));
   }
 
-  console.log('Synced CLI assets + .claude/skills/ui-ux-pro-max data/scripts from src/ui-ux-pro-max, and 6 sub-skills (normalized to LF).');
+  console.log(
+    `Synced CLI assets + .claude/skills/ui-ux-pro-max data/scripts from src/ui-ux-pro-max, and ${subSkills.length} sub-skills (normalized to LF).`,
+  );
 }
 
 if (checkOnly) {

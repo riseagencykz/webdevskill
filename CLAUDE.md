@@ -65,8 +65,25 @@ cli/                              # CLI installer (ui-ux-pro-max-cli on npm)
 
 .claude/skills/ui-ux-pro-max/     # Claude Code skill: hand-authored SKILL.md +
                                    # data/, scripts/ mirrored from src/ (see Sync Rules)
+.claude/skills/<sibling>/         # 8 hand-authored sibling skills, bundled into the
+                                   # CLI by cli/scripts/sync-assets.mjs (`subSkills`):
+                                   # banner-design, brand, design, design-system,
+                                   # github, slides, ui-styling, webdev
 .claude-plugin/                   # Claude Marketplace publishing
 ```
+
+### Skill Set
+
+| Skill | Covers |
+|-------|--------|
+| `ui-ux-pro-max` | Orchestrator: searchable UI/UX databases (styles, colors, type, charts, stacks) |
+| `webdev` | Engineering: stack choice, architecture, API/data layer, forms, perf, a11y, SEO, security, testing, deploy |
+| `github` | Branching, Conventional Commits, PRs, code review, Actions, issue triage, releases, repo hygiene, `gh` CLI |
+| `design`, `design-system`, `ui-styling`, `brand`, `banner-design`, `slides` | Visual design, tokens, components, brand, creative assets |
+
+`webdev` and `github` are self-contained (SKILL.md + `references/*.md`, no data
+or scripts), so they need no `src/` source — but they **are** mirrored into
+`cli/assets/skills/`, so edits there still require `npm run sync:assets`.
 
 The search engine uses BM25 ranking combined with regex matching. Domain auto-detection is available when `--domain` is omitted.
 

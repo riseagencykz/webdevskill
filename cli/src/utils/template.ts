@@ -218,7 +218,7 @@ export async function listBundledSubSkills(): Promise<string[]> {
 
 /**
  * Install the bundled sub-skills as siblings of the orchestrator skill, so a
- * single `uipro init` delivers all 7 skills instead of only ui-ux-pro-max.
+ * single `uipro init` delivers all 9 skills instead of only ui-ux-pro-max.
  */
 async function copySubSkills(skillsParentDir: string, force: boolean): Promise<void> {
   const skillsSource = join(ASSETS_DIR, 'skills');
@@ -276,7 +276,7 @@ export async function generatePlatformFiles(
   await copyDataAndScripts(skillDir);
 
   // Install the sibling sub-skills (banner-design, brand, design, ...) next to
-  // the orchestrator so all 7 skills are delivered. The skills parent is the
+  // the orchestrator so all 9 skills are delivered. The skills parent is the
   // orchestrator's parent dir (skills/ for most platforms, prompts/ for
   // copilot, steering/ for kiro) — derived, not hardcoded.
   const skillsParentDir = join(
