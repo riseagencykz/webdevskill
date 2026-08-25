@@ -58,6 +58,16 @@ def main():
     secs = [min_html(m.group(0)) for m in re.finditer(r'<section[^>]*>.*?</section>', body, re.S)]
     markup = min_html(body)
 
+    # делим секции пополам по объёму, а не по количеству: секции разного
+    # размера, и деление по счёту оставляет один блок вдвое толще другого
+    half = (sum(len(x) for x in secs) + len(header) + len(footer) + len(sticky)) / 2
+    split, run = len(secs), len(header)
+    for i, sec in enumerate(secs):
+        if run + len(sec) / 2 > half:
+            split = i
+            break
+        run += len(sec)
+
     t = ROOT / 'tilda'
     ob = t / 'odnim-blokom'
     ob.mkdir(parents=True, exist_ok=True)
@@ -66,8 +76,8 @@ def main():
         t / 'tilda-blok.html': FONTS + '\n<style>' + css + '</style>\n' + markup + '\n<script>' + js + '</script>',
         t / '1-head.html': '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
                            + FONTS + '\n<style>' + css + '</style>',
-        t / '2-block-a.html': header + ''.join(secs[:5]),
-        t / '3-block-b.html': ''.join(secs[5:]) + footer + sticky,
+        t / '2-block-a.html': header + ''.join(secs[:split]),
+        t / '3-block-b.html': ''.join(secs[split:]) + footer + sticky,
         t / '4-body-end.html': '<script>' + js + '</script>',
         ob / 'styles.css': css,
         ob / 'app.js': js,
