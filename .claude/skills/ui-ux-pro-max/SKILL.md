@@ -13,6 +13,23 @@ Use this Skill when the task involves **UI structure, visual design decisions, i
 
 Skip it for pure backend logic, API/database design, non-visual performance work, infrastructure/DevOps, or non-visual scripts — unless the task changes how something **looks, feels, moves, or is interacted with**.
 
+## If a UI generator is in play (v0, 21st.dev Magic MCP, similar)
+
+A generator knows what components on the internet look like. It does not know
+your palette, type scale, spacing rhythm, or accessibility bar — this Skill
+does. So the order matters:
+
+1. **Decide here first** — run the design system generation below. Style
+   direction, colors, typography, and spacing come from this Skill.
+2. **Generate** the component from those decisions, not instead of them.
+3. **Conform the output** — replace arbitrary values (`bg-[#4F46E5]`,
+   `text-[15px]`) with your tokens, swap hand-rolled widgets for real
+   primitives, then run the pre-delivery checklist at the end of this file.
+
+Generating first and retrofitting the design system afterwards costs more than
+writing the component by hand. The `ui-styling` skill carries the full pass in
+`references/magic-mcp.md`.
+
 ## Rule Categories by Priority
 
 *Follow priority 1→10 to decide which category to focus on first; use `--domain <Domain>` to query full details. The full rule text for every category lives in `references/quick-reference.md` — read it on demand rather than loading it every time.*

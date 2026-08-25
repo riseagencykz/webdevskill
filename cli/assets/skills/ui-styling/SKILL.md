@@ -224,6 +224,20 @@ Generate tailwind.config.js with custom theme:
 python scripts/tailwind_config_gen.py --colors brand:blue --fonts display:Inter
 ```
 
+## Generated Components (21st.dev Magic MCP)
+
+Optional MCP server that generates React + Tailwind components from a prompt. It
+is a starting-point generator, not a design authority — it does not know your
+palette, type scale, or accessibility bar.
+
+Order that works: **decide with `ui-ux-pro-max` → generate with Magic → conform
+with this skill.** Prefer shadcn/ui for any standard component; reach for Magic
+on unusual composites. Every generated component gets a pass for tokens (no
+`bg-[#4F46E5]`), real primitives, accessibility, dark mode, responsiveness, and
+loading/empty/error states before it is committed.
+
+Full guidance, current tool names, and setup: `references/magic-mcp.md`.
+
 ## Best Practices
 
 1. **Component Composition**: Build complex UIs from simple, composable primitives
@@ -251,6 +265,9 @@ python scripts/tailwind_config_gen.py --colors brand:blue --fonts display:Inter
 
 **Visual Design**
 - `references/canvas-design-system.md` - Design philosophy and canvas workflows
+
+**Generated Components**
+- `references/magic-mcp.md` - 21st.dev Magic MCP: when to use it, how to conform its output
 
 **Automation**
 - `scripts/shadcn_add.py` - Component installation
