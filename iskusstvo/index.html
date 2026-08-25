@@ -10,21 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   Школа тату «Искусство» — курс «Стань тату-мастером»
-
-   Визуальная система снята с презентации школы, а не придумана:
-     · белый лист, тёплый чёрный #231F1F (не чистый чёрный);
-     · жёлтые плиты #FFD453 — только графика, текст на них не лежит
-       (единственное исключение — финальный экран, там контраст 11.49);
-     · выноски с обводкой 2 px и скруглением — родной элемент слайдов;
-     · антикварные гравюры (бюст, ионическая капитель, драпированная
-       фигура) вырезаны из титульных слайдов;
-     · подложка из плиток логотипа — как на контентных слайдах.
-
+/* Школа тату «Искусство» — курс «Стань тату-мастером».
+   Палитра и приёмы взяты с презентации школы.
    ВАЖНО: белый текст на жёлтом даёт 1.59 и нечитаем.
-   На жёлтом — только тёплый чёрный (11.49).
-   ============================================================ */
+   На жёлтом — только тёплый чёрный (11.49). */
 :root{
   --paper:#FFFFFF;
   --tint:#F7F7F7;
@@ -53,7 +42,12 @@ a,button{touch-action:manipulation;}
 
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter);}
 .sec{position:relative;padding-top:var(--section-y);padding-bottom:var(--section-y);}
-/* Подложка из плиток логотипа — как на контентных слайдах презентации */
+/* Фон цветных секций растягиваем тенью, а не шириной: если блок лежит
+   в контейнере Тильды, фон всё равно идёт во всю ширину, а горизонтальной
+   прокрутки не появляется (100vw добавил бы ширину полосы прокрутки).
+   clip-path держит тень по вертикали в границах секции. */
+.sec--tint,.final{box-shadow:0 0 0 100vmax var(--tint);clip-path:inset(0 -100vmax);}
+.final{box-shadow:0 0 0 100vmax var(--yellow);}
 .sec--tint{background:var(--tint);}
 .sec--wm::before{content:'';position:absolute;inset:0;background-image:var(--wm);
   background-size:164px 164px;pointer-events:none;}
@@ -63,8 +57,7 @@ a,button{touch-action:manipulation;}
 h1,h2,h3{font-family:'Oswald',Haettenschweiler,'Arial Narrow',sans-serif;font-weight:700;
   text-transform:uppercase;color:var(--ink);margin:0;line-height:1.02;letter-spacing:.005em;
   text-wrap:balance;}
-/* Потолок 4.5rem: «тату-мастера» идёт одной строкой, а на запасном
-   шрифте он шире Oswald — с 5.25rem строка вылезала за колонку */
+/* «тату-мастера» должно влезать в строку целиком */
 h1{font-size:clamp(2.1rem,6.4vw,4.5rem);}
 h2{font-size:clamp(1.95rem,5vw,3.5rem);line-height:1.04;}
 h3{font-size:clamp(1.1rem,2.2vw,1.4rem);line-height:1.18;}
@@ -73,16 +66,14 @@ p{margin:0;}
 .small{font-size:.9375rem;line-height:1.5;}
 .label{font-family:'Oswald',sans-serif;font-weight:500;font-size:.75rem;letter-spacing:.24em;
   text-transform:uppercase;color:var(--ink);margin:0 0 18px;}
-/* Ширина в px, а не в ch: ch считается от размера шрифта родителя (1rem),
-   и заголовок вставал в столбик по одному слову */
+/* px, не ch: ch считается от шрифта родителя и ломает заголовок */
 .head{max-width:min(100%,780px);margin-bottom:clamp(34px,4.5vw,56px);}
 .head h2{max-width:15em;}
 .head .lead{max-width:58ch;margin-top:18px;}
-/* Жёлтая заливка за словом. На слайдах жёлтое — всегда цельная плита,
-   поэтому слово не переносим: два рваных прямоугольника ломают приём. */
+/* Жёлтое — всегда цельная плита, поэтому слово не переносим */
 .mark{background:var(--yellow);color:var(--ink);padding:.02em .16em;white-space:nowrap;}
 
-/* ===== Жёлтые плиты. Чистая графика, текста на них нет ===== */
+/* ===== Жёлтые плиты: графика, текста на них нет ===== */
 .slab{position:absolute;background:var(--yellow);pointer-events:none;}
 .slab--l{left:0;top:0;width:clamp(16px,3vw,52px);height:clamp(150px,26vw,380px);}
 .slab--br{right:0;bottom:clamp(28px,6vw,92px);width:clamp(84px,16vw,240px);height:clamp(26px,3.4vw,52px);}
@@ -104,7 +95,7 @@ p{margin:0;}
 .btn--full{display:flex;width:100%;}
 @media (min-width:641px){.btn--full{display:inline-flex;width:auto;}}
 
-/* ===== Выноска: обводка 2 px + скругление. Элемент из презентации ===== */
+/* ===== Выноска ===== */
 .card{border:2px solid var(--ink);border-radius:var(--r);background:var(--paper);padding:clamp(22px,2.6vw,30px);}
 
 /* ===== Шапка ===== */
@@ -112,17 +103,11 @@ p{margin:0;}
   backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--rule);}
 .top-in{display:flex;align-items:center;gap:16px;min-height:66px;}
 .logo{display:flex;align-items:center;gap:11px;min-height:44px;text-decoration:none;}
-/* Знак как в профиле школы: жёлтый круг, чёрное кольцо с отступом
-   от края, буквы сеткой 3×3. Кольцо — абсолютное ::before, иначе оно
-   стало бы десятым элементом grid и сломало сетку букв. */
+/* Кольцо — абсолютное ::before, иначе стало бы 10-м элементом grid */
 .logo-mark{position:relative;display:grid;grid-template-columns:repeat(3,1fr);
   width:46px;height:46px;padding:10.5px;border-radius:50%;background:var(--yellow);
-  /* Буквы знака — обычной ширины, как в оригинале. Oswald узкий,
-     он бы их сплющил, поэтому здесь основной шрифт, а не заголовочный */
   font-family:'Manrope',Helvetica,Arial,sans-serif;font-size:8.5px;font-weight:500;
   color:var(--ink);place-items:center;line-height:1;flex:0 0 auto;}
-/* Кольцо отступает от края примерно на 8 % диаметра — как в оригинале,
-   там жёлтое поле хорошо видно за кольцом */
 .logo-mark::before{content:'';position:absolute;inset:3.5px;
   border:1.4px solid var(--ink);border-radius:50%;}
 .logo-name{font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
@@ -149,17 +134,14 @@ p{margin:0;}
 .hero-sub{margin-top:24px;max-width:46ch;}
 .hero-cta{margin-top:34px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;}
 .hero-note{font-size:.875rem;color:var(--muted);}
-/* Гравюра с титульного слайда — уходит за правый край, как в оригинале */
 .hero-art{justify-self:end;width:min(100%,400px);}
 .hero-art img{width:100%;height:auto;}
-/* Вылет за край включаем только там, где за колонкой есть запас поля:
-   ниже 1240 px он уходил бы прямо за экран и срезал лицо */
+/* Вылет за край — только там, где за колонкой есть поле */
 @media (min-width:1240px){.hero-art{margin-right:calc(var(--gutter)*-1.6);}}
 @media (max-width:899px){
   .hero-cta{flex-direction:column;align-items:stretch;}
   .hero-cta .btn{width:100%;}
   .hero-note{text-align:center;}
-  /* На телефоне гравюра не выходит за край: там нет запаса ширины */
   .hero-art{width:min(64%,300px);margin-top:8px;margin-right:0;}
 }
 
@@ -198,7 +180,6 @@ p{margin:0;}
 .steps b{display:block;font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
   font-size:1.0625rem;letter-spacing:.05em;color:var(--ink);margin-bottom:7px;}
 .steps span{font-size:.9375rem;line-height:1.55;}
-/* Единственная выноска с жёлтой меткой — то, что снимает главное возражение */
 .steps li.is-key{position:relative;overflow:hidden;}
 .steps li.is-key::before{content:'';position:absolute;left:0;top:0;width:100%;height:6px;background:var(--yellow);}
 .steps li.is-key{padding-top:26px;}
@@ -235,8 +216,6 @@ p{margin:0;}
   border:1px solid var(--rule);border-radius:var(--r);}
 
 /* ===== FAQ ===== */
-/* Строки не на всю ширину: длинный вопрос в одну линию через 1200 px
-   читается плохо, глаз теряет начало следующей строки */
 .faq{border-top:1px solid var(--rule);max-width:900px;}
 .faq details{border-bottom:1px solid var(--rule);}
 .faq summary{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
@@ -252,7 +231,7 @@ p{margin:0;}
 .faq details[open] .faq-plus::after{transform:scaleY(0);}
 .faq p{padding:0 0 24px;max-width:64ch;}
 
-/* ===== Финал: единственный экран, где текст лежит на жёлтом (11.49) ===== */
+/* ===== Финал: единственное место, где текст на жёлтом ===== */
 .final{background:var(--yellow);color:var(--ink);text-align:center;}
 .final h2,.final p{color:var(--ink);}
 .final p{max-width:46ch;margin:18px auto 0;}
@@ -620,13 +599,10 @@ p{margin:0;}
 (function () {
   'use strict';
 
-  /* ---------- WhatsApp ----------
-     Номер и текст сообщения задаются здесь. */
+  /* ---------- WhatsApp: номер и текст задаются здесь ---------- */
   var WA_PHONE = '77773231144';
   var WA_TEXT  = 'Здравствуйте! Хочу узнать про курс тату-мастера';
-  /* Метку креатива дописываем в сообщение: при переходе в мессенджер
-     UTM теряются, и становится не видно, какой ролик приносит заявки.
-     false — убрать пометку. */
+  /* false — не дописывать метку креатива в сообщение */
   var WA_TAG_SOURCE = true;
 
   var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
@@ -638,7 +614,6 @@ p{margin:0;}
     var vals = {};
     KEYS.forEach(function (k) {
       var v = qs ? (qs.get(k) || '') : '';
-      // Параметр может потеряться при переходах — держим копию
       try {
         if (v) sessionStorage.setItem('isk_' + k, v);
         else v = sessionStorage.getItem('isk_' + k) || '';
@@ -656,17 +631,15 @@ p{margin:0;}
   var links = document.querySelectorAll('[data-wa]');
   for (var i = 0; i < links.length; i++) links[i].href = waHref();
 
-  /* Событие конверсии на клике: страницы «Спасибо» нет, иначе пиксель
-     не увидит ни одной заявки. Обёрнуто — без пикселя ошибки не будет. */
+  /* Конверсия на клике: страницы «Спасибо» нет */
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-wa]')) return;
     try { if (window.ttq && ttq.track) ttq.track('Contact'); } catch (err) {}
     try { if (window.fbq) fbq('track', 'Contact'); } catch (err) {}
   });
 
-  /* ---------- Появление при скролле ----------
-     Наблюдаем секции, а не элементы: быстрый флик-скролл проскакивает
-     отдельные элементы, и они остались бы невидимыми навсегда. */
+  /* Появление при скролле. Наблюдаем секции, а не элементы:
+     быстрый скролл проскакивал бы отдельные элементы навсегда. */
   if (!reduced && 'IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     var io = new IntersectionObserver(function (en) {
@@ -727,7 +700,7 @@ p{margin:0;}
       on = v;
       st.classList.toggle('on', v);
       st.setAttribute('aria-hidden', v ? 'false' : 'true');
-      if (btn) btn.tabIndex = v ? 0 : -1;   // скрытая панель не ловит фокус
+      if (btn) btn.tabIndex = v ? 0 : -1;
     }
     function onScroll() {
       if (tick) return;
