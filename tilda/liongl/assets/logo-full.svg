@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 40" width="300" height="40" role="img" aria-label="Lion Global Logistics">
+  <title>Lion Global Logistics</title>
+  <path d="M5 6v14.9" fill="none" stroke="#0F1822" stroke-width="3.4" stroke-linecap="square"/><path d="M5 20.9c0 9.1 9.1 9.1 9.1 9.1" fill="none" stroke="#0B6B54" stroke-width="3.4" stroke-linecap="round"/><path d="M14.1 30.0h10.1" fill="none" stroke="#0F1822" stroke-width="3.4" stroke-linecap="square"/>
+  <text x="32" y="19" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="16.5" font-weight="700" letter-spacing="-.3" fill="#0F1822">LION GLOBAL LOGISTICS</text>
+  <text x="32.5" y="32" font-family="'IBM Plex Mono',Consolas,monospace" font-size="8" letter-spacing="2.5" fill="#5A6875">АЛМАТЫ · ОТПРАВКИ ИЗ КАЗАХСТАНА</text>
+</svg>

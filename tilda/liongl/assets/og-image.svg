@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<defs>
+  <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M40 0H0V40" fill="none" stroke="#1B2735" stroke-width="1"/></pattern>
+  <radialGradient id="glow"><stop offset="0" stop-color="#2563C9" stop-opacity=".3"/>
+    <stop offset="1" stop-color="#2563C9" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="630" fill="#0F1822"/>
+<rect width="1200" height="630" fill="url(#g)" opacity=".5"/>
+
+<path d="M64 52v15" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="square"/>
+<path d="M64 67c0 9 9 9 9 9" fill="none" stroke="#3FB392" stroke-width="3.6" stroke-linecap="round"/>
+<path d="M73 76h10" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="square"/>
+<text x="96" y="72" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="-.3" fill="#fff">LION GLOBAL LOGISTICS</text>
+
+<text x="64" y="236" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#fff">Фура из Казахстана</text>
+<text x="64" y="292" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#fff">в Россию, Кыргызстан</text>
+<text x="64" y="348" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#fff">и Беларусь — <tspan fill="#3FB392">под ключ</tspan></text>
+<text x="64" y="398" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="19" fill="#8A93A0">Скажите, что везём и к какому числу.</text>
+<text x="64" y="424" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="19" fill="#8A93A0">Остальное сделаем сами.</text>
+
+<line x1="64" y1="478" x2="1136" y2="478" stroke="#2A3644" stroke-width="1"/>
+<text x="64" y="536" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="-.6" fill="#fff">+7 771 501 77 75</text>
+<text x="64" y="568" font-family="'IBM Plex Mono',Consolas,monospace" font-size="13" letter-spacing="2.4" fill="#8A93A0">АЛМАТЫ · С 2013 ГОДА</text>
+
+<g transform="translate(636 92)">
+  <circle cx="170" cy="175" r="112" fill="url(#glow)"/>
+  <rect x="0" y="30" width="360" height="292" rx="16" fill="#12876A" fill-opacity=".08"
+        stroke="#12876A" stroke-width="1.6" stroke-dasharray="4 6"/>
+  <text x="18" y="55" font-family="'IBM Plex Mono',Consolas,monospace" font-size="12" letter-spacing="2.2" fill="#3FB392">ЕАЭС · БЕЗ ТАМОЖНИ</text>
+  <path d="M55 100 H100 L170 175" fill="none" stroke="#12876A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M55 280 H95 L170 175" fill="none" stroke="#12876A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M290 280 L170 175" fill="none" stroke="#12876A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M170 175 H470" fill="none" stroke="#B06A3B" stroke-width="3.4" stroke-dasharray="10 7" stroke-linecap="round"/>
+  <line x1="390" y1="140" x2="390" y2="212" stroke="#B06A3B" stroke-width="1.6" stroke-dasharray="4 4"/>
+  <text x="390" y="130" font-family="'IBM Plex Mono',Consolas,monospace" font-size="11" fill="#B06A3B" text-anchor="middle">ТАМОЖНЯ</text>
+
+  <circle cx="55" cy="100" r="7" fill="#0F1822" stroke="#fff" stroke-width="2.6"/>
+  <text x="55" y="82" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="15" font-weight="600" fill="#fff" text-anchor="middle">Россия</text>
+  <circle cx="55" cy="280" r="7" fill="#0F1822" stroke="#fff" stroke-width="2.6"/>
+  <text x="55" y="305" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="15" font-weight="600" fill="#fff" text-anchor="middle">Беларусь</text>
+  <circle cx="290" cy="280" r="7" fill="#0F1822" stroke="#fff" stroke-width="2.6"/>
+  <text x="290" y="305" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="15" font-weight="600" fill="#fff" text-anchor="middle">Кыргызстан</text>
+  <circle cx="470" cy="175" r="7" fill="#0F1822" stroke="#B06A3B" stroke-width="2.6"/>
+  <text x="470" y="157" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="15" font-weight="600" fill="#B06A3B" text-anchor="middle">Китай</text>
+
+  <circle cx="170" cy="175" r="22" fill="#0F1822" stroke="#fff" stroke-width="1.4" opacity=".95"/>
+  <circle cx="170" cy="175" r="12" fill="#fff"/>
+  <text x="170" y="143" font-family="Inter,'Helvetica Neue',Arial,sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">Казахстан</text>
+</g>
+</svg>

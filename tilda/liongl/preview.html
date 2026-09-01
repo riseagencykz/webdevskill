@@ -66,10 +66,12 @@
 .lgl-root *,.lgl-root *::before,.lgl-root *::after{box-sizing:border-box;}
 .lgl-root h1,.lgl-root h2,.lgl-root h3,.lgl-root h4,
 .lgl-root p,.lgl-root ul,.lgl-root ol,.lgl-root dl,.lgl-root dd,.lgl-root figure{margin:0;padding:0;}
-.lgl-root ul{list-style:none;}
-.lgl-root a{color:inherit;text-decoration:none;}
-.lgl-root svg,.lgl-root img{display:block;max-width:100%;}
-.lgl-root button{font:inherit;color:inherit;}
+/* Сброс через :where() — нулевая специфичность. Иначе .lgl-root a{color:inherit}
+   перебивал .lgl-btn{color:#fff} и текст кнопок сливался с фоном. */
+.lgl-root :where(ul){list-style:none;}
+.lgl-root :where(a){color:inherit;text-decoration:none;}
+.lgl-root :where(svg,img){display:block;max-width:100%;}
+.lgl-root :where(button){font:inherit;color:inherit;}
 .lgl-root [id]{scroll-margin-top:24px;}
 
 /* фокус виден и на светлом, и на тёмном: двойное кольцо */
@@ -228,7 +230,7 @@
 .lgl-magnet>*{position:relative;}
 .lgl-magnet .lgl-mono{color:#7FCFB6;}
 .lgl-magnet h2{color:#fff;margin-top:var(--lgl-sp-3);}
-.lgl-magnet>div>p{margin-top:var(--lgl-sp-3);color:#A9B7C2;font-size:15.5px;max-width:44ch;}
+.lgl-magnet-body>p{margin-top:var(--lgl-sp-3);color:#A9B7C2;font-size:15.5px;max-width:44ch;}
 .lgl-gets{margin-top:var(--lgl-sp-5);display:grid;gap:11px;}
 .lgl-gets li{display:flex;gap:var(--lgl-sp-3);font-size:15px;line-height:1.45;}
 .lgl-gets li::before{content:'';flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;
@@ -529,7 +531,7 @@
   <section class="lgl-sec">
     <div class="lgl-wrap">
       <div class="lgl-magnet lgl-rv">
-        <div>
+        <div class="lgl-magnet-body">
           <span class="lgl-mono">Бесплатно и ни к чему не обязывает</span>
           <h2>Просчёт маршрута за 30 минут</h2>
           <p>Пришлите маршрут и вес — вернёмся с готовым решением, а не с вопросом «а какой у вас груз?».</p>
