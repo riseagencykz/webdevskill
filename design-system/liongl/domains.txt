@@ -1,0 +1,71 @@
+### --domain color
+
+### Result 1
+- **Product Type:** B2B Service
+- **Primary:** #0F172A
+- **On Primary:** #FFFFFF
+- **Secondary:** #334155
+- **On Secondary:** #FFFFFF
+- **Accent:** #0369A1
+- **On Accent:** #FFFFFF
+- **Background:** #F8FAFC
+- **Foreground:** #020617
+- **Card:** #FFFFFF
+- **Card Foreground:** #020617
+- **Muted:** #E8ECF1
+- **Muted Foreground:** #64748B
+- **Border:** #E2E8F0
+- **Destructive:** #DC2626
+- **On Destructive:** #FFFFFF
+- **Ring:** #0F172A
+- **Notes:** Professional navy + blue CTA
+
+### Result 2
+- **Product Type:** Logistics/Delivery
+- **Primary:** #2563EB
+- **On Primary:** #FFFFFF
+- **Secondary:** #3B82F6
+- **On Secondary:** #FFFFFF
+- **Accent:** #EA580C
+- **On Accent:** #FFFFFF
+- **Background:** #EFF6FF
+- **Foreground:** #1E40AF
+- **Card:** #FFFFFF
+- **Card Foreground:** #1E40AF
+- **Muted:** #E9EFF8
+- **Muted Foreground:** #64748B
+- **Border:** #BFDBFE
+- **Destructive:** #DC2626
+
+### --domain typography
+
+### Result 1
+- **Font Pairing Name:** Geometric Modern
+- **Category:** Sans + Sans
+- **Heading Font:** Outfit
+- **Body Font:** Work Sans
+- **Mood/Style Keywords:** geometric, modern, clean, balanced, contemporary, versatile
+- **Best For:** General purpose, portfolios, agencies, modern brands, landing pages
+- **Google Fonts URL:** https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap
+- **CSS Import:** @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+- **Tailwind Config:** fontFamily: { heading: ['Outfit', 'sans-serif'], body: ['Work Sans', 'sans-serif'] }
+- **Notes:** Both geometric but Outfit more distinctive for headings.
+
+### Result 2
+- **Font Pairing Name:** Enterprise SaaS Mobile (Plus Jakarta Sans)
+- **Category:** Geometric Sans (Single Family)
+- **Heading Font:** Plus Jakarta Sans
+- **Body Font:** Plus Jakarta Sans
+- **Mood/Style Keywords:** enterprise, saas, b2b, professional, indigo, modern, approachable, legible, ios dynamic type, android scaling
+- **Best For:** B2B SaaS apps, productivity tools, government and finance mobile apps, admin dashboards, enterprise onboarding
+- **Google Fonts URL:** https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400
+- **CSS Import:** @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+- **Tailwind Config:** fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+- **Notes:** Single-family system: Plus Jakarta Sans balances professional authority with mobile approachability. Weight scale: ExtraBold 800 for screen titles/hero (line height 1.1–1.2). Bold 700 for section headers. SemiBold 600 for card titles and buttons. Regular 400 for body text (line height 1.4–1.5). Must...
+
+
+### --domain ux
+
+No matches. This is not a match with an empty value -- the query did not hit the database. Retry with broader/different keywords before falling back to general defaults, and say explicitly that no database match was found if you do fall back.
+**Closest known terms:** truncation, freedom
+

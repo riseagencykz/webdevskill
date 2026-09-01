@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lion Global Logistics — предпросмотр блока</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet">
+<style>
+  /* Обёртка только для просмотра. На Тильде её нет. */
+  body{margin:0;background:#fff;font-family:Georgia,serif;color:#333}
+  .t-fake{padding:20px;background:#20242b;color:#9aa3ad;font:12px/1.5 monospace}
+  .t-fake h3{font:600 17px/1.3 Georgia,serif;color:#fff;margin:0 0 6px}
+  html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="t-fake"><h3>Соседний блок Тильды сверху</h3>
+Свой шрифт и свои цвета. Если ниже что-то поехало — стили блока протекли наружу.</div>
+<style>
+/* ============================================================================
+   Lion Global Logistics — блок T123 для Тильды
+   Всё изолировано в .lgl-root: переменные, селекторы, скрипт.
+   Шрифты Inter и IBM Plex Mono подключаются в настройках сайта Тильды.
+   ========================================================================== */
+.lgl-root{
+  /* --- цвет. Палитра утверждена, изменены только тона для текста:
+     #12876A давал 4.47 на белом (ниже AA), #B06A3B — 4.22, #7C8894 — 3.62.
+     Фирменные тона остались для заливок и графики, где хватает 3:1. --- */
+  --lgl-bg:#EDF0F3; --lgl-card:#fff; --lgl-soft:#F5F7F9;
+  --lgl-ink:#0F1822; --lgl-body:#4A5867; --lgl-mut:#5A6875;
+  --lgl-line:#D3D9DF;        /* декоративные разделители */
+  --lgl-line-ui:#8E969E;     /* границы управляемых элементов, 3.00 на белом */
+  --lgl-eaeu:#12876A;        /* графика, заливки */
+  --lgl-eaeu-ink:#0B6B54;    /* текст и кнопки, 6.47 на белом */
+  --lgl-eaeu-l:#E4F2ED;
+  --lgl-home:#2563C9;
+  --lgl-cn:#B06A3B;          /* графика */
+  --lgl-cn-ink:#8A5430;      /* текст, 6.19 на белом */
+
+  /* --- шкала кеглей, один ряд с шагом 1.2 --- */
+  --lgl-fs-2xs:11px; --lgl-fs-xs:12.5px; --lgl-fs-sm:14px; --lgl-fs-md:16px;
+  --lgl-fs-lg:19px; --lgl-fs-xl:23px; --lgl-fs-2xl:28px; --lgl-fs-3xl:34px;
+  --lgl-fs-4xl:41px; --lgl-fs-5xl:52px;
+
+  /* --- шкала отступов, шаг 4 --- */
+  --lgl-sp-1:4px; --lgl-sp-2:8px; --lgl-sp-3:12px; --lgl-sp-4:16px;
+  --lgl-sp-5:24px; --lgl-sp-6:32px; --lgl-sp-7:48px; --lgl-sp-8:64px; --lgl-sp-9:96px;
+
+  /* --- радиусы --- */
+  --lgl-r-1:4px; --lgl-r-2:8px; --lgl-r-3:12px; --lgl-r-4:16px; --lgl-r-pill:999px;
+
+  --lgl-maxw:1320px;
+  --lgl-pad:clamp(16px,4vw,36px);
+  --lgl-sec-y:clamp(48px,6.5vw,88px);
+  --lgl-dur:180ms; --lgl-ease:cubic-bezier(.22,.61,.36,1);
+
+  background:var(--lgl-bg);
+  color:var(--lgl-ink);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:var(--lgl-fs-md);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.lgl-root *,.lgl-root *::before,.lgl-root *::after{box-sizing:border-box;}
+.lgl-root h1,.lgl-root h2,.lgl-root h3,.lgl-root h4,
+.lgl-root p,.lgl-root ul,.lgl-root ol,.lgl-root dl,.lgl-root dd,.lgl-root figure{margin:0;padding:0;}
+.lgl-root ul{list-style:none;}
+.lgl-root a{color:inherit;text-decoration:none;}
+.lgl-root svg,.lgl-root img{display:block;max-width:100%;}
+.lgl-root button{font:inherit;color:inherit;}
+.lgl-root [id]{scroll-margin-top:24px;}
+
+/* фокус виден и на светлом, и на тёмном: двойное кольцо */
+.lgl-root a:focus-visible,.lgl-root button:focus-visible,.lgl-root summary:focus-visible{
+  outline:2px solid var(--lgl-eaeu-ink);outline-offset:2px;
+  box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 0 6px var(--lgl-eaeu-ink);
+  border-radius:var(--lgl-r-1);
+}
+.lgl-magnet a:focus-visible,.lgl-root .lgl-sticky a:focus-visible{
+  outline-color:#7FCFB6;box-shadow:0 0 0 4px rgba(15,24,34,.9),0 0 0 6px #7FCFB6;
+}
+
+.lgl-wrap{max-width:var(--lgl-maxw);margin-inline:auto;padding-inline:var(--lgl-pad);}
+.lgl-sec{padding-block:var(--lgl-sec-y);}
+.lgl-white{background:var(--lgl-card);}
+.lgl-hd{max-width:700px;margin-bottom:clamp(24px,3.6vw,var(--lgl-sp-7));}
+.lgl-hd .lgl-mono{display:block;margin-bottom:var(--lgl-sp-3);}
+
+.lgl-mono{font-family:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  font-size:var(--lgl-fs-2xs);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--lgl-mut);font-weight:500;}
+.lgl-root h2{font-size:clamp(var(--lgl-fs-2xl),3.6vw,var(--lgl-fs-4xl));
+  font-weight:700;letter-spacing:-.03em;line-height:1.1;}
+.lgl-lead{margin-top:var(--lgl-sp-3);font-size:clamp(var(--lgl-fs-sm),1.6vw,17px);
+  color:var(--lgl-body);max-width:52ch;}
+
+/* --- кнопки --- */
+.lgl-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--lgl-sp-2);
+  min-height:52px;padding:0 26px;background:var(--lgl-ink);color:#fff;border:1px solid var(--lgl-ink);
+  border-radius:var(--lgl-r-1);font-weight:600;font-size:15px;cursor:pointer;text-align:center;
+  transition:background var(--lgl-dur) var(--lgl-ease),border-color var(--lgl-dur) var(--lgl-ease),
+             color var(--lgl-dur) var(--lgl-ease),transform var(--lgl-dur) var(--lgl-ease);}
+.lgl-btn:hover{background:#233242;border-color:#233242;}
+.lgl-btn:active{transform:translateY(1px);}
+.lgl-btn--sm{min-height:44px;padding:0 18px;font-size:var(--lgl-fs-sm);}
+.lgl-btn--gh{background:var(--lgl-card);color:var(--lgl-ink);border-color:var(--lgl-line-ui);}
+.lgl-btn--gh:hover{background:var(--lgl-card);border-color:var(--lgl-ink);}
+.lgl-btn--gr{background:var(--lgl-eaeu-ink);border-color:var(--lgl-eaeu-ink);}
+.lgl-btn--gr:hover{background:#095844;border-color:#095844;}
+/* главный CTA страницы — самая заметная кнопка */
+.lgl-btn--hero{min-height:58px;font-size:17px;padding:0 32px;
+  box-shadow:0 1px 2px rgba(11,107,84,.3),0 10px 26px -10px rgba(11,107,84,.7);}
+.lgl-btn--hero:hover{box-shadow:0 1px 2px rgba(11,107,84,.3),0 14px 30px -10px rgba(11,107,84,.8);}
+
+/* --- шапка --- */
+.lgl-top{display:flex;align-items:center;gap:var(--lgl-sp-4);min-height:68px;
+  border-bottom:1px solid var(--lgl-line);}
+.lgl-logo{margin-right:auto;display:inline-flex;align-items:center;min-height:44px;}
+.lgl-logo svg{height:30px;width:auto;}
+.lgl-tel{font-weight:700;font-size:15px;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;}
+.lgl-tel:hover{color:var(--lgl-eaeu-ink);}
+@media (max-width:600px){.lgl-tel{display:none;}}
+
+/* --- герой --- */
+.lgl-hero{display:grid;gap:clamp(var(--lgl-sp-6),4vw,var(--lgl-sp-7));
+  padding-block:clamp(var(--lgl-sp-6),4.5vw,var(--lgl-sp-8));}
+@media (min-width:1060px){.lgl-hero{grid-template-columns:minmax(0,440px) 1fr;align-items:center;}}
+.lgl-root h1{font-size:clamp(var(--lgl-fs-3xl),5vw,var(--lgl-fs-5xl));font-weight:700;
+  line-height:1.05;letter-spacing:-.035em;text-wrap:balance;}
+.lgl-root h1 em{font-style:normal;color:var(--lgl-eaeu-ink);}
+.lgl-pill{display:inline-flex;align-items:center;gap:var(--lgl-sp-2);background:var(--lgl-eaeu-l);
+  color:var(--lgl-eaeu-ink);border-radius:var(--lgl-r-pill);padding:7px 14px;
+  font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-2xs);letter-spacing:.12em;
+  text-transform:uppercase;font-weight:500;margin-bottom:var(--lgl-sp-5);}
+.lgl-pill i{width:7px;height:7px;border-radius:50%;background:var(--lgl-eaeu-ink);flex:none;}
+.lgl-turnkey{margin-top:var(--lgl-sp-5);display:flex;flex-wrap:wrap;gap:7px;}
+.lgl-turnkey li{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-2xs);letter-spacing:.06em;
+  border:1px solid var(--lgl-line);background:var(--lgl-card);border-radius:var(--lgl-r-1);
+  padding:6px 10px;color:var(--lgl-mut);}
+.lgl-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--lgl-sp-5);}
+.lgl-trust{display:flex;flex-wrap:wrap;gap:var(--lgl-sp-5) var(--lgl-sp-6);margin-top:var(--lgl-sp-5);
+  padding-top:var(--lgl-sp-5);border-top:1px solid var(--lgl-line);}
+.lgl-trust b{display:block;font-size:var(--lgl-fs-xl);font-weight:700;letter-spacing:-.02em;line-height:1;}
+.lgl-trust span{display:block;margin-top:var(--lgl-sp-1);font-size:var(--lgl-fs-xs);
+  color:var(--lgl-mut);max-width:17ch;}
+
+/* --- схема коридоров --- */
+.lgl-mapcard{position:relative;background:var(--lgl-card);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-3);padding:clamp(var(--lgl-sp-3),2vw,var(--lgl-sp-5));overflow:hidden;
+  box-shadow:0 1px 2px rgba(15,24,34,.05),0 14px 38px -20px rgba(15,24,34,.3);}
+/* тонкая сетка на фоне карточки */
+.lgl-mapcard::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(15,24,34,.055) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(15,24,34,.055) 1px,transparent 1px);
+  background-size:28px 28px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 45%,#000 35%,transparent 78%);
+          mask-image:radial-gradient(120% 90% at 50% 45%,#000 35%,transparent 78%);}
+.lgl-mapcard>*{position:relative;}
+.lgl-maph{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;
+  margin-bottom:var(--lgl-sp-2);padding-inline:6px;}
+.lgl-maph i{font-style:normal;margin-left:auto;font-size:var(--lgl-fs-xs);color:var(--lgl-mut);}
+
+.lgl-root .lgl-map{display:none;width:100%;height:auto;}
+@media (min-width:600px){.lgl-root .lgl-map{display:block;}}
+.lgl-zone{fill:var(--lgl-eaeu-l);stroke:var(--lgl-eaeu);stroke-width:1.4;stroke-dasharray:3 5;opacity:.9;}
+/* мягкое свечение под узлом Казахстана */
+.lgl-glow{fill:url(#lglGlow);}
+.lgl-lane{stroke-width:5;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke:var(--lgl-eaeu);
+  stroke-dasharray:var(--l,600);stroke-dashoffset:var(--l,600);}
+/* линию Китая отличаем не только охрой: она тоньше и пунктирная.
+   Зелёный и охра при дейтеранопии дают контраст 1.28 — цвет один смысл не несёт. */
+.lgl-lane--cn{stroke:var(--lgl-cn);stroke-width:3.5;opacity:.85;}
+.lgl-root .lgl-is-drawn .lgl-lane{transition:stroke-dashoffset 1.1s var(--lgl-ease) var(--d,0s);
+  stroke-dashoffset:0;}
+.lgl-root .lgl-is-drawn .lgl-lane--cn{stroke-dasharray:10 7;stroke-dashoffset:0;transition:none;}
+.lgl-node{fill:#fff;stroke:var(--lgl-ink);stroke-width:2.6;}
+.lgl-node--cn{stroke:var(--lgl-cn-ink);}
+.lgl-hub{fill:var(--lgl-ink);}
+.lgl-ring{fill:none;stroke:var(--lgl-home);stroke-width:2;stroke-dasharray:5 6;opacity:.7;}
+.lgl-lbl{font-size:14.5px;font-weight:600;fill:var(--lgl-ink);}
+.lgl-lbl--m{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-2xs);font-weight:400;
+  fill:var(--lgl-mut);letter-spacing:.05em;}
+.lgl-lbl--z{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-2xs);font-weight:500;
+  fill:var(--lgl-eaeu-ink);letter-spacing:.14em;}
+.lgl-lbl--c{fill:var(--lgl-cn-ink);}
+.lgl-brd{stroke:var(--lgl-cn-ink);stroke-width:1.6;stroke-dasharray:4 4;}
+/* планшет: схема остаётся, часть подписей уходит */
+@media (max-width:1059px){.lgl-map .lgl-opt{display:none;}}
+
+.lgl-clist{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-2);overflow:hidden;}
+@media (min-width:600px){.lgl-clist{display:none;}}
+.lgl-clist li{display:flex;align-items:center;gap:var(--lgl-sp-3);background:var(--lgl-card);padding:14px 15px;}
+/* маркер кодируется формой, а не только цветом */
+.lgl-clist i{width:12px;height:12px;flex:none;border:2px solid currentColor;}
+.lgl-clist i.lgl-m--eaeu{color:var(--lgl-eaeu-ink);background:var(--lgl-eaeu-ink);border-radius:50%;}
+.lgl-clist i.lgl-m--home{color:var(--lgl-home);background:var(--lgl-home);border-radius:var(--lgl-r-1);}
+.lgl-clist i.lgl-m--cn{color:var(--lgl-cn-ink);background:transparent;border-style:dashed;border-radius:50%;}
+.lgl-clist b{font-weight:600;font-size:14.5px;}
+.lgl-clist small{display:block;color:var(--lgl-mut);font-size:var(--lgl-fs-xs);font-weight:400;}
+.lgl-clist span{margin-left:auto;font-family:'IBM Plex Mono',monospace;
+  font-size:var(--lgl-fs-xs);white-space:nowrap;}
+
+/* --- преимущества --- */
+.lgl-how{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-2);overflow:hidden;}
+@media (min-width:700px){.lgl-how{grid-template-columns:1fr 1fr;}}
+@media (min-width:1060px){.lgl-how{grid-template-columns:repeat(3,1fr);}}
+.lgl-how>div{background:var(--lgl-card);padding:clamp(22px,2.6vw,var(--lgl-sp-6));
+  display:grid;grid-template-rows:auto auto 1fr;gap:var(--lgl-sp-3);align-content:start;}
+.lgl-ico{width:44px;height:44px;border-radius:var(--lgl-r-2);background:var(--lgl-eaeu-l);
+  display:grid;place-items:center;}
+/* один оптический вес: сетка 24×24, обводка 1.6, без заливок */
+.lgl-ico svg{width:24px;height:24px;stroke:var(--lgl-eaeu-ink);stroke-width:1.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;}
+.lgl-how h3{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.25;}
+.lgl-how p{font-size:14.5px;color:var(--lgl-body);}
+
+/* --- лид-магнит --- */
+.lgl-magnet{background:var(--lgl-ink);color:#fff;border-radius:var(--lgl-r-4);
+  padding:clamp(var(--lgl-sp-6),4vw,var(--lgl-sp-7));display:grid;
+  gap:clamp(var(--lgl-sp-5),3.4vw,var(--lgl-sp-7));position:relative;overflow:hidden;}
+@media (min-width:940px){.lgl-magnet{grid-template-columns:1fr 400px;align-items:center;}}
+.lgl-magnet::before{content:'';position:absolute;inset:auto -10% -70% 40%;height:170%;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(18,135,106,.34),transparent 70%);pointer-events:none;}
+.lgl-magnet>*{position:relative;}
+.lgl-magnet .lgl-mono{color:#7FCFB6;}
+.lgl-magnet h2{color:#fff;margin-top:var(--lgl-sp-3);}
+.lgl-magnet>div>p{margin-top:var(--lgl-sp-3);color:#A9B7C2;font-size:15.5px;max-width:44ch;}
+.lgl-gets{margin-top:var(--lgl-sp-5);display:grid;gap:11px;}
+.lgl-gets li{display:flex;gap:var(--lgl-sp-3);font-size:15px;line-height:1.45;}
+.lgl-gets li::before{content:'';flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;
+  background:rgba(18,135,106,.28);background-repeat:no-repeat;background-position:center;background-size:13px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3l2.2 2.2 4.8-5' fill='none' stroke='%237FCFB6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}
+/* акцентная карточка читается как отдельный объект: приподнята и с бланком расчёта */
+.lgl-magnet-card{background:#fff;color:var(--lgl-ink);border-radius:var(--lgl-r-3);
+  padding:clamp(var(--lgl-sp-5),2.6vw,28px);
+  box-shadow:0 2px 4px rgba(0,0,0,.18),0 26px 50px -24px rgba(0,0,0,.85);}
+.lgl-magnet-card b{display:block;font-size:var(--lgl-fs-lg);font-weight:700;letter-spacing:-.02em;}
+.lgl-magnet-card>p{font-size:var(--lgl-fs-sm);color:var(--lgl-mut);margin:6px 0 var(--lgl-sp-4);}
+.lgl-magnet-card .lgl-fine{font-size:var(--lgl-fs-xs);margin:var(--lgl-sp-3) 0 0;color:var(--lgl-mut);}
+.lgl-magnet-card .lgl-fine a{color:var(--lgl-ink);font-weight:600;text-decoration:underline;
+  text-underline-offset:2px;}
+/* мини-бланк расчёта */
+.lgl-form{display:grid;gap:7px;margin:0 0 var(--lgl-sp-4);}
+.lgl-form-row{display:flex;align-items:center;gap:10px;border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-1);padding:9px 12px;background:var(--lgl-soft);}
+.lgl-form-row span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--lgl-mut);flex:none;width:58px;}
+.lgl-form-row i{flex:1;height:7px;border-radius:var(--lgl-r-pill);background:var(--lgl-line);}
+.lgl-form-row:nth-child(2) i{max-width:72%;}
+.lgl-form-row:nth-child(3) i{max-width:44%;}
+
+/* --- машины --- */
+.lgl-fleet{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-2);overflow:hidden;}
+@media (min-width:640px){.lgl-fleet{grid-template-columns:1fr 1fr;}}
+@media (min-width:1060px){.lgl-fleet{grid-template-columns:repeat(3,1fr);}}
+.lgl-veh{background:var(--lgl-card);padding:clamp(18px,2.2vw,var(--lgl-sp-5));
+  display:grid;grid-template-rows:auto auto auto 1fr;}
+.lgl-veh--lead{background:var(--lgl-soft);box-shadow:inset 3px 0 0 var(--lgl-eaeu-ink);}
+.lgl-pic{margin-bottom:var(--lgl-sp-3);}
+/* силуэты в общем масштабе: viewBox 360 = 18 м, значит 20 единиц на метр */
+.lgl-pic svg{width:100%;height:auto;stroke:var(--lgl-ink);stroke-width:1.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;}
+.lgl-pic .lgl-gl{stroke:var(--lgl-line-ui);stroke-width:1.1;}
+.lgl-pic .lgl-fillw{fill:#fff;}
+.lgl-veh--lead .lgl-pic svg{stroke:var(--lgl-eaeu-ink);}
+.lgl-veh--lead .lgl-pic .lgl-gl{stroke:rgba(11,107,84,.4);}
+.lgl-veh h3{font-size:16.5px;font-weight:700;letter-spacing:-.02em;}
+.lgl-tag{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-2xs);letter-spacing:.12em;
+  color:var(--lgl-eaeu-ink);display:block;margin-top:var(--lgl-sp-1);}
+.lgl-veh dl{margin-top:var(--lgl-sp-3);border-top:1px solid var(--lgl-line);padding-top:var(--lgl-sp-3);
+  display:grid;gap:7px;align-self:end;}
+.lgl-veh dl div{display:flex;gap:var(--lgl-sp-3);font-size:13.5px;}
+.lgl-veh dt{color:var(--lgl-mut);flex:none;}
+.lgl-veh dd{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-xs);font-weight:500;
+  text-align:right;margin-left:auto;}
+/* подсветка габаритов кузова при наведении */
+.lgl-veh .lgl-body-hl{fill:var(--lgl-eaeu);opacity:0;transition:opacity var(--lgl-dur) var(--lgl-ease);}
+.lgl-veh:hover .lgl-body-hl,.lgl-veh:focus-within .lgl-body-hl{opacity:.12;}
+/* шкала метров под сеткой */
+.lgl-scale{margin-top:var(--lgl-sp-3);}
+.lgl-scale svg{width:100%;height:auto;}
+.lgl-scale .lgl-tick{stroke:var(--lgl-line-ui);stroke-width:1;}
+.lgl-scale .lgl-axis{stroke:var(--lgl-line-ui);stroke-width:1;}
+.lgl-scale text{font-family:'IBM Plex Mono',monospace;font-size:9px;fill:var(--lgl-mut);letter-spacing:.06em;}
+.lgl-cn-line{display:flex;flex-wrap:wrap;align-items:center;gap:var(--lgl-sp-3);
+  margin-top:clamp(var(--lgl-sp-4),2.2vw,22px);background:var(--lgl-card);border:1px solid var(--lgl-line);
+  border-left:4px solid var(--lgl-cn);border-radius:var(--lgl-r-2);padding:var(--lgl-sp-4) 20px;}
+.lgl-cn-line b{font-size:15.5px;font-weight:700;}
+.lgl-cn-line span{font-size:var(--lgl-fs-sm);color:var(--lgl-body);margin-right:auto;}
+.lgl-cn-line a{font-size:var(--lgl-fs-sm);font-weight:600;color:var(--lgl-cn-ink);white-space:nowrap;
+  min-height:44px;display:inline-flex;align-items:center;}
+.lgl-cn-line a:hover{text-decoration:underline;text-underline-offset:3px;}
+
+/* --- пять шагов, с линией прогресса --- */
+.lgl-steps{counter-reset:lglstep;border-top:1px solid var(--lgl-line);position:relative;}
+.lgl-step{display:grid;grid-template-columns:auto 1fr;gap:var(--lgl-sp-3) clamp(14px,2.4vw,28px);
+  padding:clamp(var(--lgl-sp-4),2vw,20px) 0;border-bottom:1px solid var(--lgl-line);align-items:baseline;
+  position:relative;}
+@media (min-width:860px){.lgl-step{grid-template-columns:56px 280px 1fr auto;}}
+.lgl-num{counter-increment:lglstep;font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-xs);
+  color:var(--lgl-eaeu-ink);position:relative;z-index:1;}
+.lgl-num::before{content:counter(lglstep,decimal-leading-zero);position:relative;z-index:1;
+  background:var(--lgl-bg);padding-right:6px;}
+/* вертикальная линия, связывающая шаги */
+.lgl-step::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:2px;
+  background:var(--lgl-line);}
+.lgl-step:first-child::before{top:50%;}
+.lgl-step:last-child::before{bottom:50%;}
+.lgl-step::after{content:'';position:absolute;left:2px;top:calc(clamp(16px,2vw,20px) + 3px);
+  width:8px;height:8px;border-radius:50%;background:var(--lgl-eaeu-ink);}
+.lgl-step h3{font-size:17px;font-weight:700;letter-spacing:-.02em;}
+.lgl-step p{grid-column:2;font-size:14.5px;color:var(--lgl-body);max-width:52ch;}
+@media (min-width:860px){.lgl-step p{grid-column:3;}}
+.lgl-when{grid-column:2;font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  color:var(--lgl-mut);white-space:nowrap;}
+@media (min-width:860px){.lgl-when{grid-column:4;text-align:right;}}
+
+/* --- заявка --- */
+.lgl-req{display:grid;gap:clamp(var(--lgl-sp-5),3.4vw,44px);background:var(--lgl-card);
+  border:1px solid var(--lgl-line);border-radius:var(--lgl-r-4);padding:clamp(var(--lgl-sp-5),3.6vw,44px);}
+@media (min-width:940px){.lgl-req{grid-template-columns:1fr 360px;align-items:center;}}
+.lgl-req h2{max-width:16ch;}
+.lgl-req-tel{font-size:clamp(21px,2.6vw,27px);font-weight:700;letter-spacing:-.02em;
+  display:inline-flex;align-items:center;min-height:44px;}
+.lgl-req-tel:hover{color:var(--lgl-eaeu-ink);}
+.lgl-side{display:grid;gap:10px;}
+.lgl-side .lgl-fine{font-size:var(--lgl-fs-xs);color:var(--lgl-mut);text-align:center;}
+
+/* --- факты --- */
+.lgl-facts{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-2);overflow:hidden;}
+@media (min-width:600px){.lgl-facts{grid-template-columns:1fr 1fr;}}
+@media (min-width:980px){.lgl-facts{grid-template-columns:repeat(4,1fr);}}
+.lgl-facts div{background:var(--lgl-card);padding:clamp(20px,2.4vw,26px);}
+.lgl-facts b{display:block;font-size:var(--lgl-fs-xl);font-weight:700;letter-spacing:-.02em;line-height:1;}
+.lgl-facts span{display:block;margin-top:7px;font-size:13.5px;color:var(--lgl-mut);}
+
+/* --- контакты --- */
+.lgl-contacts{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
+  border-radius:var(--lgl-r-3);overflow:hidden;}
+@media (min-width:900px){.lgl-contacts{grid-template-columns:minmax(0,380px) 1fr;}}
+.lgl-cinfo{background:var(--lgl-card);padding:clamp(var(--lgl-sp-5),3vw,var(--lgl-sp-6));}
+.lgl-crow{padding-block:14px;border-bottom:1px solid var(--lgl-line);}
+.lgl-crow:last-child{border-bottom:0;padding-bottom:0;}
+.lgl-crow:first-of-type{padding-top:0;}
+.lgl-cinfo h4{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--lgl-mut);font-weight:400;margin-bottom:6px;}
+.lgl-cinfo b{font-size:var(--lgl-fs-lg);font-weight:700;letter-spacing:-.02em;}
+.lgl-cinfo p{font-size:15px;}
+.lgl-cinfo b a,.lgl-cinfo p a{display:inline-flex;align-items:center;min-height:44px;}
+.lgl-cinfo a:hover{color:var(--lgl-eaeu-ink);}
+.lgl-msg{display:flex;flex-wrap:wrap;gap:9px;margin-top:var(--lgl-sp-4);}
+.lgl-msg a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;
+  border:1px solid var(--lgl-line-ui);border-radius:var(--lgl-r-1);font-size:var(--lgl-fs-sm);font-weight:600;
+  transition:border-color var(--lgl-dur) var(--lgl-ease),color var(--lgl-dur) var(--lgl-ease);}
+.lgl-msg a svg{width:18px;height:18px;flex:none;}
+.lgl-msg a:hover{border-color:var(--lgl-eaeu-ink);color:var(--lgl-eaeu-ink);}
+/* карта-заглушка: стилизованный квартал, а не просто сетка */
+.lgl-cmap{background:var(--lgl-soft);min-height:320px;position:relative;display:grid;
+  place-items:center;padding:var(--lgl-sp-5);overflow:hidden;}
+.lgl-cmap-bg{position:absolute;inset:0;width:100%;height:100%;}
+.lgl-cmap .lgl-marker{text-align:center;position:relative;}
+.lgl-pin{width:44px;height:44px;margin:0 auto var(--lgl-sp-3);border-radius:50%;
+  background:var(--lgl-eaeu-ink);display:grid;place-items:center;
+  box-shadow:0 0 0 10px rgba(18,135,106,.16);}
+.lgl-pin svg{width:20px;stroke:#fff;stroke-width:1.8;fill:none;}
+.lgl-cmap b{display:block;font-size:15px;}
+.lgl-cmap>.lgl-marker>span{display:block;font-size:var(--lgl-fs-xs);color:var(--lgl-mut);
+  margin:var(--lgl-sp-1) 0 var(--lgl-sp-3);}
+
+/* --- подвал --- */
+.lgl-ftr{border-top:1px solid var(--lgl-line);padding-block:var(--lgl-sp-5);display:flex;
+  flex-wrap:wrap;gap:10px var(--lgl-sp-5);justify-content:space-between;
+  font-size:var(--lgl-fs-xs);color:var(--lgl-mut);}
+.lgl-ftr a{min-height:44px;display:inline-flex;align-items:center;}
+.lgl-ftr a:hover{color:var(--lgl-ink);text-decoration:underline;text-underline-offset:3px;}
+
+/* --- липкая панель на мобильных --- */
+.lgl-sticky{position:fixed;left:0;right:0;bottom:0;z-index:90;display:flex;gap:8px;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(255,255,255,.97);border-top:1px solid var(--lgl-line);
+  transform:translateY(115%);transition:transform 220ms var(--lgl-ease);pointer-events:none;}
+.lgl-sticky.lgl-on{transform:translateY(0);pointer-events:auto;}
+.lgl-sticky .lgl-btn{flex:1;min-height:48px;}
+.lgl-sticky .lgl-btn--gh{flex:0 0 auto;width:48px;padding:0;}
+.lgl-sticky .lgl-btn--gh svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none;}
+@media (min-width:900px){.lgl-sticky{display:none;}}
+
+/* --- появление при скролле --- */
+.lgl-root.lgl-js .lgl-rv{opacity:0;transform:translateY(14px);}
+.lgl-root.lgl-js .lgl-rv.lgl-in{opacity:1;transform:none;
+  transition:opacity 380ms var(--lgl-ease),transform 380ms var(--lgl-ease);}
+
+@media (prefers-reduced-motion:reduce){
+  .lgl-root *,.lgl-root *::before,.lgl-root *::after{
+    animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;}
+  .lgl-root.lgl-js .lgl-rv{opacity:1;transform:none;}
+  .lgl-root .lgl-lane{stroke-dashoffset:0;}
+}
+</style>
+
+<div class="lgl-root" id="lgl-root">
+
+  <div class="lgl-wrap">
+    <header class="lgl-top">
+      <a class="lgl-logo" href="#lgl-root" aria-label="Lion Global Logistics">
+        <svg viewBox="0 0 268 34" role="img" aria-label="Lion Global Logistics">
+          <path d="M4 5v18h11" fill="none" stroke="#0F1822" stroke-width="3.2" stroke-linecap="square"/>
+          <path d="M4 23c0-6 5-11 11-11" fill="none" stroke="#0B6B54" stroke-width="3.2" stroke-linecap="butt"/>
+          <text x="27" y="16" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700"
+                letter-spacing="-.3" fill="#0F1822">LION GLOBAL LOGISTICS</text>
+          <text x="27.5" y="28" font-family="IBM Plex Mono,monospace" font-size="7.4"
+                letter-spacing="2.3" fill="#5A6875">АЛМАТЫ · ОТПРАВКИ ИЗ КАЗАХСТАНА</text>
+        </svg>
+      </a>
+      <a class="lgl-tel" href="tel:+77715017775">+7 771 501 77 75</a>
+      <a class="lgl-btn lgl-btn--sm" href="#popup:myform">Рассчитать</a>
+    </header>
+
+    <!-- 1. ГЕРОЙ -->
+    <section class="lgl-hero">
+      <div class="lgl-rv">
+        <span class="lgl-pill"><i></i>Россия · Кыргызстан · Беларусь</span>
+        <h1>Фура из Казахстана в Россию, Кыргызстан и Беларусь — <em>под ключ</em></h1>
+        <p class="lgl-lead">Скажите, что везём и к какому числу. Остальное сделаем сами.</p>
+        <ul class="lgl-turnkey"><li>МАШИНА</li><li>ПЕРЕВОЗОЧНЫЕ ДОКУМЕНТЫ</li><li>СТРАХОВКА</li><li>КОНТРОЛЬ В ПУТИ</li></ul>
+        <div class="lgl-acts">
+          <a class="lgl-btn" href="#lgl-zayavka">Заявка на просчёт</a>
+          <a class="lgl-btn lgl-btn--gh" href="#lgl-fleet">На чём возим</a>
+        </div>
+        <div class="lgl-trust">
+          <div><b>от 1,5 до 60 т</b><span>от газели до трала</span></div>
+          <div><b>1–12 дней</b><span>в пути по ЕАЭС</span></div>
+          <div><b>30 минут</b><span>на расчёт</span></div>
+        </div>
+      </div>
+
+      <div class="lgl-mapcard lgl-rv" id="lgl-mapcard">
+        <div class="lgl-maph"><span class="lgl-mono">Куда возим</span><i>сроки в пути</i></div>
+        <svg class="lgl-map" viewBox="0 0 780 490" role="img"
+             aria-label="Схема отправок из Казахстана в Россию, Беларусь и Кыргызстан, а также ввоз из Китая">
+          <defs>
+            <radialGradient id="lglGlow">
+              <stop offset="0" stop-color="#2563C9" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#2563C9" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle class="lgl-glow" cx="300" cy="250" r="120"/>
+          <rect class="lgl-zone" x="34" y="52" width="500" height="392" rx="18"/>
+          <text class="lgl-lbl lgl-lbl--z" x="56" y="82">ЕАЭС · БЕЗ ТАМОЖНИ</text>
+          <path class="lgl-lane" style="--l:300;--d:0s"   d="M130 140 H190 L300 250"/>
+          <path class="lgl-lane" style="--l:300;--d:.1s"  d="M130 370 H180 L300 250"/>
+          <path class="lgl-lane" style="--l:220;--d:.2s"  d="M430 380 L300 250"/>
+          <path class="lgl-lane lgl-lane--cn" style="--l:420;--d:.34s" d="M300 250 H700"/>
+          <line class="lgl-brd" x1="534" y1="196" x2="534" y2="304"/>
+          <text class="lgl-lbl lgl-lbl--m lgl-lbl--c" x="534" y="186" text-anchor="middle">ТАМОЖНЯ</text>
+          <circle class="lgl-node" cx="130" cy="140" r="8"/>
+          <text class="lgl-lbl" x="130" y="118" text-anchor="middle">Россия</text>
+          <text class="lgl-lbl lgl-lbl--m" x="130" y="166" text-anchor="middle">3–10 ДНЕЙ</text>
+          <circle class="lgl-node" cx="130" cy="370" r="8"/>
+          <text class="lgl-lbl" x="130" y="348" text-anchor="middle">Беларусь</text>
+          <text class="lgl-lbl lgl-lbl--m" x="130" y="396" text-anchor="middle">6–12 ДНЕЙ</text>
+          <circle class="lgl-node" cx="430" cy="380" r="8"/>
+          <text class="lgl-lbl" x="430" y="358" text-anchor="middle">Кыргызстан</text>
+          <text class="lgl-lbl lgl-lbl--m" x="430" y="406" text-anchor="middle">1–3 ДНЯ</text>
+          <circle class="lgl-node lgl-node--cn" cx="700" cy="250" r="8"/>
+          <text class="lgl-lbl lgl-lbl--c" x="700" y="228" text-anchor="middle">Китай</text>
+          <text class="lgl-lbl lgl-lbl--m" x="700" y="276" text-anchor="middle">ВВОЗ · 8–20 ДНЕЙ</text>
+          <circle class="lgl-ring" cx="300" cy="250" r="56"/>
+          <circle cx="300" cy="250" r="23" fill="#fff" stroke="#0F1822" stroke-width="1.3" opacity=".92"/>
+          <circle class="lgl-hub" cx="300" cy="250" r="13"/>
+          <text class="lgl-lbl" x="300" y="180" text-anchor="middle">Казахстан</text>
+          <text class="lgl-lbl lgl-lbl--m lgl-opt" x="300" y="330" text-anchor="middle">ПО РК · 1–5 ДНЕЙ</text>
+        </svg>
+        <ul class="lgl-clist">
+          <li><i class="lgl-m--eaeu"></i><b>Россия<small>из Казахстана</small></b><span>3–10 дней</span></li>
+          <li><i class="lgl-m--eaeu"></i><b>Кыргызстан<small>из Казахстана</small></b><span>1–3 дня</span></li>
+          <li><i class="lgl-m--eaeu"></i><b>Беларусь<small>из Казахстана</small></b><span>6–12 дней</span></li>
+          <li><i class="lgl-m--home"></i><b>По Казахстану<small>город и межгород</small></b><span>1–5 дней</span></li>
+          <li><i class="lgl-m--cn"></i><b>Китай<small>ввоз, с таможней</small></b><span>8–20 дней</span></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- 2. ПРЕИМУЩЕСТВА -->
+  <section class="lgl-sec lgl-white">
+    <div class="lgl-wrap">
+      <div class="lgl-hd lgl-rv">
+        <span class="lgl-mono">Как мы возим</span>
+        <h2>Вы отдаёте груз — дальше наша работа</h2>
+      </div>
+      <div class="lgl-how">
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 7.5h11v9h-11z"/><path d="M13.5 10.5h3.6l3.4 3.4v2.6h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span>
+          <h3>Машина под ваш груз</h3><p>Не поставим тент туда, где нужен рефрижератор.</p>
+        </div>
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.4 2"/></svg></span>
+          <h3>Подадим машину в ваше окно</h3><p>Склад грузит по слотам — встанем в слот.</p>
+        </div>
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v15M5 9h14"/><path d="M5 9l-2.2 5.4a2.7 2.7 0 004.4 0z"/><path d="M19 9l-2.2 5.4a2.7 2.7 0 004.4 0z"/></svg></span>
+          <h3>Вес проверим заранее</h3><p>Чтобы машину не развернули на весах.</p>
+        </div>
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.4"/><path d="M5 19.5a7 7 0 0114 0"/></svg></span>
+          <h3>Один менеджер на всю перевозку</h3><p>Не придётся объяснять всё заново каждому новому человеку.</p>
+        </div>
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 9.5a5.5 5.5 0 10-11 0c0 4.5-1.8 5.5-1.8 5.5h14.6s-1.8-1-1.8-5.5z"/><path d="M10.4 19a2 2 0 003.2 0"/></svg></span>
+          <h3>Сами напишем, где машина</h3><p>Не нужно звонить и выяснять.</p>
+        </div>
+        <div class="lgl-rv">
+          <span class="lgl-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h7.2l3.8 3.8v13.2H6.5z"/><path d="M13.5 3.5v4h4"/><path d="M9.5 12.5h6M9.5 16h4"/></svg></span>
+          <h3>Документы вернём вовремя</h3><p>Накладные, акт, счёт-фактура и ЭСФ.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. ЛИД-МАГНИТ -->
+  <section class="lgl-sec">
+    <div class="lgl-wrap">
+      <div class="lgl-magnet lgl-rv">
+        <div>
+          <span class="lgl-mono">Бесплатно и ни к чему не обязывает</span>
+          <h2>Просчёт маршрута за 30 минут</h2>
+          <p>Пришлите маршрут и вес — вернёмся с готовым решением, а не с вопросом «а какой у вас груз?».</p>
+          <ul class="lgl-gets">
+            <li>Два-три варианта: где быстрее, где дешевле</li>
+            <li>Цена и срок по каждому</li>
+            <li>Какая машина подойдёт под ваш груз</li>
+            <li>Что подготовить к отгрузке</li>
+          </ul>
+        </div>
+        <div class="lgl-magnet-card">
+          <b>Нужно всего три строки</b>
+          <p>Откуда, куда и сколько тонн. Остальное уточним сами.</p>
+          <div class="lgl-form" aria-hidden="true">
+            <div class="lgl-form-row"><span>Откуда</span><i></i></div>
+            <div class="lgl-form-row"><span>Куда</span><i></i></div>
+            <div class="lgl-form-row"><span>Тонн</span><i></i></div>
+          </div>
+          <a class="lgl-btn lgl-btn--gr lgl-btn--hero" href="#popup:myform" style="width:100%">Получить просчёт</a>
+          <p class="lgl-fine">Или сразу позвоните: <a href="tel:+77715017775">+7 771 501 77 75</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. МАШИНЫ -->
+  <section class="lgl-sec lgl-white" id="lgl-fleet">
+    <div class="lgl-wrap">
+      <div class="lgl-hd lgl-rv">
+        <span class="lgl-mono">На чём возим</span>
+        <h2>От газели до трала</h2>
+        <p class="lgl-lead">Силуэты в одном масштабе — размеры видно на глаз.</p>
+      </div>
+
+      <div class="lgl-fleet">
+        <!-- масштаб общий: viewBox 360 = 18 м, 20 единиц на метр -->
+        <div class="lgl-veh lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="42" y="24" width="68" height="42"/>
+            <path class="lgl-fillw" d="M6 66V40l14-14h22v40z"/>
+            <rect class="lgl-fillw" x="42" y="24" width="68" height="42"/>
+            <path class="lgl-gl" d="M10 40h30M42 24v42"/>
+            <circle cx="26" cy="72" r="7"/><circle cx="94" cy="72" r="7"/>
+          </svg></div>
+          <h3>Газель</h3><span class="lgl-tag">ДО 1,5 Т</span>
+          <dl><div><dt>Объём</dt><dd>9–16 м³</dd></div><div><dt>Паллеты</dt><dd>4–6</dd></div></dl>
+        </div>
+
+        <div class="lgl-veh lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="48" y="18" width="92" height="48"/>
+            <path class="lgl-fillw" d="M6 66V36l16-16h26v46z"/>
+            <rect class="lgl-fillw" x="48" y="18" width="92" height="48"/>
+            <path class="lgl-gl" d="M10 36h34M48 18v48"/>
+            <circle cx="28" cy="72" r="7"/><circle cx="120" cy="72" r="7"/>
+          </svg></div>
+          <h3>Трёх- и пятитонник</h3><span class="lgl-tag">3–5 Т</span>
+          <dl><div><dt>Объём</dt><dd>20–28 м³</dd></div><div><dt>Паллеты</dt><dd>8–12</dd></div></dl>
+        </div>
+
+        <div class="lgl-veh lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="52" y="12" width="128" height="54"/>
+            <path class="lgl-fillw" d="M6 66V32l18-18h28v52z"/>
+            <rect class="lgl-fillw" x="52" y="12" width="128" height="54"/>
+            <path class="lgl-gl" d="M10 32h38M52 12v54"/>
+            <circle cx="30" cy="72" r="7"/><circle cx="140" cy="72" r="7"/><circle cx="164" cy="72" r="7"/>
+          </svg></div>
+          <h3>Десятитонник</h3><span class="lgl-tag">8–10 Т</span>
+          <dl><div><dt>Объём</dt><dd>36–45 м³</dd></div><div><dt>Паллеты</dt><dd>12–16</dd></div></dl>
+        </div>
+
+        <div class="lgl-veh lgl-veh--lead lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="72" y="8" width="258" height="58"/>
+            <path class="lgl-fillw" d="M6 66V30l16-16h30v52z"/>
+            <rect class="lgl-fillw" x="72" y="8" width="258" height="58"/>
+            <path class="lgl-gl" d="M10 30h34M52 52h20M130 8v58M200 8v58M265 8v58"/>
+            <circle cx="28" cy="72" r="7"/><circle cx="60" cy="72" r="7"/>
+            <circle cx="272" cy="72" r="7"/><circle cx="296" cy="72" r="7"/><circle cx="320" cy="72" r="7"/>
+          </svg></div>
+          <h3>Фура</h3><span class="lgl-tag">ГЛАВНАЯ МАШИНА · 20–22 Т</span>
+          <dl><div><dt>Объём</dt><dd>82–92 м³</dd></div><div><dt>Паллеты</dt><dd>33</dd></div></dl>
+        </div>
+
+        <div class="lgl-veh lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="72" y="8" width="258" height="58"/>
+            <path class="lgl-fillw" d="M6 66V30l16-16h30v52z"/>
+            <rect class="lgl-fillw" x="72" y="8" width="258" height="58"/>
+            <rect class="lgl-fillw" x="76" y="-4" width="34" height="12"/>
+            <path class="lgl-gl" d="M10 30h34M52 52h20M300 20v34"/>
+            <circle cx="28" cy="72" r="7"/><circle cx="60" cy="72" r="7"/>
+            <circle cx="272" cy="72" r="7"/><circle cx="296" cy="72" r="7"/><circle cx="320" cy="72" r="7"/>
+          </svg></div>
+          <h3>Рефрижератор</h3><span class="lgl-tag">ОТ −20 ДО +12 °C</span>
+          <dl><div><dt>Объём</dt><dd>до 86 м³</dd></div><div><dt>Паллеты</dt><dd>32–33</dd></div></dl>
+        </div>
+
+        <div class="lgl-veh lgl-rv">
+          <div class="lgl-pic"><svg viewBox="0 0 360 96" aria-hidden="true">
+            <rect class="lgl-body-hl" x="104" y="46" width="196" height="16"/>
+            <path class="lgl-fillw" d="M6 66V30l16-16h30v52z"/>
+            <path d="M52 44h34l18 18h196l14-18h26"/>
+            <path class="lgl-gl" d="M10 30h34M104 62h196"/>
+            <circle cx="28" cy="72" r="7"/><circle cx="60" cy="72" r="7"/>
+            <circle cx="300" cy="72" r="7"/><circle cx="322" cy="72" r="7"/><circle cx="344" cy="72" r="7"/>
+          </svg></div>
+          <h3>Трал</h3><span class="lgl-tag">ДО 60 Т</span>
+          <dl><div><dt>Для чего</dt><dd>негабарит</dd></div><div><dt>Разрешения</dt><dd>на нас</dd></div></dl>
+        </div>
+      </div>
+
+      <div class="lgl-scale lgl-rv" aria-hidden="true">
+        <svg viewBox="0 0 360 20" preserveAspectRatio="none" style="height:20px">
+          <line class="lgl-axis" x1="6" y1="6" x2="354" y2="6"/>
+          <g class="lgl-tick">
+            <line x1="6" y1="2" x2="6" y2="10"/><line x1="46" y1="3" x2="46" y2="9"/>
+            <line x1="86" y1="2" x2="86" y2="10"/><line x1="126" y1="3" x2="126" y2="9"/>
+            <line x1="166" y1="2" x2="166" y2="10"/><line x1="206" y1="3" x2="206" y2="9"/>
+            <line x1="246" y1="2" x2="246" y2="10"/><line x1="286" y1="3" x2="286" y2="9"/>
+            <line x1="326" y1="2" x2="326" y2="10"/>
+          </g>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;
+                    font-size:10px;color:var(--lgl-mut);letter-spacing:.06em;margin-top:2px">
+          <span>0</span><span>4 м</span><span>8 м</span><span>12 м</span><span>16 м</span>
+        </div>
+      </div>
+
+      <div class="lgl-cn-line lgl-rv">
+        <b>Везём и из Китая</b>
+        <span>Здесь нужна не только машина — оформим ввоз и проведём через Хоргос или Достык.</span>
+        <a href="#popup:myform">Посчитать →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ЭТАПЫ -->
+  <section class="lgl-sec">
+    <div class="lgl-wrap">
+      <div class="lgl-hd lgl-rv"><span class="lgl-mono">Как всё пройдёт</span><h2>Пять шагов</h2></div>
+      <div class="lgl-steps">
+        <div class="lgl-step lgl-rv"><div class="lgl-num"></div><h3>Присылаете заявку</h3>
+          <p>Что везём, откуда, куда, вес и когда груз готов.</p><div class="lgl-when">5 минут</div></div>
+        <div class="lgl-step lgl-rv"><div class="lgl-num"></div><h3>Считаем варианты</h3>
+          <p>Покажем, где быстрее, а где дешевле. Выбираете вы.</p><div class="lgl-when">30 минут</div></div>
+        <div class="lgl-step lgl-rv"><div class="lgl-num"></div><h3>Договор и страховка</h3>
+          <p>Фиксируем цену, срок и машину.</p><div class="lgl-when">1 день</div></div>
+        <div class="lgl-step lgl-rv"><div class="lgl-num"></div><h3>Забираем и везём</h3>
+          <p>Пишем сами: загрузились, прошли границу, подъезжаем.</p><div class="lgl-when">весь путь</div></div>
+        <div class="lgl-step lgl-rv"><div class="lgl-num"></div><h3>Выгрузка и документы</h3>
+          <p>Сдаём груз получателю, оригиналы привозим вам.</p><div class="lgl-when">после доставки</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ЗАЯВКА -->
+  <section class="lgl-sec lgl-white" id="lgl-zayavka">
+    <div class="lgl-wrap">
+      <div class="lgl-req lgl-rv">
+        <div>
+          <span class="lgl-mono">Заявка на просчёт</span>
+          <h2 style="margin-top:12px">Три строки — и мы считаем</h2>
+          <p class="lgl-lead">Откуда, куда и сколько тонн. Ответим за 30 минут в рабочее время. Груз необычный — лучше позвоните, разберёмся быстрее.</p>
+          <p style="margin-top:20px"><a class="lgl-req-tel" href="tel:+77715017775">+7 771 501 77 75</a></p>
+        </div>
+        <div class="lgl-side">
+          <a class="lgl-btn lgl-btn--gr" href="#popup:myform">Получить просчёт</a>
+          <a class="lgl-btn lgl-btn--gh" href="https://wa.me/77715017775" target="_blank" rel="noopener">Написать в WhatsApp</a>
+          <p class="lgl-fine">Ответим за 30 минут в рабочее время</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ФАКТЫ -->
+  <section class="lgl-sec lgl-white" style="padding-top:0">
+    <div class="lgl-wrap">
+      <div class="lgl-facts">
+        <div class="lgl-rv"><b>с 2013</b><span>года на рынке перевозок</span></div>
+        <div class="lgl-rv"><b>Алматы</b><span>офис и диспетчерская</span></div>
+        <div class="lgl-rv"><b>Безнал</b><span>договор и закрывающие документы</span></div>
+        <div class="lgl-rv"><b>24/7</b><span>дежурный логист по грузам в пути</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. КОНТАКТЫ -->
+  <section class="lgl-sec">
+    <div class="lgl-wrap">
+      <div class="lgl-hd lgl-rv"><span class="lgl-mono">Контакты</span><h2>Приезжайте или пишите</h2></div>
+      <div class="lgl-contacts lgl-rv">
+        <div class="lgl-cinfo">
+          <div class="lgl-crow"><h4>Телефон</h4><b><a href="tel:+77715017775">+7 771 501 77 75</a></b></div>
+          <div class="lgl-crow"><h4>Почта</h4><p><a href="mailto:info-liongl@yandex.kz">info-liongl@yandex.kz</a></p></div>
+          <div class="lgl-crow"><h4>Адрес</h4><p>Алматы, ул. Осипенко 35А, офис 406</p></div>
+          <div class="lgl-crow"><h4>Часы работы</h4><p>Пн–Пт, 9:00–18:00</p>
+            <div class="lgl-msg">
+              <a href="https://wa.me/77715017775" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 018.24 8.24c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+                WhatsApp</a>
+              <a href="https://t.me/LionGlobalLogistics" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.7 4.3c-.3-.25-.75-.3-1.2-.12L2.9 11.05c-.5.2-.8.62-.78 1.1.02.48.35.88.87 1.03l4.28 1.25 1.65 5.05c.1.3.34.53.65.6.08.02.16.03.24.03.24 0 .47-.1.63-.28l2.42-2.6 4.2 3.1c.22.16.48.25.74.25.13 0 .26-.02.38-.06.38-.13.66-.45.75-.85l3.1-14.4c.1-.47-.05-.93-.33-1.17zM9.3 14.1l-.62 2.6-.95-2.9 8.1-5.15L9.3 14.1z"/></svg>
+                Telegram</a>
+            </div>
+          </div>
+        </div>
+        <div class="lgl-cmap">
+          <svg class="lgl-cmap-bg" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="400" height="320" fill="#F5F7F9"/>
+            <g fill="#E7EBEF"><rect x="20" y="18" width="120" height="86" rx="3"/>
+              <rect x="168" y="18" width="96" height="60" rx="3"/><rect x="292" y="18" width="94" height="86" rx="3"/>
+              <rect x="20" y="132" width="86" height="74" rx="3"/><rect x="292" y="132" width="94" height="74" rx="3"/>
+              <rect x="20" y="234" width="120" height="70" rx="3"/><rect x="168" y="234" width="96" height="70" rx="3"/>
+              <rect x="292" y="234" width="94" height="70" rx="3"/></g>
+            <g stroke="#DCE2E7" stroke-width="10" stroke-linecap="square">
+              <path d="M154 0v320"/><path d="M278 0v320"/><path d="M0 118h400"/><path d="M0 220h400"/></g>
+            <g stroke="#fff" stroke-width="1.4" stroke-dasharray="7 7">
+              <path d="M154 0v320"/><path d="M0 118h400"/></g>
+          </svg>
+          <div class="lgl-marker">
+            <div class="lgl-pin"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+            <b>Осипенко 35А, офис 406</b>
+            <span>Алматы</span>
+            <a class="lgl-btn lgl-btn--gh lgl-btn--sm" href="https://2gis.kz/almaty/search/%D0%9E%D1%81%D0%B8%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE%2035%D0%90" target="_blank" rel="noopener">Открыть на карте</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lgl-wrap">
+    <footer class="lgl-ftr">
+      <span>© 2013–2026 Lion Global Logistics</span>
+      <a href="/privacy">Политика конфиденциальности</a>
+    </footer>
+  </div>
+
+  <div class="lgl-sticky" id="lgl-sticky" aria-hidden="true">
+    <a class="lgl-btn lgl-btn--gr" href="#popup:myform" tabindex="-1">Получить просчёт</a>
+    <a class="lgl-btn lgl-btn--gh" href="tel:+77715017775" aria-label="Позвонить" tabindex="-1">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a12 12 0 006 6l1.5-2 4 1.5v3a1.5 1.5 0 01-1.6 1.5C11.4 18.6 5.4 12.6 5 6.1A1.5 1.5 0 016.5 3.5z"/></svg>
+    </a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.getElementById('lgl-root');
+  if (!root || root.getAttribute('data-lgl-init')) return;   // защита от повторной инициализации
+  root.setAttribute('data-lgl-init', '1');
+
+  function init() {
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* --- появление секций. Наблюдаем контейнеры, а не элементы: быстрый
+       флик-скролл проскакивает отдельные элементы, и они остались бы скрытыми. --- */
+    if (!reduced && 'IntersectionObserver' in window) {
+      root.classList.add('lgl-js');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          var items = en.target.querySelectorAll('.lgl-rv');
+          for (var i = 0; i < items.length; i++) {
+            items[i].style.transitionDelay = (Math.min(i, 7) * 70) + 'ms';
+            items[i].classList.add('lgl-in');
+          }
+          io.unobserve(en.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+      var groups = root.querySelectorAll('section, footer, .lgl-hero');
+      for (var g = 0; g < groups.length; g++) io.observe(groups[g]);
+
+      // страховка: ничего не должно остаться скрытым ни при каком сценарии
+      var sweep;
+      window.addEventListener('scroll', function () {
+        clearTimeout(sweep);
+        sweep = setTimeout(function () {
+          var left = root.querySelectorAll('.lgl-rv:not(.lgl-in)');
+          for (var k = 0; k < left.length; k++) {
+            var host = left[k].closest('section, footer, .lgl-hero');
+            if (host && host.getBoundingClientRect().top < window.innerHeight) left[k].classList.add('lgl-in');
+          }
+        }, 200);
+      }, { passive: true });
+    }
+
+    /* --- отрисовка линий схемы. Класс ставится один раз, поэтому
+       анимация не проигрывается заново при возврате на вкладку. --- */
+    var mapcard = root.querySelector('#lgl-mapcard');
+    if (mapcard) {
+      var drawn = false;
+      var draw = function () { if (!drawn) { drawn = true; mapcard.classList.add('lgl-is-drawn'); } };
+      if (reduced || !('IntersectionObserver' in window)) draw();
+      else {
+        var mio = new IntersectionObserver(function (en) {
+          if (en[0].isIntersecting) { draw(); mio.disconnect(); }
+        }, { threshold: 0.25 });
+        mio.observe(mapcard);
+      }
+    }
+
+    /* --- липкая панель: после 30% прокрутки, прячется у формы заявки --- */
+    var sticky = root.querySelector('#lgl-sticky');
+    var form = root.querySelector('#lgl-zayavka');
+    if (sticky) {
+      var links = sticky.querySelectorAll('a'), on = false, ticking = false;
+      var set = function (v) {
+        if (v === on) return;
+        on = v;
+        sticky.classList.toggle('lgl-on', v);
+        sticky.setAttribute('aria-hidden', v ? 'false' : 'true');
+        for (var i = 0; i < links.length; i++) links[i].tabIndex = v ? 0 : -1;
+      };
+      var onScroll = function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var d = document.documentElement, max = d.scrollHeight - window.innerHeight;
+          if (max <= 0) return set(false);
+          var atForm = form && form.getBoundingClientRect().top < window.innerHeight * 0.9;
+          set((window.pageYOffset || d.scrollTop) / max >= 0.3 && !atForm);
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
+<div class="t-fake"><h3>Соседний блок Тильды снизу</h3>
+Тот же тест с другой стороны.</div>
+</body>
+</html>
