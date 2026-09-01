@@ -497,3 +497,7 @@
 .lgl-q--ask{background:var(--lgl-soft);}
 .lgl-q--ask .lgl-q-mark{width:24px;height:24px;opacity:.6;}
 .lgl-q--ask figcaption{border-top:0;padding-top:0;}
+.lgl-q-pdf{display:inline-flex;align-items:center;gap:7px;margin-top:var(--lgl-sp-2);
+  min-height:44px;font-size:var(--lgl-fs-sm);font-weight:600;color:var(--lgl-eaeu-ink);}
+.lgl-q-pdf svg{width:16px;height:16px;flex:none;}
+.lgl-q-pdf:hover{text-decoration:underline;text-underline-offset:3px;}
