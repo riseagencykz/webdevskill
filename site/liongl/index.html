@@ -259,6 +259,32 @@
 .lgl-form-row:nth-child(3) i{max-width:44%;}
 
 /* --- машины --- */
+/* Крупный чертёж фуры. Стоит вместо фотографии: настоящих фото машин
+   у клиента нет, а сток на этой странице читался бы как враньё. */
+.lgl-rig{background:var(--lgl-bg);border:1px solid var(--lgl-line);border-radius:var(--lgl-r-2);
+  padding:clamp(14px,2.4vw,var(--lgl-sp-5)) clamp(10px,2vw,var(--lgl-sp-5)) var(--lgl-sp-3);
+  margin-bottom:var(--lgl-sp-4);overflow:hidden;}
+.lgl-rig svg{width:100%;height:auto;display:block;}
+.lgl-rig .lgl-ink{stroke:var(--lgl-ink);stroke-width:2.2;fill:none;
+  stroke-linejoin:round;stroke-linecap:round;}
+.lgl-rig .lgl-thin{stroke:var(--lgl-mut);stroke-width:1.5;fill:none;
+  stroke-linejoin:round;stroke-linecap:round;}
+.lgl-rig .lgl-hair{stroke:#C2CAD2;stroke-width:1.3;fill:none;}
+.lgl-rig .lgl-fillw{fill:var(--lgl-card);}
+.lgl-rig .lgl-fills{fill:var(--lgl-soft);}
+.lgl-rig .lgl-tilt{fill:var(--lgl-soft);}
+.lgl-rig .lgl-glass{fill:#E3E9EE;}
+.lgl-rig .lgl-road{stroke:var(--lgl-line);stroke-width:2;}
+.lgl-rig .lgl-shade{fill:var(--lgl-ink);opacity:.07;}
+.lgl-rig .lgl-wheels circle{fill:#1B2530;}
+.lgl-rig .lgl-wheels .lgl-hub{fill:var(--lgl-bg);}
+.lgl-rig-mark{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.22em;
+  fill:var(--lgl-line-ui);}
+.lgl-rig-cap{margin-top:var(--lgl-sp-2);text-align:center;font-size:var(--lgl-fs-sm);
+  color:var(--lgl-mut);}
+.lgl-rig-cap .lgl-mono{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-xs);
+  letter-spacing:.08em;color:var(--lgl-ink);}
+
 .lgl-fleet{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
   border-radius:var(--lgl-r-2);overflow:hidden;}
 @media (min-width:640px){.lgl-fleet{grid-template-columns:1fr 1fr;}}
@@ -272,6 +298,8 @@
   stroke-linecap:round;stroke-linejoin:round;}
 .lgl-pic .lgl-gl{stroke:var(--lgl-line-ui);stroke-width:1.1;}
 .lgl-pic .lgl-fillw{fill:#fff;}
+/* колесо толстым штрихом — силуэт перестаёт быть проволочным */
+.lgl-pic circle{stroke-width:4;}
 .lgl-veh--lead .lgl-pic svg{stroke:var(--lgl-eaeu-ink);}
 .lgl-veh--lead .lgl-pic .lgl-gl{stroke:rgba(11,107,84,.4);}
 .lgl-veh h3{font-size:16.5px;font-weight:700;letter-spacing:-.02em;}
@@ -478,6 +506,11 @@
 .lgl-pic svg{transition:transform 280ms var(--lgl-ease);}
 .lgl-veh:hover .lgl-pic svg,.lgl-veh:focus-within .lgl-pic svg{transform:translateX(6px);}
 
+/* --- фура въезжает в кадр слева, один раз --- */
+.lgl-root.lgl-js .lgl-rig svg{transform:translateX(-6%);}
+.lgl-root.lgl-js .lgl-rig.lgl-in svg{transform:none;
+  transition:transform 1s cubic-bezier(.16,.72,.29,1) 120ms;}
+
 /* --- карточки чуть приподнимаются --- */
 .lgl-veh,.lgl-how>div{transition:background 200ms var(--lgl-ease);}
 .lgl-how>div:hover{background:var(--lgl-soft);}
@@ -493,6 +526,7 @@
   .lgl-root.lgl-js .lgl-map .lgl-ring{opacity:.7;}
   .lgl-dot{display:none;}
   .lgl-pic svg{transition:none;}
+  .lgl-root.lgl-js .lgl-rig svg{transform:none;}
 }
 
 /* ============================================================================
@@ -700,6 +734,55 @@
         <span class="lgl-mono">На чём возим</span>
         <h2>От газели до трала</h2>
         <p class="lgl-lead">Силуэты в одном масштабе — размеры видно на глаз.</p>
+      </div>
+
+      <!-- Главная машина в полный рост. Чертёж, а не фото: настоящих
+           фотографий машин у нас нет, а сток здесь был бы враньём.
+           Пропорции честные — 16,6 м по габариту, как у еврофуры. -->
+      <div class="lgl-rig lgl-rv">
+        <svg viewBox="0 0 1080 290" role="img" aria-label="Седельный тягач с тентованным полуприцепом, вид сбоку">
+          <line class="lgl-road" x1="0" y1="269" x2="1080" y2="269"/>
+          <rect class="lgl-shade" x="70" y="264" width="960" height="6"/>
+
+          <!-- полуприцеп -->
+          <path class="lgl-fillw lgl-ink" d="M206 30h824a8 8 0 0 1 8 8v158H206z"/>
+          <rect class="lgl-tilt" x="210" y="50" width="820" height="140"/>
+          <path class="lgl-thin" d="M206 50h832M206 190h832"/>
+          <path class="lgl-hair" d="M292 50v140M378 50v140M464 50v140M550 50v140M636 50v140M722 50v140M808 50v140M894 50v140M980 50v140"/>
+          <text class="lgl-rig-mark" x="470" y="132">LION GLOBAL LOGISTICS</text>
+          <path class="lgl-fills lgl-ink" d="M206 196h832v14H206z"/>
+          <path class="lgl-thin" d="M400 210v28M414 210v28M394 238h26"/>
+          <path class="lgl-fills lgl-ink" d="M1030 210h10v30h-10z"/>
+
+          <!-- тягач -->
+          <path class="lgl-fills lgl-ink" d="M40 198h300v16H40z"/>
+          <path class="lgl-fills lgl-ink" d="M180 214h76v28h-76z"/>
+          <path class="lgl-hair" d="M180 228h76"/>
+          <path class="lgl-fillw lgl-ink" d="M40 198V150q0-8 6-13L68 104q5-10 16-10V58q0-12 12-12h94q12 0 12 12v140z"/>
+          <path class="lgl-thin" d="M84 94h118"/>
+          <path class="lgl-glass" d="M68 136l14-28h44v28z"/>
+          <rect class="lgl-glass" x="134" y="108" width="58" height="28"/>
+          <path class="lgl-thin" d="M68 136l14-28h44v28zM134 108h58v28h-58z"/>
+          <path class="lgl-thin" d="M130 108v90M142 158h16M56 122H46"/>
+          <rect class="lgl-fillw lgl-thin" x="36" y="108" width="10" height="36" rx="3"/>
+          <path class="lgl-hair" d="M46 156h32M46 165h32M46 174h32"/>
+          <path class="lgl-thin" d="M44 182h30v16H44z"/>
+          <path class="lgl-fills lgl-ink" d="M38 198h54v20H38z"/>
+          <path class="lgl-thin" d="M100 214v16h20"/>
+
+          <!-- колёса -->
+          <g class="lgl-wheels">
+            <circle cx="110" cy="236" r="32"/><circle class="lgl-hub" cx="110" cy="236" r="14"/>
+            <circle cx="300" cy="236" r="32"/><circle class="lgl-hub" cx="300" cy="236" r="14"/>
+            <circle cx="816" cy="236" r="32"/><circle class="lgl-hub" cx="816" cy="236" r="14"/>
+            <circle cx="892" cy="236" r="32"/><circle class="lgl-hub" cx="892" cy="236" r="14"/>
+            <circle cx="968" cy="236" r="32"/><circle class="lgl-hub" cx="968" cy="236" r="14"/>
+          </g>
+          <path class="lgl-thin" d="M78 220a32 32 0 0 1 64 0M268 220a32 32 0 0 1 64 0"/>
+        </svg>
+        <!-- Цифры в подписи — те же, что в карточке «Фура» ниже.
+             Новых на страницу не добавляем. -->
+        <p class="lgl-rig-cap">Фура — главная машина: <span class="lgl-mono">20–22 Т</span> · <span class="lgl-mono">33</span> паллеты</p>
       </div>
 
       <div class="lgl-fleet">
