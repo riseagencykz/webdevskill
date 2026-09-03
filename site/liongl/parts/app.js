@@ -94,6 +94,26 @@
       }
     }
 
+    /* ---------- ночная трасса: движется только пока видна ----------
+       Дорога, горизонт и колёса — это три бесконечные CSS-анимации.
+       Браузер не останавливает их сам, когда полоса уходит за экран,
+       поэтому включаем и выключаем вручную. */
+    var rig = root.querySelector('#lgl-rig');
+    if (rig && !reduced) {
+      if (io2) {
+        var rigVis = false;
+        var rigSync = function () {
+          rig.classList.toggle('lgl-run', rigVis && !document.hidden);
+        };
+        new IntersectionObserver(function (en) {
+          rigVis = en[0].isIntersecting; rigSync();
+        }, { threshold: 0.05 }).observe(rig);
+        document.addEventListener('visibilitychange', rigSync);
+      } else {
+        rig.classList.add('lgl-run');
+      }
+    }
+
     /* ---------- линия прогресса в пяти шагах ---------- */
     var steps = root.querySelector('.lgl-steps');
     if (steps && !reduced) {

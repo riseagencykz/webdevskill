@@ -175,49 +175,89 @@
         <p class="lgl-lead">Силуэты в одном масштабе — размеры видно на глаз.</p>
       </div>
 
-      <!-- Главная машина в полный рост. Чертёж, а не фото: настоящих
-           фотографий машин у нас нет, а сток здесь был бы враньём.
-           Пропорции честные — 16,6 м по габариту, как у еврофуры. -->
-      <div class="lgl-rig lgl-rv">
-        <svg viewBox="0 0 1080 290" role="img" aria-label="Седельный тягач с тентованным полуприцепом, вид сбоку">
-          <line class="lgl-road" x1="0" y1="269" x2="1080" y2="269"/>
-          <rect class="lgl-shade" x="70" y="264" width="960" height="6"/>
+      <!-- Ночная трасса с фурой. Чертёж, а не фото: настоящих фотографий
+           машин у нас нет, а сток здесь был бы враньём. Пропорции честные —
+           16,6 м по габариту, как у еврофуры.
+           Движение: дорога и горизонт едут влево с разной скоростью,
+           колёса крутятся в ту же сторону. Всё это включается только
+           когда полоса на экране, — см. app.js. -->
+      <div class="lgl-rig lgl-rv" id="lgl-rig">
+        <svg viewBox="0 34 1080 306" role="img" aria-label="Седельный тягач с тентованным полуприцепом идёт по ночной трассе">
+          <defs>
+            <pattern id="lglRigGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M40 0H0V40" fill="none" stroke="#1B2735" stroke-width="1"/></pattern>
+            <linearGradient id="lglRigBeam" x1="1" y1="0" x2="0" y2="0">
+              <stop offset="0" stop-color="#FFC978" stop-opacity=".26"/>
+              <stop offset="1" stop-color="#FFC978" stop-opacity="0"/></linearGradient>
+            <clipPath id="lglRigClip"><rect y="34" width="1080" height="306"/></clipPath>
+          </defs>
 
-          <!-- полуприцеп -->
-          <path class="lgl-fillw lgl-ink" d="M206 30h824a8 8 0 0 1 8 8v158H206z"/>
-          <rect class="lgl-tilt" x="210" y="50" width="820" height="140"/>
-          <path class="lgl-thin" d="M206 50h832M206 190h832"/>
-          <path class="lgl-hair" d="M292 50v140M378 50v140M464 50v140M550 50v140M636 50v140M722 50v140M808 50v140M894 50v140M980 50v140"/>
-          <text class="lgl-rig-mark" x="470" y="132">LION GLOBAL LOGISTICS</text>
-          <path class="lgl-fills lgl-ink" d="M206 196h832v14H206z"/>
-          <path class="lgl-thin" d="M400 210v28M414 210v28M394 238h26"/>
-          <path class="lgl-fills lgl-ink" d="M1030 210h10v30h-10z"/>
+          <rect y="34" width="1080" height="306" fill="#0F1822"/>
+          <rect y="34" width="1080" height="306" fill="url(#lglRigGrid)" opacity=".5"/>
 
-          <!-- тягач -->
-          <path class="lgl-fills lgl-ink" d="M40 198h300v16H40z"/>
-          <path class="lgl-fills lgl-ink" d="M180 214h76v28h-76z"/>
-          <path class="lgl-hair" d="M180 228h76"/>
-          <path class="lgl-fillw lgl-ink" d="M40 198V150q0-8 6-13L68 104q5-10 16-10V58q0-12 12-12h94q12 0 12 12v140z"/>
-          <path class="lgl-thin" d="M84 94h118"/>
-          <path class="lgl-glass" d="M68 136l14-28h44v28z"/>
-          <rect class="lgl-glass" x="134" y="108" width="58" height="28"/>
-          <path class="lgl-thin" d="M68 136l14-28h44v28zM134 108h58v28h-58z"/>
-          <path class="lgl-thin" d="M130 108v90M142 158h16M56 122H46"/>
-          <rect class="lgl-fillw lgl-thin" x="36" y="108" width="10" height="36" rx="3"/>
-          <path class="lgl-hair" d="M46 156h32M46 165h32M46 174h32"/>
-          <path class="lgl-thin" d="M44 182h30v16H44z"/>
-          <path class="lgl-fills lgl-ink" d="M38 198h54v20H38z"/>
-          <path class="lgl-thin" d="M100 214v16h20"/>
-
-          <!-- колёса -->
-          <g class="lgl-wheels">
-            <circle cx="110" cy="236" r="32"/><circle class="lgl-hub" cx="110" cy="236" r="14"/>
-            <circle cx="300" cy="236" r="32"/><circle class="lgl-hub" cx="300" cy="236" r="14"/>
-            <circle cx="816" cy="236" r="32"/><circle class="lgl-hub" cx="816" cy="236" r="14"/>
-            <circle cx="892" cy="236" r="32"/><circle class="lgl-hub" cx="892" cy="236" r="14"/>
-            <circle cx="968" cy="236" r="32"/><circle class="lgl-hub" cx="968" cy="236" r="14"/>
+          <g clip-path="url(#lglRigClip)">
+            <!-- дальний план: степной горизонт, период 540 -->
+            <g class="lgl-hills">
+              <path d="M0 309v-18l70-12 62 11 84-19 76 17 66-9 74 15 52-10 56 12v13z"/>
+              <path d="M540 309v-18l70-12 62 11 84-19 76 17 66-9 74 15 52-10 56 12v13z"/>
+              <path d="M1080 309v-18l70-12 62 11 84-19 76 17 66-9 74 15 52-10 56 12v13z"/>
+            </g>
+            <line class="lgl-horizon" x1="0" y1="309" x2="1080" y2="309"/>
+            <rect class="lgl-asphalt" y="309" width="1080" height="31"/>
+            <!-- разметка, период 80 -->
+            <g class="lgl-dash">
+              <rect x="0" y="325" width="46" height="3" rx="1.5"/><rect x="80" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="160" y="325" width="46" height="3" rx="1.5"/><rect x="240" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="320" y="325" width="46" height="3" rx="1.5"/><rect x="400" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="480" y="325" width="46" height="3" rx="1.5"/><rect x="560" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="640" y="325" width="46" height="3" rx="1.5"/><rect x="720" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="800" y="325" width="46" height="3" rx="1.5"/><rect x="880" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="960" y="325" width="46" height="3" rx="1.5"/><rect x="1040" y="325" width="46" height="3" rx="1.5"/>
+              <rect x="1120" y="325" width="46" height="3" rx="1.5"/>
+            </g>
           </g>
-          <path class="lgl-thin" d="M78 220a32 32 0 0 1 64 0M268 220a32 32 0 0 1 64 0"/>
+
+          <g class="lgl-truck" transform="translate(56 67) scale(.9)">
+            <path class="lgl-beam" d="M46 178L-80 138v112l126-46z"/>
+
+            <path class="lgl-fillw lgl-ink" d="M206 30h824a8 8 0 0 1 8 8v158H206z"/>
+            <rect class="lgl-tilt" x="210" y="50" width="820" height="140"/>
+            <path class="lgl-thin" d="M206 50h832M206 190h832"/>
+            <path class="lgl-hair" d="M292 50v140M378 50v140M464 50v140M550 50v140M636 50v140M722 50v140M808 50v140M894 50v140M980 50v140"/>
+            <text class="lgl-rig-mark" x="470" y="132">LION GLOBAL LOGISTICS</text>
+            <path class="lgl-fills lgl-ink" d="M206 196h832v14H206z"/>
+            <path class="lgl-thin" d="M400 210v28M414 210v28M394 238h26"/>
+            <path class="lgl-fills lgl-ink" d="M1030 210h10v30h-10z"/>
+
+            <path class="lgl-fills lgl-ink" d="M40 198h300v16H40z"/>
+            <path class="lgl-fills lgl-ink" d="M180 214h76v28h-76z"/>
+            <path class="lgl-hair" d="M180 228h76"/>
+            <path class="lgl-fillw lgl-ink" d="M40 198V150q0-8 6-13L68 104q5-10 16-10V58q0-12 12-12h94q12 0 12 12v140z"/>
+            <path class="lgl-thin" d="M84 94h118"/>
+            <path class="lgl-glass" d="M68 136l14-28h44v28z"/>
+            <rect class="lgl-glass" x="134" y="108" width="58" height="28"/>
+            <path class="lgl-thin" d="M68 136l14-28h44v28zM134 108h58v28h-58z"/>
+            <path class="lgl-thin" d="M130 108v90M142 158h16M56 122H46"/>
+            <rect class="lgl-fillw lgl-thin" x="36" y="108" width="10" height="36" rx="3"/>
+            <path class="lgl-hair" d="M46 156h32M46 165h32M46 174h32"/>
+            <rect class="lgl-lamp" x="46" y="183" width="26" height="14" rx="4"/>
+            <path class="lgl-fills lgl-ink" d="M38 198h54v20H38z"/>
+            <path class="lgl-thin" d="M100 214v16h20"/>
+
+            <g class="lgl-wheels">
+              <g class="lgl-wheel"><circle cx="110" cy="236" r="32"/><circle class="lgl-hub" cx="110" cy="236" r="14"/>
+                <path class="lgl-spokes" d="M110 222v28M96 236h28M100 226l20 20M120 226l-20 20"/></g>
+              <g class="lgl-wheel"><circle cx="300" cy="236" r="32"/><circle class="lgl-hub" cx="300" cy="236" r="14"/>
+                <path class="lgl-spokes" d="M300 222v28M286 236h28M290 226l20 20M310 226l-20 20"/></g>
+              <g class="lgl-wheel"><circle cx="816" cy="236" r="32"/><circle class="lgl-hub" cx="816" cy="236" r="14"/>
+                <path class="lgl-spokes" d="M816 222v28M802 236h28M806 226l20 20M826 226l-20 20"/></g>
+              <g class="lgl-wheel"><circle cx="892" cy="236" r="32"/><circle class="lgl-hub" cx="892" cy="236" r="14"/>
+                <path class="lgl-spokes" d="M892 222v28M878 236h28M882 226l20 20M902 226l-20 20"/></g>
+              <g class="lgl-wheel"><circle cx="968" cy="236" r="32"/><circle class="lgl-hub" cx="968" cy="236" r="14"/>
+                <path class="lgl-spokes" d="M968 222v28M954 236h28M958 226l20 20M978 226l-20 20"/></g>
+            </g>
+            <path class="lgl-thin" d="M78 220a32 32 0 0 1 64 0M268 220a32 32 0 0 1 64 0"/>
+          </g>
         </svg>
         <!-- Цифры в подписи — те же, что в карточке «Фура» ниже.
              Новых на страницу не добавляем. -->

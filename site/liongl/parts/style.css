@@ -236,32 +236,41 @@
 .lgl-form-row:nth-child(3) i{max-width:44%;}
 
 /* --- машины --- */
-/* Крупный чертёж фуры. Стоит вместо фотографии: настоящих фото машин
-   у клиента нет, а сток на этой странице читался бы как враньё. */
-.lgl-rig{background:var(--lgl-bg);border:1px solid var(--lgl-line);border-radius:var(--lgl-r-2);
-  padding:clamp(14px,2.4vw,var(--lgl-sp-5)) clamp(10px,2vw,var(--lgl-sp-5)) var(--lgl-sp-3);
-  margin-bottom:var(--lgl-sp-4);overflow:hidden;}
+/* Ночная трасса с фурой. Стоит вместо фотографии: настоящих фото машин
+   у клиента нет, а сток на этой странице читался бы как враньё.
+   Полоса выходит за колонку на всю ширину экрана: box-shadow вместо
+   100vw, иначе на страницах с полосой прокрутки вылезает горизонтальный
+   скролл. clip-path пускает тень вбок и режет её сверху и снизу. */
+.lgl-rig{background:var(--lgl-ink);margin-bottom:var(--lgl-sp-5);padding-bottom:var(--lgl-sp-3);
+  box-shadow:0 0 0 100vmax var(--lgl-ink);clip-path:inset(0 -100vmax);}
 .lgl-rig svg{width:100%;height:auto;display:block;}
-.lgl-rig .lgl-ink{stroke:var(--lgl-ink);stroke-width:2.2;fill:none;
+.lgl-rig .lgl-ink{stroke:#41525F;stroke-width:2.2;fill:none;
   stroke-linejoin:round;stroke-linecap:round;}
-.lgl-rig .lgl-thin{stroke:var(--lgl-mut);stroke-width:1.5;fill:none;
+.lgl-rig .lgl-thin{stroke:#5C6E7E;stroke-width:1.5;fill:none;
   stroke-linejoin:round;stroke-linecap:round;}
-.lgl-rig .lgl-hair{stroke:#C2CAD2;stroke-width:1.3;fill:none;}
-.lgl-rig .lgl-fillw{fill:var(--lgl-card);}
-.lgl-rig .lgl-fills{fill:var(--lgl-soft);}
-.lgl-rig .lgl-tilt{fill:var(--lgl-soft);}
-.lgl-rig .lgl-glass{fill:#E3E9EE;}
-.lgl-rig .lgl-road{stroke:var(--lgl-line);stroke-width:2;}
-.lgl-rig .lgl-shade{fill:var(--lgl-ink);opacity:.07;}
-.lgl-rig .lgl-wheels circle{fill:#1B2530;}
-.lgl-rig .lgl-wheels .lgl-hub{fill:var(--lgl-bg);}
+.lgl-rig .lgl-hair{stroke:#33424F;stroke-width:1.3;fill:none;}
+.lgl-rig .lgl-fillw{fill:#16202B;}
+.lgl-rig .lgl-fills{fill:#1B2735;}
+.lgl-rig .lgl-tilt{fill:#16202B;}
+.lgl-rig .lgl-glass{fill:#2C3B4B;}
+.lgl-rig .lgl-hills{fill:#16202B;}
+.lgl-rig .lgl-horizon{stroke:#26333F;stroke-width:1.4;}
+.lgl-rig .lgl-asphalt{fill:#131C26;}
+/* не .lgl-lane: так называются коридоры на схеме выше, и её
+   безусловное правило fill:none тянулось бы сюда */
+.lgl-rig .lgl-dash{fill:#46586B;}
+.lgl-rig .lgl-beam{fill:url(#lglRigBeam);}
+.lgl-rig .lgl-lamp{fill:#FFD79A;opacity:.8;}
+.lgl-rig .lgl-wheels circle{fill:#0B111A;}
+.lgl-rig .lgl-wheels .lgl-hub{fill:#2A3644;}
+.lgl-rig .lgl-spokes{stroke:#0B111A;stroke-width:3;fill:none;}
 .lgl-rig-mark{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.22em;
-  fill:var(--lgl-line-ui);}
+  fill:#46586B;}
 .lgl-rig-cap{margin-top:var(--lgl-sp-2);text-align:center;font-size:var(--lgl-fs-xs);
-  color:var(--lgl-mut);}
+  color:#8A93A0;}
 @media (min-width:640px){.lgl-rig-cap{font-size:var(--lgl-fs-sm);}}
 .lgl-rig-cap .lgl-mono{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-xs);
-  letter-spacing:.08em;color:var(--lgl-ink);}
+  letter-spacing:.08em;color:#E7EBEF;}
 
 .lgl-fleet{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
   border-radius:var(--lgl-r-2);overflow:hidden;}
@@ -521,9 +530,24 @@
 .lgl-veh:hover .lgl-pic svg,.lgl-veh:focus-within .lgl-pic svg{transform:translateX(6px);}
 
 /* --- фура въезжает в кадр слева, один раз --- */
-.lgl-root.lgl-js .lgl-rig svg{transform:translateX(-6%);}
-.lgl-root.lgl-js .lgl-rig.lgl-in svg{transform:none;
+.lgl-root.lgl-js .lgl-rig .lgl-truck{transform:translate(-40px,67px) scale(.9);}
+.lgl-root.lgl-js .lgl-rig.lgl-in .lgl-truck{transform:translate(56px,67px) scale(.9);
   transition:transform 1s cubic-bezier(.16,.72,.29,1) 120ms;}
+
+/* --- и дальше едет: дорога и горизонт уходят влево, колёса крутятся ---
+   Периоды подобраны под шаг рисунка: разметка 80 единиц, горизонт 540,
+   колесо радиусом 32 — окружность 201. Скорости согласованы, поэтому
+   колёса не «проскальзывают» относительно дороги.
+   Класс lgl-run ставит app.js: анимация идёт только пока полоса на
+   экране, иначе телефон греет батарею впустую. */
+@keyframes lgl-road{to{transform:translateX(-80px);}}
+@keyframes lgl-far{to{transform:translateX(-540px);}}
+@keyframes lgl-spin{to{transform:rotate(-360deg);}}
+.lgl-rig .lgl-dash,.lgl-rig .lgl-hills{transform-box:view-box;transform-origin:0 0;}
+.lgl-rig .lgl-wheel{transform-box:fill-box;transform-origin:center;}
+.lgl-rig.lgl-run .lgl-dash{animation:lgl-road .56s linear infinite;}
+.lgl-rig.lgl-run .lgl-hills{animation:lgl-far 26s linear infinite;}
+.lgl-rig.lgl-run .lgl-wheel{animation:lgl-spin 1.4s linear infinite;}
 
 /* --- карточки чуть приподнимаются --- */
 .lgl-veh,.lgl-how>div{transition:background 200ms var(--lgl-ease);}
@@ -540,7 +564,8 @@
   .lgl-root.lgl-js .lgl-map .lgl-ring{opacity:.7;}
   .lgl-dot{display:none;}
   .lgl-pic svg{transition:none;}
-  .lgl-root.lgl-js .lgl-rig svg{transform:none;}
+  .lgl-root.lgl-js .lgl-rig .lgl-truck{transform:translate(56px,67px) scale(.9);}
+  .lgl-rig .lgl-dash,.lgl-rig .lgl-hills,.lgl-rig .lgl-wheel{animation:none!important;}
 }
 
 /* ============================================================================
