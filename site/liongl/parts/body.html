@@ -415,9 +415,34 @@
           <p style="margin-top:20px"><a class="lgl-req-tel" href="tel:+77715017775">+7 771 501 77 75</a></p>
         </div>
         <div class="lgl-side">
-          <a class="lgl-btn lgl-btn--gr" href="https://wa.me/77715017775?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9D%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BF%D1%80%D0%BE%D1%81%D1%87%D1%91%D1%82%20%D0%BC%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%D0%B0" target="_blank" rel="noopener">Получить просчёт</a>
+          <!-- Заявка уходит на почту через send.php. Обязательны только имя
+               и телефон — остальное подсказка, а не барьер. -->
+          <form class="lgl-form" id="lgl-form" method="post" action="send.php">
+            <!-- Ловушка для ботов: человек этого поля не видит и не заполнит. -->
+            <div class="lgl-trap" aria-hidden="true">
+              <label>Оставьте это поле пустым
+                <input type="text" name="company_site" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <label class="lgl-f"><span>Имя <i>*</i></span>
+              <input type="text" name="name" required maxlength="80" autocomplete="name"
+                     placeholder="Как к вам обращаться"></label>
+            <label class="lgl-f"><span>Телефон <i>*</i></span>
+              <input type="tel" name="phone" required maxlength="32" autocomplete="tel"
+                     inputmode="tel" placeholder="+7 ___ ___ __ __"></label>
+            <div class="lgl-f-row">
+              <label class="lgl-f"><span>Откуда</span>
+                <input type="text" name="from" maxlength="80" placeholder="Алматы"></label>
+              <label class="lgl-f"><span>Куда</span>
+                <input type="text" name="to" maxlength="80" placeholder="Москва"></label>
+            </div>
+            <label class="lgl-f"><span>Сколько тонн</span>
+              <input type="text" name="weight" maxlength="32" inputmode="decimal" placeholder="20"></label>
+            <input type="hidden" name="page" value="">
+            <button class="lgl-btn lgl-btn--gr" type="submit">Получить просчёт</button>
+            <p class="lgl-fine">Ответим за 30 минут в рабочее время</p>
+            <p class="lgl-form-msg" id="lgl-form-msg" role="status" aria-live="polite" hidden></p>
+          </form>
           <a class="lgl-btn lgl-btn--gh" href="https://wa.me/77715017775" target="_blank" rel="noopener">Написать в WhatsApp</a>
-          <p class="lgl-fine">Ответим за 30 минут в рабочее время</p>
         </div>
       </div>
     </div>

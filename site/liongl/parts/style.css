@@ -339,8 +339,44 @@
 .lgl-req-tel{font-size:clamp(21px,2.6vw,27px);font-weight:700;letter-spacing:-.02em;
   display:inline-flex;align-items:center;min-height:44px;}
 .lgl-req-tel:hover{color:var(--lgl-eaeu-ink);}
-.lgl-side{display:grid;gap:10px;}
+.lgl-side{display:grid;gap:10px;align-content:start;}
 .lgl-side .lgl-fine{font-size:var(--lgl-fs-xs);color:var(--lgl-mut);text-align:center;}
+@media (min-width:940px){.lgl-req{align-items:start;}}
+
+/* --- форма заявки --- */
+.lgl-form{display:grid;gap:10px;}
+/* ловушка для ботов: убрана с экрана, но не display:none —
+   иначе часть ботов её просто не найдёт и не попадётся */
+.lgl-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.lgl-f{display:grid;gap:5px;}
+.lgl-f>span{font-size:var(--lgl-fs-xs);color:var(--lgl-mut);letter-spacing:.01em;}
+.lgl-f>span i{color:var(--lgl-cn-ink);font-style:normal;}
+.lgl-f input{width:100%;min-height:46px;padding:0 13px;font:inherit;font-size:var(--lgl-fs-md);
+  color:var(--lgl-ink);background:var(--lgl-card);border:1px solid var(--lgl-line-ui);
+  border-radius:var(--lgl-r-2);
+  transition:border-color var(--lgl-dur) var(--lgl-ease),box-shadow var(--lgl-dur) var(--lgl-ease);}
+/* Не --lgl-line-ui: на белом он даёт 3.0, а подсказка внутри поля —
+   это текст, ему нужно 4.5. #6E777E даёт 4.56 и всё ещё заметно
+   бледнее введённого значения (17.9), так что за заполненное поле
+   подсказку не примешь. */
+.lgl-f input::placeholder{color:#6E777E;opacity:1;}
+.lgl-f input:hover{border-color:var(--lgl-mut);}
+.lgl-f input:focus{outline:none;border-color:var(--lgl-eaeu-ink);
+  box-shadow:0 0 0 3px rgba(18,135,106,.18);}
+/* ошибку показываем не только цветом: рядом появляется текст */
+.lgl-f input[aria-invalid="true"]{border-color:var(--lgl-cn-ink);
+  box-shadow:0 0 0 3px rgba(176,106,59,.16);}
+.lgl-f-err{font-size:var(--lgl-fs-xs);color:var(--lgl-cn-ink);}
+.lgl-f-row{display:grid;gap:10px;grid-template-columns:1fr 1fr;}
+.lgl-form button{width:100%;margin-top:var(--lgl-sp-1);}
+.lgl-form button[disabled]{opacity:.6;cursor:progress;}
+.lgl-form-msg{font-size:var(--lgl-fs-sm);line-height:1.45;border-radius:var(--lgl-r-2);
+  padding:11px 13px;border:1px solid var(--lgl-line);}
+.lgl-form-msg[data-ok="1"]{background:var(--lgl-eaeu-l);border-color:var(--lgl-eaeu);
+  color:var(--lgl-eaeu-ink);}
+.lgl-form-msg[data-ok="0"]{background:#FBF1EA;border-color:var(--lgl-cn);color:var(--lgl-cn-ink);}
+.lgl-form-msg a{color:inherit;font-weight:600;text-decoration:underline;
+  text-underline-offset:2px;}
 
 /* --- факты --- */
 .lgl-facts{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);

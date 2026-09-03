@@ -280,8 +280,9 @@
 .lgl-rig .lgl-wheels .lgl-hub{fill:var(--lgl-bg);}
 .lgl-rig-mark{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.22em;
   fill:var(--lgl-line-ui);}
-.lgl-rig-cap{margin-top:var(--lgl-sp-2);text-align:center;font-size:var(--lgl-fs-sm);
+.lgl-rig-cap{margin-top:var(--lgl-sp-2);text-align:center;font-size:var(--lgl-fs-xs);
   color:var(--lgl-mut);}
+@media (min-width:640px){.lgl-rig-cap{font-size:var(--lgl-fs-sm);}}
 .lgl-rig-cap .lgl-mono{font-family:'IBM Plex Mono',monospace;font-size:var(--lgl-fs-xs);
   letter-spacing:.08em;color:var(--lgl-ink);}
 
@@ -361,8 +362,44 @@
 .lgl-req-tel{font-size:clamp(21px,2.6vw,27px);font-weight:700;letter-spacing:-.02em;
   display:inline-flex;align-items:center;min-height:44px;}
 .lgl-req-tel:hover{color:var(--lgl-eaeu-ink);}
-.lgl-side{display:grid;gap:10px;}
+.lgl-side{display:grid;gap:10px;align-content:start;}
 .lgl-side .lgl-fine{font-size:var(--lgl-fs-xs);color:var(--lgl-mut);text-align:center;}
+@media (min-width:940px){.lgl-req{align-items:start;}}
+
+/* --- форма заявки --- */
+.lgl-form{display:grid;gap:10px;}
+/* ловушка для ботов: убрана с экрана, но не display:none —
+   иначе часть ботов её просто не найдёт и не попадётся */
+.lgl-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.lgl-f{display:grid;gap:5px;}
+.lgl-f>span{font-size:var(--lgl-fs-xs);color:var(--lgl-mut);letter-spacing:.01em;}
+.lgl-f>span i{color:var(--lgl-cn-ink);font-style:normal;}
+.lgl-f input{width:100%;min-height:46px;padding:0 13px;font:inherit;font-size:var(--lgl-fs-md);
+  color:var(--lgl-ink);background:var(--lgl-card);border:1px solid var(--lgl-line-ui);
+  border-radius:var(--lgl-r-2);
+  transition:border-color var(--lgl-dur) var(--lgl-ease),box-shadow var(--lgl-dur) var(--lgl-ease);}
+/* Не --lgl-line-ui: на белом он даёт 3.0, а подсказка внутри поля —
+   это текст, ему нужно 4.5. #6E777E даёт 4.56 и всё ещё заметно
+   бледнее введённого значения (17.9), так что за заполненное поле
+   подсказку не примешь. */
+.lgl-f input::placeholder{color:#6E777E;opacity:1;}
+.lgl-f input:hover{border-color:var(--lgl-mut);}
+.lgl-f input:focus{outline:none;border-color:var(--lgl-eaeu-ink);
+  box-shadow:0 0 0 3px rgba(18,135,106,.18);}
+/* ошибку показываем не только цветом: рядом появляется текст */
+.lgl-f input[aria-invalid="true"]{border-color:var(--lgl-cn-ink);
+  box-shadow:0 0 0 3px rgba(176,106,59,.16);}
+.lgl-f-err{font-size:var(--lgl-fs-xs);color:var(--lgl-cn-ink);}
+.lgl-f-row{display:grid;gap:10px;grid-template-columns:1fr 1fr;}
+.lgl-form button{width:100%;margin-top:var(--lgl-sp-1);}
+.lgl-form button[disabled]{opacity:.6;cursor:progress;}
+.lgl-form-msg{font-size:var(--lgl-fs-sm);line-height:1.45;border-radius:var(--lgl-r-2);
+  padding:11px 13px;border:1px solid var(--lgl-line);}
+.lgl-form-msg[data-ok="1"]{background:var(--lgl-eaeu-l);border-color:var(--lgl-eaeu);
+  color:var(--lgl-eaeu-ink);}
+.lgl-form-msg[data-ok="0"]{background:#FBF1EA;border-color:var(--lgl-cn);color:var(--lgl-cn-ink);}
+.lgl-form-msg a{color:inherit;font-weight:600;text-decoration:underline;
+  text-underline-offset:2px;}
 
 /* --- факты --- */
 .lgl-facts{display:grid;gap:1px;background:var(--lgl-line);border:1px solid var(--lgl-line);
@@ -976,9 +1013,34 @@
           <p style="margin-top:20px"><a class="lgl-req-tel" href="tel:+77715017775">+7 771 501 77 75</a></p>
         </div>
         <div class="lgl-side">
-          <a class="lgl-btn lgl-btn--gr" href="https://wa.me/77715017775?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9D%D1%83%D0%B6%D0%B5%D0%BD%20%D0%BF%D1%80%D0%BE%D1%81%D1%87%D1%91%D1%82%20%D0%BC%D0%B0%D1%80%D1%88%D1%80%D1%83%D1%82%D0%B0" target="_blank" rel="noopener">Получить просчёт</a>
+          <!-- Заявка уходит на почту через send.php. Обязательны только имя
+               и телефон — остальное подсказка, а не барьер. -->
+          <form class="lgl-form" id="lgl-form" method="post" action="send.php">
+            <!-- Ловушка для ботов: человек этого поля не видит и не заполнит. -->
+            <div class="lgl-trap" aria-hidden="true">
+              <label>Оставьте это поле пустым
+                <input type="text" name="company_site" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <label class="lgl-f"><span>Имя <i>*</i></span>
+              <input type="text" name="name" required maxlength="80" autocomplete="name"
+                     placeholder="Как к вам обращаться"></label>
+            <label class="lgl-f"><span>Телефон <i>*</i></span>
+              <input type="tel" name="phone" required maxlength="32" autocomplete="tel"
+                     inputmode="tel" placeholder="+7 ___ ___ __ __"></label>
+            <div class="lgl-f-row">
+              <label class="lgl-f"><span>Откуда</span>
+                <input type="text" name="from" maxlength="80" placeholder="Алматы"></label>
+              <label class="lgl-f"><span>Куда</span>
+                <input type="text" name="to" maxlength="80" placeholder="Москва"></label>
+            </div>
+            <label class="lgl-f"><span>Сколько тонн</span>
+              <input type="text" name="weight" maxlength="32" inputmode="decimal" placeholder="20"></label>
+            <input type="hidden" name="page" value="">
+            <button class="lgl-btn lgl-btn--gr" type="submit">Получить просчёт</button>
+            <p class="lgl-fine">Ответим за 30 минут в рабочее время</p>
+            <p class="lgl-form-msg" id="lgl-form-msg" role="status" aria-live="polite" hidden></p>
+          </form>
           <a class="lgl-btn lgl-btn--gh" href="https://wa.me/77715017775" target="_blank" rel="noopener">Написать в WhatsApp</a>
-          <p class="lgl-fine">Ответим за 30 минут в рабочее время</p>
         </div>
       </div>
     </div>
@@ -1203,6 +1265,79 @@
     };
     window.addEventListener('scroll', onHead, { passive: true });
     onHead();
+
+    /* ---------- форма заявки ----------
+       Отправляем через fetch, чтобы человек остался на странице.
+       Без JS форма работает обычным POST — обработчик отдаёт страницу
+       с ответом, поэтому здесь ничего критичного не завязано. */
+    var frm = root.querySelector('#lgl-form');
+    if (frm) {
+      var msg = root.querySelector('#lgl-form-msg');
+      var btn = frm.querySelector('button[type=submit]');
+      var pageField = frm.querySelector('input[name=page]');
+      if (pageField) pageField.value = location.href;
+      /* Штатную проверку браузера выключаем только здесь, при живом JS:
+         её всплывашка пропадает от любого клика и не стилизуется, а свой
+         текст остаётся под полем. Без JS required продолжает работать. */
+      frm.noValidate = true;
+
+      var say = function (ok, text) {
+        if (!msg) return;
+        msg.hidden = false;
+        msg.setAttribute('data-ok', ok ? '1' : '0');
+        msg.textContent = text;
+      };
+      var digits = function (s) { return (s.match(/\d/g) || []).length; };
+
+      // Свои проверки вместо браузерных: нужен разбор по полям и текст рядом
+      var check = function () {
+        var bad = null;
+        var fields = [
+          { el: frm.name, test: function (v) { return v.trim().length >= 2; },
+            err: 'Напишите, как к вам обращаться' },
+          { el: frm.phone, test: function (v) { return digits(v) >= 10; },
+            err: 'Телефон нужен целиком, с кодом города или оператора' }
+        ];
+        for (var i = 0; i < fields.length; i++) {
+          var f = fields[i], wrap = f.el.parentNode;
+          var old = wrap.querySelector('.lgl-f-err');
+          if (old) wrap.removeChild(old);
+          if (f.test(f.el.value)) { f.el.removeAttribute('aria-invalid'); continue; }
+          f.el.setAttribute('aria-invalid', 'true');
+          var p = document.createElement('span');
+          p.className = 'lgl-f-err';
+          p.textContent = f.err;
+          wrap.appendChild(p);
+          if (!bad) bad = f.el;
+        }
+        return bad;
+      };
+
+      frm.addEventListener('submit', function (e) {
+        var bad = check();
+        if (bad) { e.preventDefault(); bad.focus(); return; }
+        if (!window.fetch || !window.FormData) return;   // старый браузер — обычный POST
+        e.preventDefault();
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Отправляем…';
+        fetch(frm.action, {
+          method: 'POST', body: new FormData(frm),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (r) {
+          return r.json().catch(function () { return { ok: r.ok }; });
+        }).then(function (d) {
+          if (!d || !d.ok) throw new Error((d && d.error) || 'fail');
+          frm.reset();
+          say(true, 'Заявка ушла. Перезвоним или напишем в рабочее время.');
+        }).catch(function () {
+          say(false, 'Не отправилось. Напишите в WhatsApp или позвоните +7 771 501 77 75 — так быстрее.');
+        }).then(function () {
+          btn.disabled = false;
+          btn.textContent = label;
+        });
+      });
+    }
 
     /* ---------- липкая панель: после 30 % прокрутки, прячется у заявки ---------- */
     var sticky = root.querySelector('#lgl-sticky');

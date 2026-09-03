@@ -142,6 +142,79 @@
     window.addEventListener('scroll', onHead, { passive: true });
     onHead();
 
+    /* ---------- форма заявки ----------
+       Отправляем через fetch, чтобы человек остался на странице.
+       Без JS форма работает обычным POST — обработчик отдаёт страницу
+       с ответом, поэтому здесь ничего критичного не завязано. */
+    var frm = root.querySelector('#lgl-form');
+    if (frm) {
+      var msg = root.querySelector('#lgl-form-msg');
+      var btn = frm.querySelector('button[type=submit]');
+      var pageField = frm.querySelector('input[name=page]');
+      if (pageField) pageField.value = location.href;
+      /* Штатную проверку браузера выключаем только здесь, при живом JS:
+         её всплывашка пропадает от любого клика и не стилизуется, а свой
+         текст остаётся под полем. Без JS required продолжает работать. */
+      frm.noValidate = true;
+
+      var say = function (ok, text) {
+        if (!msg) return;
+        msg.hidden = false;
+        msg.setAttribute('data-ok', ok ? '1' : '0');
+        msg.textContent = text;
+      };
+      var digits = function (s) { return (s.match(/\d/g) || []).length; };
+
+      // Свои проверки вместо браузерных: нужен разбор по полям и текст рядом
+      var check = function () {
+        var bad = null;
+        var fields = [
+          { el: frm.name, test: function (v) { return v.trim().length >= 2; },
+            err: 'Напишите, как к вам обращаться' },
+          { el: frm.phone, test: function (v) { return digits(v) >= 10; },
+            err: 'Телефон нужен целиком, с кодом города или оператора' }
+        ];
+        for (var i = 0; i < fields.length; i++) {
+          var f = fields[i], wrap = f.el.parentNode;
+          var old = wrap.querySelector('.lgl-f-err');
+          if (old) wrap.removeChild(old);
+          if (f.test(f.el.value)) { f.el.removeAttribute('aria-invalid'); continue; }
+          f.el.setAttribute('aria-invalid', 'true');
+          var p = document.createElement('span');
+          p.className = 'lgl-f-err';
+          p.textContent = f.err;
+          wrap.appendChild(p);
+          if (!bad) bad = f.el;
+        }
+        return bad;
+      };
+
+      frm.addEventListener('submit', function (e) {
+        var bad = check();
+        if (bad) { e.preventDefault(); bad.focus(); return; }
+        if (!window.fetch || !window.FormData) return;   // старый браузер — обычный POST
+        e.preventDefault();
+        btn.disabled = true;
+        var label = btn.textContent;
+        btn.textContent = 'Отправляем…';
+        fetch(frm.action, {
+          method: 'POST', body: new FormData(frm),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (r) {
+          return r.json().catch(function () { return { ok: r.ok }; });
+        }).then(function (d) {
+          if (!d || !d.ok) throw new Error((d && d.error) || 'fail');
+          frm.reset();
+          say(true, 'Заявка ушла. Перезвоним или напишем в рабочее время.');
+        }).catch(function () {
+          say(false, 'Не отправилось. Напишите в WhatsApp или позвоните +7 771 501 77 75 — так быстрее.');
+        }).then(function () {
+          btn.disabled = false;
+          btn.textContent = label;
+        });
+      });
+    }
+
     /* ---------- липкая панель: после 30 % прокрутки, прячется у заявки ---------- */
     var sticky = root.querySelector('#lgl-sticky');
     var form = root.querySelector('#lgl-zayavka');
