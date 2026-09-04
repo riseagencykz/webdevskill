@@ -170,12 +170,67 @@ class TestShadcnInstaller:
         assert "button" in message
         assert "card" in message
 
-        # Verify correct command was called
+        # Verify correct command was called. The version segment is resolved by
+        # _get_shadcn_version(), so assert against that rather than hardcoding the
+        # pinned default -- otherwise bumping the pin silently breaks this test.
         mock_run.assert_called_once()
         call_args = mock_run.call_args[0][0]
-        assert call_args[:3] == ["npx", "shadcn@latest", "add"]
+        assert call_args[:3] == [
+            "npx",
+            f"shadcn@{installer._get_shadcn_version()}",
+            "add",
+        ]
         assert "button" in call_args
         assert "card" in call_args
+
+    def test_get_shadcn_version_falls_back_when_no_package_json(self, temp_project):
+        """No package.json at all -> pinned fallback, not 'latest'."""
+        installer = ShadcnInstaller(project_root=temp_project)
+        version = installer._get_shadcn_version()
+        assert version != "latest"
+        assert version[0].isdigit()
+
+    def test_get_shadcn_version_falls_back_when_dep_absent(self, temp_project):
+        """package.json exists but does not depend on shadcn -> same fallback."""
+        fallback = ShadcnInstaller(project_root=temp_project)._get_shadcn_version()
+        (temp_project / "package.json").write_text(
+            json.dumps({"dependencies": {"react": "^19.0.0"}})
+        )
+        assert ShadcnInstaller(project_root=temp_project)._get_shadcn_version() == fallback
+
+    def test_get_shadcn_version_reads_dependencies(self, temp_project):
+        """A pinned dependency wins over the fallback."""
+        (temp_project / "package.json").write_text(json.dumps({"dependencies": {"shadcn": "2.9.1"}}))
+        installer = ShadcnInstaller(project_root=temp_project)
+        assert installer._get_shadcn_version() == "2.9.1"
+
+    def test_get_shadcn_version_reads_dev_dependencies(self, temp_project):
+        """devDependencies is searched too."""
+        (temp_project / "package.json").write_text(
+            json.dumps({"devDependencies": {"shadcn": "3.0.0"}})
+        )
+        installer = ShadcnInstaller(project_root=temp_project)
+        assert installer._get_shadcn_version() == "3.0.0"
+
+    @pytest.mark.parametrize(
+        "declared,expected",
+        [("^2.9.1", "2.9.1"), ("~2.9.1", "2.9.1"), (">=2.9.1", "2.9.1"), (">=2.9.1 <3", "2.9.1")],
+    )
+    def test_get_shadcn_version_strips_range_prefixes(self, temp_project, declared, expected):
+        """Semver range syntax is reduced to a concrete version npx can resolve."""
+        (temp_project / "package.json").write_text(
+            json.dumps({"dependencies": {"shadcn": declared}})
+        )
+        installer = ShadcnInstaller(project_root=temp_project)
+        assert installer._get_shadcn_version() == expected
+
+    def test_get_shadcn_version_survives_malformed_package_json(self, temp_project):
+        """A broken package.json must not crash the installer."""
+        (temp_project / "package.json").write_text("{ not json")
+        installer = ShadcnInstaller(project_root=temp_project)
+        version = installer._get_shadcn_version()
+        assert version != "latest"
+        assert version[0].isdigit()
 
     @patch("subprocess.run")
     def test_add_components_subprocess_error(self, mock_run, temp_project):
