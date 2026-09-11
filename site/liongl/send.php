@@ -559,18 +559,21 @@ if (field('company_site') !== '') {
 $name  = field('name');
 $phone = field('phone');
 
-if (mb_strlen($name) < 2) {
-    reply(false, 'Не хватает имени');
-}
+// Телефон обязателен всегда: без него заявка бесполезна.
+// Имя — нет. В короткой форме лид-магнита его просто не спрашивают,
+// там четыре поля и цель в том, чтобы человек не передумал.
 if (digits($phone) < 10) {
     reply(false, 'Не хватает телефона');
+}
+if ($name !== '' && mb_strlen($name) < 2) {
+    reply(false, 'Не хватает имени');
 }
 if (rate_count() >= (int)$CFG['per_hour']) {
     reply(false, 'Слишком много заявок подряд. Позвоните: +7 771 501 77 75');
 }
 
 $rows = [
-    'Имя'      => $name,
+    'Имя'      => $name !== '' ? $name : 'не указано',
     'Телефон'  => $phone,
     'Откуда'   => field('from'),
     'Куда'     => field('to'),
@@ -587,7 +590,7 @@ $body .= 'Страница: ' . field('page') . "\n";
 $body .= 'Время: ' . date('d.m.Y H:i') . "\n";
 $body .= 'IP: ' . client_ip() . "\n";
 
-$subject = 'Заявка с сайта: ' . $name . ', ' . $phone;
+$subject = 'Заявка с сайта: ' . ($name !== '' ? $name . ', ' : '') . $phone;
 
 if ($CFG['mode'] === 'local' || $CFG['smtp_pass'] === '') {
     $sent = send_local($CFG, $subject, $body);

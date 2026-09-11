@@ -162,13 +162,17 @@
     window.addEventListener('scroll', onHead, { passive: true });
     onHead();
 
-    /* ---------- форма заявки ----------
-       Отправляем через fetch: так ошибки показываем на месте, а при
-       удаче уводим на «спасибо». Без JS форма работает обычным POST,
+    /* ---------- формы заявки ----------
+       Их на странице две: короткая в лид-магните и полная внизу.
+       Код один на обе — искать по классу, а не по id.
+       Отправляем через fetch: ошибки показываем на месте, при удаче
+       уводим на «спасибо». Без JS форма работает обычным POST,
        и туда же уводит сам обработчик — 303-редиректом. */
-    var frm = root.querySelector('#lgl-form');
-    if (frm) {
-      var msg = root.querySelector('#lgl-form-msg');
+    var forms = root.querySelectorAll('form.lgl-form');
+    for (var fi = 0; fi < forms.length; fi++) bindForm(forms[fi]);
+
+    function bindForm(frm) {
+      var msg = frm.querySelector('.lgl-form-msg');
       var btn = frm.querySelector('button[type=submit]');
       var pageField = frm.querySelector('input[name=page]');
       if (pageField) pageField.value = location.href;
@@ -185,17 +189,20 @@
       };
       var digits = function (s) { return (s.match(/\d/g) || []).length; };
 
-      // Свои проверки вместо браузерных: нужен разбор по полям и текст рядом
+      // Свои проверки вместо браузерных: нужен разбор по полям и текст рядом.
+      // В короткой форме имени нет, поэтому проверяем только то, что есть.
       var check = function () {
         var bad = null;
-        var fields = [
-          { el: frm.name, test: function (v) { return v.trim().length >= 2; },
+        var rules = [
+          { el: frm.elements.namedItem('name'), test: function (v) { return v.trim().length >= 2; },
             err: 'Напишите, как к вам обращаться' },
-          { el: frm.phone, test: function (v) { return digits(v) >= 10; },
+          { el: frm.elements.namedItem('phone'), test: function (v) { return digits(v) >= 10; },
             err: 'Телефон нужен целиком, с кодом города или оператора' }
         ];
-        for (var i = 0; i < fields.length; i++) {
-          var f = fields[i], wrap = f.el.parentNode;
+        for (var i = 0; i < rules.length; i++) {
+          var f = rules[i];
+          if (!f.el || !f.el.tagName) continue;          // такого поля в этой форме нет
+          var wrap = f.el.parentNode;
           var old = wrap.querySelector('.lgl-f-err');
           if (old) wrap.removeChild(old);
           if (f.test(f.el.value)) { f.el.removeAttribute('aria-invalid'); continue; }

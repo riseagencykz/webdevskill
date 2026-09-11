@@ -226,14 +226,25 @@
 .lgl-magnet-card .lgl-fine a{color:var(--lgl-ink);font-weight:600;text-decoration:underline;
   text-underline-offset:2px;}
 /* мини-бланк расчёта */
-.lgl-form{display:grid;gap:7px;margin:0 0 var(--lgl-sp-4);}
-.lgl-form-row{display:flex;align-items:center;gap:10px;border:1px solid var(--lgl-line);
-  border-radius:var(--lgl-r-1);padding:9px 12px;background:var(--lgl-soft);}
+/* Компактная форма в лид-магните. Вид взят от прежнего макета —
+   мононадпись слева, поле справа, — но теперь поля настоящие. */
+.lgl-form--mini{display:grid;gap:7px;margin:0;}
+.lgl-form-row{display:flex;align-items:center;gap:10px;border:1px solid var(--lgl-line-ui);
+  border-radius:var(--lgl-r-1);padding:0 12px;background:var(--lgl-card);min-height:48px;
+  transition:border-color var(--lgl-dur) var(--lgl-ease),box-shadow var(--lgl-dur) var(--lgl-ease);}
 .lgl-form-row span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--lgl-mut);flex:none;width:58px;}
-.lgl-form-row i{flex:1;height:7px;border-radius:var(--lgl-r-pill);background:var(--lgl-line);}
-.lgl-form-row:nth-child(2) i{max-width:72%;}
-.lgl-form-row:nth-child(3) i{max-width:44%;}
+.lgl-form-row input{flex:1;min-width:0;border:0;background:none;font:inherit;
+  font-size:var(--lgl-fs-sm);color:var(--lgl-ink);padding:0;}
+.lgl-form-row input:focus{outline:none;}
+.lgl-form-row input::placeholder{color:#6E777E;opacity:1;}
+.lgl-form-row:hover{border-color:var(--lgl-mut);}
+.lgl-form-row:focus-within{border-color:var(--lgl-eaeu-ink);
+  box-shadow:0 0 0 3px rgba(18,135,106,.18);}
+.lgl-form-row:has(input[aria-invalid="true"]){border-color:var(--lgl-cn-ink);
+  box-shadow:0 0 0 3px rgba(176,106,59,.16);}
+.lgl-form--mini button{margin-top:var(--lgl-sp-2);}
+.lgl-form--mini .lgl-form-msg{margin-top:var(--lgl-sp-2);}
 
 /* --- машины --- */
 /* Ночная трасса с фурой. Стоит вместо фотографии: настоящих фото машин
