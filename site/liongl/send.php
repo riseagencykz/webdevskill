@@ -25,6 +25,14 @@ $CFG = [
     'from'       => 'info-liongl@yandex.kz',  // должен совпадать с smtp_user
     'from_name'  => 'Сайт lion-gl.kz',
 
+    // Как отправлять:
+    //   'smtp'  — своим SMTP-клиентом наружу, на smtp_host выше;
+    //   'local' — почтой самого хостинга, функцией mail(). Нужен, когда
+    //             хостинг не выпускает наружу на 465 (типичный запрет
+    //             от спама на общих тарифах). Тогда 'from' обязан быть
+    //             на своём домене, иначе письмо не пройдёт проверку SPF.
+    'mode'       => 'smtp',
+
     // Не больше стольких заявок с одного адреса в час.
     'per_hour'   => 8,
 
@@ -203,6 +211,32 @@ function smtp_send(array $cfg, string $subject, string $body): bool
 }
 
 /**
+ * Отправка почтой самого хостинга. Не требует исходящего порта наружу:
+ * письмо отдаётся местному почтовому серверу, дальше его забота.
+ * Пятый аргумент задаёт конверт отправителя — по нему считается SPF.
+ */
+function send_local(array $cfg, string $subject, string $body): bool
+{
+    if (!function_exists('mail')) {
+        error_log('lgl: функция mail() отключена на хостинге');
+        return false;
+    }
+    $headers = implode("\r\n", [
+        'From: ' . mime_header($cfg['from_name']) . ' <' . $cfg['from'] . '>',
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: base64',
+    ]);
+    return @mail(
+        $cfg['to'],
+        mime_header($subject),
+        chunk_split(base64_encode($body)),
+        $headers,
+        '-f' . $cfg['from']
+    );
+}
+
+/**
  * Диагностика. Открывается только при непустом diag_key и точном
  * совпадении — иначе этого адреса для внешнего мира не существует.
  * Пароль наружу не выводится, только его длина.
@@ -237,8 +271,7 @@ function diagnose(array $cfg): never
     }
     $out('');
 
-    $out('2. ИСХОДЯЩИЕ ПОРТЫ');
-    foreach ([[465, 'ssl://smtp.yandex.ru'], [587, 'tcp://smtp.yandex.ru'], [25, 'tcp://smtp.yandex.ru']] as [$port, $host]) {
+    $probe = static function (string $label, string $host, int $port) use ($out): bool {
         $t0 = microtime(true);
         $e = 0; $es = '';
         $s = @stream_socket_client($host . ':' . $port, $e, $es, 6);
@@ -246,14 +279,53 @@ function diagnose(array $cfg): never
         if ($s) {
             $greet = trim((string)fgets($s, 1024));
             fclose($s);
-            $out(sprintf('   %-4d ОТКРЫТ (%d мс)  %s', $port, $ms, $greet));
-        } else {
-            $out(sprintf('   %-4d ЗАКРЫТ (%d мс)  %s', $port, $ms, $es ?: 'нет ответа'));
+            $out(sprintf('   %-28s ОТКРЫТ (%d мс)  %s', $label, $ms, $greet));
+            return true;
+        }
+        $out(sprintf('   %-28s ЗАКРЫТ (%d мс)  %s', $label, $ms, $es ?: 'нет ответа'));
+        return false;
+    };
+
+    $out('2. НАРУЖУ');
+    // Чей это отказ, важно различать: «refused» приходит мгновенно и означает
+    // активный запрет, «timed out» — что пакеты молча выбрасывают. А если
+    // имя вдруг resolve-ится в 127.0.0.1, запрет сделан на уровне DNS.
+    $ip = gethostbyname('smtp.yandex.ru');
+    $out('   smtp.yandex.ru → ' . ($ip === 'smtp.yandex.ru' ? 'ИМЯ НЕ РАЗРЕШАЕТСЯ' : $ip));
+    $probe('smtp.yandex.ru:465', 'ssl://smtp.yandex.ru', 465);
+    $probe('smtp.yandex.ru:587', 'tcp://smtp.yandex.ru', 587);
+    $probe('smtp.yandex.ru:25',  'tcp://smtp.yandex.ru', 25);
+    $out('');
+
+    $out('3. ПОЧТА САМОГО ХОСТИНГА');
+    $localOk = false;
+    // Запасной путь, когда наружу не пускают: письмо отдаём местному
+    // почтовому серверу. Ему исходящий порт не нужен.
+    $local = false;
+    $local = $probe('localhost:25', 'tcp://127.0.0.1', 25) || $local;
+    $local = $probe('localhost:587', 'tcp://127.0.0.1', 587) || $local;
+    $local = $probe('mail.lion-gl.kz:25', 'tcp://mail.lion-gl.kz', 25) || $local;
+    $sendmail = (string)ini_get('sendmail_path');
+    $out('   функция mail():             ' . (function_exists('mail') ? 'ЕСТЬ' : 'ОТКЛЮЧЕНА'));
+    $out('   sendmail_path:              ' . ($sendmail !== '' ? $sendmail : '— не задан'));
+    if (function_exists('mail')) {
+        $probeBody = "Проверочное письмо, отправлено почтой хостинга.\n"
+                   . "Видите его — форма будет работать в режиме 'local'.\n";
+        $okLocal = send_local(
+            ['to' => $cfg['to'], 'from' => 'site@lion-gl.kz', 'from_name' => $cfg['from_name']],
+            'Проверка: почта хостинга',
+            $probeBody
+        );
+        $localOk = $okLocal;
+        $out('   пробное письмо через mail(): ' . ($okLocal ? 'ПРИНЯТО' : 'ОТКАЗ'));
+        if ($okLocal) {
+            $out('   → Проверьте ' . $cfg['to'] . ', включая «Спам».');
+            $out('     Пришло — скажите мне, переключу форму на этот путь.');
         }
     }
     $out('');
 
-    $out('3. РАЗГОВОР С ПОЧТОВЫМ СЕРВЕРОМ');
+    $out('4. РАЗГОВОР С ПОЧТОВЫМ СЕРВЕРОМ');
     if ($cfg['smtp_pass'] === '') {
         exit("   Пропущено: пароль не вписан.\n");
     }
@@ -262,9 +334,25 @@ function diagnose(array $cfg): never
     $fp = @stream_socket_client($cfg['smtp_host'] . ':' . $cfg['smtp_port'], $e, $es, 20);
     if (!$fp) {
         $out('   НЕ ПОДКЛЮЧИЛИСЬ: ' . ($es ?: 'нет ответа'));
-        exit("\nВЕРДИКТ: хостинг не выпускает наружу на порт " . $cfg['smtp_port'] . ".\n"
-           . "В поддержку хостинга: «нужен исходящий SMTP на smtp.yandex.ru:465».\n"
-           . "Если выше открытым оказался 587 — напишите мне, переключу на него.\n");
+        $v = "\nВЕРДИКТ: хостинг не выпускает наружу на порт " . $cfg['smtp_port'] . ".\n"
+           . "Это обычный запрет от спама на общих тарифах, чинится не у вас.\n\n";
+        if ($localOk) {
+            $v .= "НО ПОЧТА ХОСТИНГА РАБОТАЕТ (пункт 3, письмо принято).\n"
+                . "Это и есть решение: в send.php поставьте\n"
+                . "    'mode' => 'local',\n"
+                . "    'from' => 'site@lion-gl.kz',\n"
+                . "и заявки пойдут через местный почтовый сервер. Адрес отправителя\n"
+                . "обязан быть на своём домене — иначе письмо не пройдёт SPF.\n"
+                . "Сначала убедитесь, что проверочное письмо из пункта 3 дошло.\n";
+        } else {
+            $v .= "Почта хостинга тоже не принимает (пункт 3), так что вариантов два:\n"
+                . " 1. Написать в поддержку: «нужен исходящий SMTP на smtp.yandex.ru:465»\n"
+                . "    либо «почему не работает mail() / локальный sendmail».\n"
+                . " 2. Перевести форму на внешний сервис приёма заявок — он ходит\n"
+                . "    по обычному HTTPS, а его порты хостинг не блокирует.\n"
+                . "Если в пункте 2 открытым оказался 587 — скажите, переключу на него.\n";
+        }
+        exit($v);
     }
     stream_set_timeout($fp, 20);
 
@@ -414,21 +502,10 @@ $body .= 'IP: ' . client_ip() . "\n";
 
 $subject = 'Заявка с сайта: ' . $name . ', ' . $phone;
 
-if ($CFG['smtp_pass'] !== '') {
-    $sent = smtp_send($CFG, $subject, $body);
+if ($CFG['mode'] === 'local' || $CFG['smtp_pass'] === '') {
+    $sent = send_local($CFG, $subject, $body);
 } else {
-    // Запасной путь: встроенная отправка хостинга. Работает не везде
-    // и чаще попадает в спам, поэтому SMTP предпочтительнее.
-    $sent = @mail(
-        $CFG['to'],
-        mime_header($subject),
-        $body,
-        implode("\r\n", [
-            'From: ' . mime_header($CFG['from_name']) . ' <' . $CFG['from'] . '>',
-            'MIME-Version: 1.0',
-            'Content-Type: text/plain; charset=UTF-8',
-        ])
-    );
+    $sent = smtp_send($CFG, $subject, $body);
 }
 
 if (!$sent) {
