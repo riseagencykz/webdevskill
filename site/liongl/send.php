@@ -33,6 +33,12 @@ $CFG = [
     //             на своём домене, иначе письмо не пройдёт проверку SPF.
     'mode'       => 'smtp',
 
+    // Куда отправлять человека после удачной заявки. Отдельный адрес
+    // нужен не для красоты: на «посещение /thanks/» проще всего
+    // настроить цель в Метрике и рекламных кабинетах.
+    // Пусто — редиректа не будет, останется надпись под кнопкой.
+    'thanks_url' => '/thanks/',
+
     // Не больше стольких заявок с одного адреса в час.
     'per_hour'   => 8,
 
@@ -71,10 +77,34 @@ function digits(string $s): int
     return preg_match_all('/\d/u', $s);
 }
 
-/** Простой счётчик по IP: файл во временной папке, без базы. */
-function rate_ok(int $limit): bool
+/**
+ * Простой счётчик по IP: файл во временной папке, без базы.
+ * Считаем только УШЕДШИЕ письма. Неудачные попытки квоту не тратят —
+ * иначе один сломанный вечер настройки запирает форму на час,
+ * а смысл ограничителя в том, чтобы не давать рассылать, а не
+ * в том, чтобы наказывать за неработающую почту.
+ */
+function rate_file(): string
 {
-    $file = sys_get_temp_dir() . '/lgl-rate-' . md5(client_ip()) . '.txt';
+    return sys_get_temp_dir() . '/lgl-rate-' . md5(client_ip()) . '.txt';
+}
+
+function rate_count(): int
+{
+    $file = rate_file();
+    if (!is_readable($file)) {
+        return 0;
+    }
+    $now = time();
+    return count(array_filter(
+        array_map('intval', explode(',', (string)file_get_contents($file))),
+        static fn(int $t): bool => $t > $now - 3600
+    ));
+}
+
+function rate_hit(): void
+{
+    $file = rate_file();
     $now  = time();
     $hits = [];
     if (is_readable($file)) {
@@ -83,12 +113,8 @@ function rate_ok(int $limit): bool
             static fn(int $t): bool => $t > $now - 3600
         );
     }
-    if (count($hits) >= $limit) {
-        return false;
-    }
     $hits[] = $now;
     @file_put_contents($file, implode(',', $hits), LOCK_EX);
-    return true;
 }
 
 function wants_json(): bool
@@ -96,12 +122,22 @@ function wants_json(): bool
     return str_contains((string)($_SERVER['HTTP_ACCEPT'] ?? ''), 'application/json');
 }
 
-function reply(bool $ok, string $text): never
+function reply(bool $ok, string $text, string $redirect = ''): never
 {
     if (wants_json()) {
         header('Content-Type: application/json; charset=utf-8');
         http_response_code($ok ? 200 : 400);
-        echo json_encode(['ok' => $ok, 'error' => $ok ? null : $text], JSON_UNESCAPED_UNICODE);
+        echo json_encode(
+            ['ok' => $ok, 'error' => $ok ? null : $text, 'redirect' => $redirect ?: null],
+            JSON_UNESCAPED_UNICODE
+        );
+        exit;
+    }
+    // Без JS уводим на «спасибо» сами. 303, а не 302: после него браузер
+    // переходит на страницу методом GET, и обновление её не отправит
+    // заявку повторно.
+    if ($ok && $redirect !== '') {
+        header('Location: ' . $redirect, true, 303);
         exit;
     }
     // Ответ для случая, когда JS выключен.
@@ -266,9 +302,12 @@ function diagnose(array $cfg): never
     if ($cfg['smtp_pass'] !== '' && strlen($cfg['smtp_pass']) !== 16) {
         $out('   !! Пароль приложения Яндекса — ровно 16 символов. Похоже, скопирован не целиком.');
     }
-    if ($cfg['from'] !== $cfg['smtp_user']) {
+    if ($cfg['mode'] !== 'local' && $cfg['from'] !== $cfg['smtp_user']) {
         $out('   !! from и smtp_user не совпадают — Яндекс отклонит письмо.');
     }
+    $out('   режим:   ' . $cfg['mode'] . ($cfg['mode'] === 'local' ? ' (почта хостинга)' : ' (внешний SMTP)'));
+    $out('   лимит:   ' . rate_count() . ' из ' . $cfg['per_hour'] . ' за час с адреса ' . client_ip()
+        . (rate_count() >= (int)$cfg['per_hour'] ? '   ← ИСЧЕРПАН, форма откажет' : ''));
     $out('');
 
     $probe = static function (string $label, string $host, int $port) use ($out): bool {
@@ -499,7 +538,7 @@ if (mb_strlen($name) < 2) {
 if (digits($phone) < 10) {
     reply(false, 'Не хватает телефона');
 }
-if (!rate_ok((int)$CFG['per_hour'])) {
+if (rate_count() >= (int)$CFG['per_hour']) {
     reply(false, 'Слишком много заявок подряд. Позвоните: +7 771 501 77 75');
 }
 
@@ -534,4 +573,5 @@ if (!$sent) {
     reply(false, 'Письмо не ушло. Напишите в WhatsApp: +7 771 501 77 75');
 }
 
-reply(true, 'Заявка отправлена');
+rate_hit();
+reply(true, 'Заявка отправлена', (string)$CFG['thanks_url']);

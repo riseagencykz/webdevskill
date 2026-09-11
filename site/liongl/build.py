@@ -33,6 +33,20 @@ def main():
     out.write_text(page, encoding='utf-8')
     print('index.html собран:', round(len(page.encode()) / 1024, 1), 'КБ')
 
+    # Страница «спасибо» отдельная и самодостаточная: свои стили,
+    # свой <head>. Тащить в неё 40 КБ стилей главной ради одного
+    # экрана незачем.
+    thanks = (P / 'thanks.html').read_text(encoding='utf-8').strip()
+    tpage = ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n'
+             + thanks.split('<div class="lgl-root"', 1)[0].rstrip()
+             + '\n</head>\n<body>\n<div class="lgl-root"'
+             + thanks.split('<div class="lgl-root"', 1)[1]
+             + '\n</body>\n</html>\n')
+    tdir = HERE / 'thanks'
+    tdir.mkdir(exist_ok=True)
+    (tdir / 'index.html').write_text(tpage, encoding='utf-8')
+    print('thanks/index.html собран:', round(len(tpage.encode()) / 1024, 1), 'КБ')
+
 
 if __name__ == '__main__':
     main()

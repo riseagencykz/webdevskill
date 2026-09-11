@@ -1,0 +1,200 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Заявка принята — Lion Global Logistics</title>
+<!-- Страницу «спасибо» в поиск пускать нельзя: человек попадёт на неё
+     из выдачи, решит, что заявка отправлена, и будет ждать звонка. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F1822'/%3E%3Cpath d='M11 8v10' stroke='%23fff' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cpath d='M11 18c0 6 6 6 6 6' stroke='%233FB392' stroke-width='2.6' stroke-linecap='round' fill='none'/%3E%3Cpath d='M17 24h6' stroke='%23fff' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap&subset=cyrillic,latin" rel="stylesheet">
+
+<style>
+/* Токены те же, что на главной, но только нужные этой странице:
+   тащить сюда все 40 КБ стилей ради одного экрана незачем. */
+.lgl-root{
+  --lgl-bg:#EDF0F3; --lgl-card:#fff; --lgl-soft:#F5F7F9;
+  --lgl-ink:#0F1822; --lgl-body:#4A5867; --lgl-mut:#5A6875;
+  --lgl-line:#D3D9DF; --lgl-line-ui:#8E969E;
+  --lgl-eaeu:#12876A; --lgl-eaeu-ink:#0B6B54; --lgl-eaeu-l:#E4F2ED;
+  --lgl-sp-1:4px; --lgl-sp-2:8px; --lgl-sp-3:12px; --lgl-sp-4:16px;
+  --lgl-sp-5:24px; --lgl-sp-6:32px; --lgl-sp-7:48px;
+  --lgl-r-1:4px; --lgl-r-2:8px; --lgl-r-4:16px; --lgl-r-pill:999px;
+  --lgl-dur:180ms; --lgl-ease:cubic-bezier(.22,.61,.36,1);
+  background:var(--lgl-bg); color:var(--lgl-ink);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+body{margin:0;}
+.lgl-root *,.lgl-root *::before,.lgl-root *::after{box-sizing:border-box;}
+/* Сброс через :where() — нулевая специфичность. Иначе
+   .lgl-root ul{margin:0} перебивал .lgl-next{margin-top:32px},
+   и «Что дальше» прилипало к подзаголовку. */
+.lgl-root :where(h1,h2,p,ul,li){margin:0;padding:0;}
+.lgl-root :where(ul){list-style:none;}
+.lgl-root :where(a){color:inherit;text-decoration:none;}
+.lgl-root :where(svg){display:block;max-width:100%;}
+.lgl-root a:focus-visible{outline:2px solid var(--lgl-eaeu-ink);outline-offset:2px;
+  box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 0 6px var(--lgl-eaeu-ink);border-radius:var(--lgl-r-1);}
+
+.lgl-wrap{width:100%;max-width:720px;margin-inline:auto;padding-inline:clamp(16px,4vw,32px);}
+.lgl-top{display:flex;align-items:center;min-height:68px;border-bottom:1px solid var(--lgl-line);}
+.lgl-logo{display:inline-flex;align-items:center;min-height:44px;}
+.lgl-logo svg{height:30px;width:auto;}
+
+.lgl-main{flex:1;display:flex;align-items:center;padding-block:clamp(32px,6vw,64px);}
+.lgl-card{background:var(--lgl-card);border:1px solid var(--lgl-line);border-radius:var(--lgl-r-4);
+  padding:clamp(24px,5vw,var(--lgl-sp-7));width:100%;
+  box-shadow:0 1px 2px rgba(15,24,34,.05),0 18px 44px -28px rgba(15,24,34,.35);}
+.lgl-tick{width:56px;height:56px;border-radius:50%;background:var(--lgl-eaeu-l);
+  display:grid;place-items:center;margin-bottom:var(--lgl-sp-5);}
+.lgl-tick svg{width:30px;height:30px;stroke:var(--lgl-eaeu-ink);stroke-width:2.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;}
+.lgl-root h1{font-size:clamp(28px,5vw,41px);font-weight:700;letter-spacing:-.03em;line-height:1.1;}
+.lgl-lead{margin-top:var(--lgl-sp-3);font-size:17px;color:var(--lgl-body);}
+
+.lgl-next{margin-top:var(--lgl-sp-7);border-top:1px solid var(--lgl-line);padding-top:var(--lgl-sp-5);
+  display:grid;gap:var(--lgl-sp-4);}
+.lgl-next>span{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--lgl-mut);font-weight:500;}
+.lgl-next li{display:grid;grid-template-columns:1fr auto;gap:var(--lgl-sp-3);align-items:baseline;}
+.lgl-next b{font-size:15.5px;font-weight:700;}
+.lgl-next p{font-size:14px;color:var(--lgl-body);grid-column:1;}
+.lgl-when{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--lgl-eaeu-ink);
+  white-space:nowrap;grid-row:1;grid-column:2;}
+
+.lgl-acts{margin-top:var(--lgl-sp-6);display:flex;flex-wrap:wrap;gap:10px;}
+.lgl-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--lgl-sp-2);
+  min-height:52px;padding:0 26px;background:var(--lgl-ink);color:#fff;border:1px solid var(--lgl-ink);
+  border-radius:var(--lgl-r-1);font-weight:600;font-size:15px;
+  transition:background var(--lgl-dur) var(--lgl-ease),border-color var(--lgl-dur) var(--lgl-ease);}
+.lgl-btn:hover{background:#233242;border-color:#233242;}
+.lgl-btn--gh{background:var(--lgl-card);color:var(--lgl-ink);border-color:var(--lgl-line-ui);}
+.lgl-btn--gh:hover{background:var(--lgl-card);border-color:var(--lgl-ink);}
+.lgl-btn svg{width:18px;height:18px;flex:none;}
+
+.lgl-contacts{margin-top:var(--lgl-sp-6);border-top:1px solid var(--lgl-line);padding-top:var(--lgl-sp-5);
+  display:flex;flex-wrap:wrap;gap:var(--lgl-sp-3) var(--lgl-sp-6);align-items:center;}
+.lgl-contacts a{display:inline-flex;align-items:center;gap:7px;min-height:44px;font-weight:600;}
+.lgl-contacts a:hover{color:var(--lgl-eaeu-ink);}
+.lgl-contacts svg{width:18px;height:18px;fill:currentColor;}
+.lgl-hours{font-size:13.5px;color:var(--lgl-mut);}
+
+/* Фура внизу — та же, что в разделе «На чём возим», только статичная. */
+.lgl-rig{margin-top:var(--lgl-sp-6);}
+.lgl-rig svg{width:100%;height:auto;}
+.lgl-rig .lgl-ink{stroke:var(--lgl-line-ui);stroke-width:2.2;fill:none;
+  stroke-linejoin:round;stroke-linecap:round;}
+.lgl-rig .lgl-thin{stroke:var(--lgl-line);stroke-width:1.5;fill:none;}
+.lgl-rig .lgl-fillw{fill:var(--lgl-card);}
+.lgl-rig .lgl-fills{fill:var(--lgl-soft);}
+/* колесо толстым штрихом, как в сетке машин на главной:
+   сплошная заливка читалась серой кляксой */
+.lgl-rig circle{fill:none;stroke:var(--lgl-line-ui);stroke-width:9;}
+
+.lgl-foot{border-top:1px solid var(--lgl-line);padding-block:var(--lgl-sp-5);
+  font-size:13px;color:var(--lgl-mut);}
+</style>
+
+<div class="lgl-root" id="lgl-root">
+  <header class="lgl-top">
+    <div class="lgl-wrap">
+      <a class="lgl-logo" href="/" aria-label="Lion Global Logistics, на главную">
+        <svg viewBox="0 0 210 34" role="img" aria-hidden="true">
+          <path d="M10 7v11" fill="none" stroke="#0F1822" stroke-width="2.8" stroke-linecap="square"/>
+          <path d="M10 18c0 7 7 7 7 7" fill="none" stroke="#12876A" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M17 25h8" fill="none" stroke="#0F1822" stroke-width="2.8" stroke-linecap="square"/>
+          <text x="36" y="22" font-family="Inter,sans-serif" font-size="14" font-weight="700"
+                letter-spacing="-.2" fill="#0F1822">LION GLOBAL LOGISTICS</text>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="lgl-main">
+    <div class="lgl-wrap">
+      <div class="lgl-card">
+        <div class="lgl-tick" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+        </div>
+
+        <h1>Заявка принята</h1>
+        <p class="lgl-lead">Ответим за 30 минут в рабочее время.</p>
+
+        <ul class="lgl-next">
+          <span>Что дальше</span>
+          <li>
+            <b>Считаем варианты</b>
+            <div class="lgl-when">30 минут</div>
+            <p>Покажем, где быстрее, а где дешевле. Выбираете вы.</p>
+          </li>
+          <li>
+            <b>Договор и страховка</b>
+            <div class="lgl-when">1 день</div>
+            <p>Фиксируем цену, срок и машину.</p>
+          </li>
+        </ul>
+
+        <div class="lgl-acts">
+          <a class="lgl-btn" href="https://wa.me/77715017775" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 01-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 018.24 8.24c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Написать в WhatsApp</a>
+          <a class="lgl-btn lgl-btn--gh" href="/assets/prezentaciya-lion-global-logistics.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7.2l3.8 3.8v13.2H6.5z"/><path d="M13.5 3.5v4h4"/></svg>
+            Презентация компании</a>
+          <a class="lgl-btn lgl-btn--gh" href="/">На главную</a>
+        </div>
+
+        <div class="lgl-contacts">
+          <a href="tel:+77715017775">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 013 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
+            +7 771 501 77 75</a>
+          <a href="https://t.me/LionGlobalLogistics" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.7 4.3c-.3-.25-.75-.3-1.2-.12L2.9 11.05c-.5.2-.8.62-.78 1.1.02.48.35.88.87 1.03l4.28 1.25 1.65 5.05c.1.3.34.53.65.6.08.02.16.03.24.03.24 0 .47-.1.63-.28l2.42-2.6 4.2 3.1c.22.16.48.25.74.25.13 0 .26-.02.38-.06.38-.13.66-.45.75-.85l3.1-14.4c.1-.47-.05-.93-.33-1.17zM9.3 14.1l-.62 2.6-.95-2.9 8.1-5.15L9.3 14.1z"/></svg>
+            Telegram</a>
+          <span class="lgl-hours">Пн–Пт, 9:00–18:00</span>
+        </div>
+
+        <div class="lgl-rig" aria-hidden="true">
+          <svg viewBox="0 0 1080 290">
+            <line class="lgl-thin" x1="0" y1="269" x2="1080" y2="269"/>
+            <path class="lgl-fillw lgl-ink" d="M206 30h824a8 8 0 0 1 8 8v158H206z"/>
+            <rect class="lgl-fills" x="210" y="50" width="820" height="140"/>
+            <path class="lgl-thin" d="M206 50h832M206 190h832"/>
+            <path class="lgl-fills lgl-ink" d="M206 196h832v14H206z"/>
+            <path class="lgl-fills lgl-ink" d="M1030 210h10v30h-10z"/>
+            <path class="lgl-fills lgl-ink" d="M40 198h300v16H40z"/>
+            <path class="lgl-fills lgl-ink" d="M180 214h76v28h-76z"/>
+            <path class="lgl-fillw lgl-ink" d="M40 198V150q0-8 6-13L68 104q5-10 16-10V58q0-12 12-12h94q12 0 12 12v140z"/>
+            <path class="lgl-thin" d="M84 94h118M68 136l14-28h44v28zM134 108h58v28h-58zM130 108v90"/>
+            <path class="lgl-fills lgl-ink" d="M38 198h54v20H38z"/>
+            <circle cx="110" cy="236" r="32"/><circle cx="300" cy="236" r="32"/>
+            <circle cx="816" cy="236" r="32"/><circle cx="892" cy="236" r="32"/>
+            <circle cx="968" cy="236" r="32"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="lgl-foot">
+    <div class="lgl-wrap">ТОО «Lion Global Logistics» · БИН 220840033654 · Алматы, ул. Осипенко 35А, офис 406</div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     СЧЁТЧИКИ И ЦЕЛИ
+
+     Ради этого отдельная страница и делалась: в Яндекс.Метрике,
+     Google Analytics и рекламных кабинетах цель проще всего
+     настроить на «посещение страницы /thanks/».
+
+     Код счётчика ставится ОДИНАКОВЫЙ и сюда, и на главную —
+     иначе система не свяжет заход с заявкой и не покажет,
+     из какой рекламы пришёл клиент.
+
+     Пришлите номер счётчика — вставлю. Сам я ничего сюда
+     не подставлял: чужой или выдуманный номер молча сливает
+     статистику не туда.
+     ============================================================ -->
