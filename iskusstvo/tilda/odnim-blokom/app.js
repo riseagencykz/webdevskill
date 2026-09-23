@@ -1,11 +1,11 @@
 (function () {
 'use strict';
-var WA_PHONE = '77773231144';
+var WA_PHONE = '77073054566';
 var WA_TEXT = 'Здравствуйте! Хочу узнать про курс тату-мастера';
 var WA_TAG_SOURCE = true;
 var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','ttclid'];
 var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-function waHref(custom) {
+function waHref() {
 var qs, tag = '';
 try { qs = new URLSearchParams(window.location.search); } catch (e) { qs = null; }
 var vals = {};
@@ -17,7 +17,7 @@ else v = sessionStorage.getItem('isk_' + k) || '';
 } catch (e) {}
 vals[k] = v;
 });
-var text = custom || WA_TEXT;
+var text = WA_TEXT;
 if (WA_TAG_SOURCE) {
 tag = vals.utm_content || vals.utm_campaign || vals.utm_source || '';
 if (tag) text += ' #' + tag.replace(/[^\w-]/g, '').slice(0, 24);
@@ -26,7 +26,7 @@ return 'https://api.whatsapp.com/send/?phone=' + WA_PHONE +
 '&text=' + encodeURIComponent(text) + '&type=phone_number&app_absent=0';
 }
 var links = document.querySelectorAll('[data-wa]');
-for (var i = 0; i < links.length; i++) links[i].href = waHref(links[i].getAttribute('data-wa'));
+for (var i = 0; i < links.length; i++) links[i].href = waHref();
 document.addEventListener('click', function (e) {
 if (!e.target.closest('[data-wa]')) return;
 try { if (window.ttq && ttq.track) ttq.track('Contact'); } catch (err) {}
