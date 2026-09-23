@@ -221,6 +221,49 @@ p{margin:0;}
 .steps li.is-key::before{content:'';position:absolute;left:0;top:0;width:100%;height:6px;background:var(--yellow);}
 .steps li.is-key{padding-top:26px;}
 
+/* ===== Путь ученика =====
+   Вертикальный рельс, а не сетка: блок «Программа» ниже уже сделан
+   сеткой из номеров, и два одинаковых списка на одной странице
+   читались бы как повтор. Здесь важна последовательность. */
+.road{position:relative;margin:0;padding:0 0 0 clamp(38px,5vw,52px);list-style:none;
+  max-width:780px;counter-reset:road;}
+.road::before{content:'';position:absolute;left:clamp(14px,2vw,19px);top:12px;bottom:12px;
+  width:2px;background:var(--rule);}
+.road>li{position:relative;padding-bottom:clamp(22px,3vw,30px);}
+.road>li:last-child{padding-bottom:0;}
+.road>li::before{counter-increment:road;content:counter(road);
+  position:absolute;left:calc(clamp(38px,5vw,52px) * -1);top:0;
+  width:clamp(30px,4vw,40px);height:clamp(30px,4vw,40px);border-radius:50%;
+  display:grid;place-items:center;background:var(--yellow);color:var(--ink);
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:.9375rem;
+  font-variant-numeric:tabular-nums;box-shadow:0 0 0 5px var(--tint);}
+.road b{display:block;font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:1.0625rem;letter-spacing:.05em;color:var(--ink);margin-bottom:6px;line-height:1.3;}
+.road p{margin:0;font-size:.9375rem;line-height:1.55;}
+.road .road-when{display:inline-block;margin-top:8px;font-family:'Oswald',sans-serif;
+  font-weight:500;font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);border:1.5px solid var(--rule);border-radius:999px;padding:4px 11px;}
+
+/* оплата: две карточки внутри того же блока */
+.pay{margin-top:clamp(30px,4vw,44px);}
+.pay-h{font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;
+  font-size:.75rem;letter-spacing:.24em;color:var(--ink);margin:0 0 16px;}
+.pay-grid{display:grid;gap:16px;}
+@media (min-width:700px){.pay-grid{grid-template-columns:repeat(2,1fr);}}
+.pay-card{border:2px solid var(--ink);border-radius:var(--r);background:var(--paper);
+  padding:clamp(20px,2.4vw,28px);}
+.pay-card h3{margin:0 0 6px;font-size:1.125rem;letter-spacing:.03em;}
+.pay-card>p{margin:0 0 14px;font-size:.9375rem;line-height:1.55;}
+.pay-card ul{margin:0;padding:0;list-style:none;}
+.pay-card li{position:relative;padding-left:18px;margin-bottom:9px;font-size:.9375rem;
+  line-height:1.45;}
+.pay-card li:last-child{margin-bottom:0;}
+.pay-card li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:1.5px;
+  background:var(--ink);}
+.pay-card li b{color:var(--ink);}
+.pay-note{margin:16px 0 0;font-size:.875rem;line-height:1.55;}
+.pay-note b{color:var(--ink);}
+
 /* ===== Пакеты ===== */
 .packs{display:grid;gap:18px;}
 @media (min-width:700px){.packs{grid-template-columns:repeat(2,1fr);}}
@@ -380,6 +423,83 @@ p{margin:0;}
         <li><b>12</b><span>уроков в курсе</span></li>
         <li><b>Да</b><span>сертификат в конце</span></li>
       </ul>
+    </div>
+  </section>
+
+  <!-- ============ ПУТЬ УЧЕНИКА ============
+       Вторым блоком намеренно: человек должен увидеть, что его ждёт
+       после оплаты, до того как начнёт сравнивать форматы и цены.
+       Весь текст собран из уже утверждённых кусков страницы —
+       программы, FAQ и цен пирсинга. Ничего нового не обещаем. -->
+  <section class="sec sec--tint sec--wm" id="kak-budet">
+    <div class="wrap">
+      <div class="head rv">
+        <p class="label">Путь ученика</p>
+        <h2>Вот как всё будет, когда вы решитесь</h2>
+        <p class="lead">От первого сообщения до сертификата. Показываем весь путь заранее,
+        чтобы в середине не было сюрпризов.</p>
+      </div>
+
+      <ol class="road">
+        <li class="rv">
+          <b>Пишете в WhatsApp</b>
+          <p>Расскажем про формат, цену и ближайший набор. Никакой предоплаты,
+          чтобы просто задать вопрос.</p>
+          <span class="road-when">Бесплатно</span>
+        </li>
+        <li class="rv">
+          <b>Выбираем формат</b>
+          <p>По тату — базовый, продвинутый, индивидуальный или ускоренный за две недели.
+          По пирсингу — базовый или продвинутый. Подбираем под вашу цель и график.</p>
+        </li>
+        <li class="rv">
+          <b>Оплачиваете как удобно</b>
+          <p>Целиком или в рассрочку. Способ выбираете вы — что входит в курс,
+          от этого не меняется. Подробности ниже.</p>
+        </li>
+        <li class="rv">
+          <b>Составляем расписание под вас</b>
+          <p>График обсуждается индивидуально и составляется вместе с вами.
+          Не нужно бросать работу или учёбу.</p>
+        </li>
+        <li class="rv">
+          <b>Учитесь</b>
+          <p>Теория и безопасность, потом руки на искусственной коже, свои эскизы —
+          и только затем живые модели, каждый этап под контролем мастера.
+          Оборудование, расходники и моделей даёт студия: покупать заранее ничего не нужно.</p>
+        </li>
+        <li class="rv">
+          <b>Получаете сертификат</b>
+          <p>Итоговое тестирование и сертификат об окончании курса. Плюс бонусом —
+          как вести соцсети, чтобы к вам пошли первые клиенты.</p>
+        </li>
+      </ol>
+
+      <div class="pay rv">
+        <p class="pay-h">Как платят</p>
+        <div class="pay-grid">
+          <article class="pay-card">
+            <h3>Целиком</h3>
+            <p>Один платёж перед стартом — и дальше только учёба.</p>
+            <ul>
+              <li>Сумму называем до оплаты, она не меняется по ходу курса</li>
+              <li>Оборудование, расходники и модели уже внутри</li>
+              <li>На продвинутом и индивидуальном тату — <b>тату-машинка в подарок</b></li>
+            </ul>
+          </article>
+          <article class="pay-card">
+            <h3>В рассрочку</h3>
+            <p>Платите частями каждый месяц, учитесь с первого дня.</p>
+            <ul>
+              <li>Пирсинг базовый — <b>от 32 500 ₸ в месяц</b></li>
+              <li>Пирсинг продвинутый — <b>от 40 834 ₸ в месяц</b></li>
+              <li>По тату посчитаем под выбранный формат</li>
+            </ul>
+          </article>
+        </div>
+        <p class="pay-note"><b>Срок и точный платёж называем в переписке до оплаты</b> —
+        чтобы вы видели всю сумму заранее, а не узнавали её в процессе.</p>
+      </div>
     </div>
   </section>
 
