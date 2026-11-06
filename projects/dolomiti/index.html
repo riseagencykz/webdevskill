@@ -38,6 +38,15 @@
   h3{font-size:clamp(1.1rem,2vw,1.35rem)}
   section{padding:clamp(56px,8vw,120px) var(--pad)}
   .wrap{max-width:1280px;margin:0 auto}
+  .distrib{display:inline-block;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--black);padding:8px 14px;margin-bottom:22px;font-weight:600;line-height:1.3}
+  .usp{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:32px 0 0;
+    border-top:.5px solid var(--line);border-left:.5px solid var(--line)}
+  .usp>div{padding:16px 18px;border-right:.5px solid var(--line);border-bottom:.5px solid var(--line);
+    display:flex;flex-direction:column;gap:3px}
+  .usp b{font-size:.98rem;font-weight:700;line-height:1.25}
+  .usp span{font-size:.82rem;color:var(--muted)}
+  @media(max-width:640px){.usp{grid-template-columns:1fr}}
   .kicker{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
   .muted{color:var(--muted)}
   /* buttons */
@@ -68,15 +77,23 @@
   .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
   .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:.5px solid var(--line);font-size:.86rem;color:var(--muted)}
   .trust b{color:var(--black);font-weight:600}
-  .ph{background:var(--gray);display:flex;align-items:center;justify-content:center;color:#b7b3ab;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:12px;overflow:hidden}
+  .ph{background:var(--white);display:flex;align-items:center;justify-content:center;color:#b7b3ab;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:12px;overflow:hidden}
   .ph:has(img){padding:0}
   .ph img{width:100%;height:100%;object-fit:cover}
   .ph.contain img{object-fit:contain;padding:14px}
-  .certs{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
-  .certs a{display:block;width:96px;border:.5px solid var(--line);transition:transform .2s}
-  .certs a:hover{transform:translateY(-3px)}
-  .certs img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-  .certs figcaption{font-size:.7rem;text-align:center;padding:4px 0;color:var(--muted)}
+  .ph.plug{background:var(--gray)}
+  .cert-wrap{position:relative;margin-top:34px}
+  .certs{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;
+    scrollbar-width:none;padding-bottom:4px}
+  .certs::-webkit-scrollbar{display:none}
+  .certs a{flex:0 0 clamp(190px,22vw,260px);scroll-snap-align:start;border:.5px solid var(--line);
+    background:var(--white);transition:transform .25s,box-shadow .25s}
+  .certs a:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .certs img{width:100%;aspect-ratio:3/4;object-fit:contain;display:block;padding:10px}
+  .certs figcaption{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;
+    padding:10px 0;border-top:.5px solid var(--line);color:var(--black);font-weight:600}
+  .cert-wrap .gal-nav.prev{left:-18px} .cert-wrap .gal-nav.next{right:-18px}
+  @media(max-width:900px){.cert-wrap .gal-nav{display:none}}
   .hero-img{aspect-ratio:3/4;max-height:680px;width:100%}
   /* chips + calc */
   .chips{display:flex;gap:10px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
@@ -99,7 +116,8 @@
   .cat-head{grid-column:1/-1;background:var(--white);border-right:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:26px 26px 18px;display:flex;justify-content:space-between;align-items:baseline;gap:16px}
   .cat-head span:first-child{font-size:1.15rem;font-weight:700;letter-spacing:-.01em}
   .cat-head .muted{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
-  .card-series{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .card-serie{font-size:clamp(1.25rem,1.8vw,1.55rem);text-transform:uppercase;letter-spacing:.01em;margin-bottom:5px}
+  .card-model{font-size:.95rem;font-weight:600;color:#333;margin-bottom:5px}
   .card-meta{font-size:.82rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
   .badge{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border:.5px solid var(--black);padding:4px 10px;width:max-content}
   .price{font-size:1.15rem;font-weight:700}
@@ -112,7 +130,16 @@
   .overlay{position:fixed;inset:0;background:rgba(17,17,17,.55);z-index:90;display:none;align-items:flex-start;justify-content:center;padding:4vh 16px;overflow-y:auto}
   .overlay.open{display:flex}
   .popup{background:var(--white);max-width:960px;width:100%;position:relative;display:grid;grid-template-columns:1fr 1fr;margin:auto 0}
-  .popup .ph{aspect-ratio:1/1.15;position:sticky;top:0}
+  .popup .gal{position:relative;align-self:start;position:sticky;top:0}
+  .popup .ph{aspect-ratio:1/1.15}
+  .gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border:.5px solid var(--line);
+    background:rgba(255,255,255,.92);font-size:1.5rem;line-height:1;cursor:pointer;transition:background .2s;z-index:2}
+  .gal-nav:hover{background:var(--black);color:var(--white)}
+  .gal-nav.prev{left:12px} .gal-nav.next{right:12px}
+  .gal[hidden-nav] .gal-nav,.gal[hidden-nav] .gal-dots{display:none}
+  .gal-dots{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:7px;z-index:2}
+  .gal-dots i{width:7px;height:7px;border:1px solid var(--black);background:transparent;display:block;cursor:pointer}
+  .gal-dots i.on{background:var(--black)}
   .popup-body{padding:clamp(24px,3vw,44px);max-height:92vh;overflow-y:auto}
   .popup-close{position:absolute;top:0;right:0;z-index:5;background:var(--black);color:var(--white);border:none;width:48px;height:48px;font-size:1.3rem;cursor:pointer}
   .popup-close:hover{background:#333}
@@ -147,6 +174,15 @@
   .dealer-grid .fi{background:#1d1d1d;border-color:rgba(255,255,255,.16);color:var(--white)}
   .dealer-grid .fi::placeholder{color:#777}
   @media(max-width:1000px){.dealer-grid{grid-template-columns:1fr}}
+  .kb{margin-top:clamp(48px,6vw,80px);padding-top:clamp(36px,4vw,56px);border-top:.5px solid rgba(255,255,255,.16)}
+  .kb-h{font-size:clamp(1.3rem,2.4vw,1.8rem);margin-bottom:12px}
+  .kb-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px)}
+  .kb-col h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:12px;font-weight:600}
+  .kb-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;
+    border-bottom:.5px solid rgba(255,255,255,.16);font-size:.95rem;transition:padding-left .2s}
+  .kb-row:hover{padding-left:8px}
+  .kb-row span:last-child{color:#999;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+  @media(max-width:800px){.kb-grid{grid-template-columns:1fr}}
   /* faq (паттерн: 21st.dev faq-monochrome, адаптирован под ч/б без скруглений) */
   .faq-item{border-bottom:.5px solid var(--line);position:relative;overflow:hidden}
   .faq-item::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
@@ -260,7 +296,7 @@
     <nav class="menu">
       <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
       <a href="#accessories">Аксессуары</a>
-      <a href="#brand">О бренде</a><a href="#brand">База знаний</a><a href="#contacts">Контакты</a>
+      <a href="#brand">О бренде</a><a href="#dealers">База знаний</a><a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
       <a class="nav-phone" href="tel:+77775555884"><span>Отдел продаж</span>+7 777 555 58 84</a>
@@ -284,12 +320,17 @@
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <div class="kicker">Электрические печи для бань и саун · Казахстан</div>
+      <div class="distrib">Эксклюзивный дистрибьютор DOLOMITI на территории Республики Казахстан</div>
       <h1>Электропечи Dolomiti для бани и сауны — со&nbsp;склада в&nbsp;Казахстане</h1>
       <p class="sub">Полная линейка от&nbsp;6 до&nbsp;27&nbsp;кВт — для домашней парной и&nbsp;коммерческой сауны. Гарантия 1&nbsp;год, ТЭНы в&nbsp;наличии в&nbsp;РК, доставка 1–7&nbsp;дней.</p>
       <div class="hero-cta">
         <a class="btn" href="#podbor">Подобрать печь</a>
         <a class="btn outline" href="https://wa.me/77775555884?text=Здравствуйте!%20Интересуют%20печи%20Dolomiti" target="_blank">Написать в WhatsApp</a>
+      </div>
+      <div class="usp">
+        <div><b>Гарантия 1 год</b><span>на всё оборудование</span></div>
+        <div><b>Печи и ТЭНы в наличии</b><span>склад в Казахстане</span></div>
+        <div><b>Собственный сервисный центр</b><span>ремонт и запчасти в РК</span></div>
       </div>
       <div class="trust">
         <span><b>CE · EAC · SGS</b> сертификация</span>
@@ -352,11 +393,15 @@
     <div class="kicker">Качество и безопасность</div>
     <h2>Международная сертификация</h2>
     <p class="muted" style="margin:14px 0 0;max-width:44em">Печи Dolomiti&amp;F проходят независимые испытания и имеют полный пакет международных сертификатов. Нажмите на документ, чтобы открыть его целиком.</p>
-    <div class="certs">
-      <a href="img/cert-ce.webp" target="_blank"><img src="img/cert-ce.webp" alt="Сертификат CE" loading="lazy"><figcaption>CE</figcaption></a>
-      <a href="img/cert-sgs.webp" target="_blank"><img src="img/cert-sgs.webp" alt="Сертификат SGS" loading="lazy"><figcaption>SGS</figcaption></a>
-      <a href="img/cert-saa.webp" target="_blank"><img src="img/cert-saa.webp" alt="Сертификат SAA" loading="lazy"><figcaption>SAA</figcaption></a>
-      <a href="img/cert-cvc.webp" target="_blank"><img src="img/cert-cvc.webp" alt="Сертификат CVC" loading="lazy"><figcaption>CVC</figcaption></a>
+    <div class="cert-wrap">
+      <button class="gal-nav prev" type="button" id="certPrev" aria-label="Назад">‹</button>
+      <div class="certs" id="certs">
+        <a href="img/cert-ce.webp" target="_blank"><img src="img/cert-ce.webp" alt="Сертификат CE" loading="lazy"><figcaption>CE</figcaption></a>
+        <a href="img/cert-sgs.webp" target="_blank"><img src="img/cert-sgs.webp" alt="Сертификат SGS" loading="lazy"><figcaption>SGS</figcaption></a>
+        <a href="img/cert-saa.webp" target="_blank"><img src="img/cert-saa.webp" alt="Сертификат SAA" loading="lazy"><figcaption>SAA</figcaption></a>
+        <a href="img/cert-cvc.webp" target="_blank"><img src="img/cert-cvc.webp" alt="Сертификат CVC" loading="lazy"><figcaption>CVC</figcaption></a>
+      </div>
+      <button class="gal-nav next" type="button" id="certNext" aria-label="Вперёд">›</button>
     </div>
     <div class="cols4" style="margin-top:44px">
       <div><div class="n">1 год</div><h3>Гарантия на печь</h3><p class="muted" style="margin-top:8px;font-size:.92rem">ТЭНы: 1 год для частной бани, 3 месяца при коммерческой эксплуатации.</p></div>
@@ -446,6 +491,30 @@
         <p style="font-size:.78rem;color:#777;margin-top:10px">Вышлем дилерскую презентацию и прайс в ответ на заявку.</p>
       </form>
     </div>
+
+    <div class="kb">
+      <div class="kicker" style="color:#999">База знаний для дилеров</div>
+      <h3 class="kb-h">Обучающие материалы и документация</h3>
+      <p style="color:#999;max-width:46em;margin-bottom:28px">Видеоуроки по продукции, инструкции по монтажу и подбору мощности, технические паспорта и каталоги — всё в одном месте.</p>
+      <div class="kb-grid">
+        <div class="kb-col">
+          <h4>Видеоуроки</h4>
+          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Обзор линейки печей Dolomiti</span><span>YouTube</span></a>
+          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Монтаж и подключение</span><span>YouTube</span></a>
+          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Настройка пультов CL32 / CL50 WiFi</span><span>YouTube</span></a>
+          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Замена ТЭНов: порядок обслуживания</span><span>YouTube</span></a>
+          <a class="btn outline sm" style="margin-top:14px" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener">Весь канал на YouTube</a>
+        </div>
+        <div class="kb-col">
+          <h4>Документы</h4>
+          <a class="kb-row" href="#form"><span>Каталог Dolomiti 2026–2027</span><span>PDF</span></a>
+          <a class="kb-row" href="#form"><span>Дилерская презентация</span><span>PDF</span></a>
+          <a class="kb-row" href="#form"><span>Инструкции по монтажу печей</span><span>PDF</span></a>
+          <a class="kb-row" href="#form"><span>Паспорта и сертификаты</span><span>PDF</span></a>
+          <p style="font-size:.78rem;color:#777;margin-top:14px">Документы доступны дилерам после регистрации — оставьте заявку выше.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -525,7 +594,12 @@
 <div class="overlay" id="overlay" onclick="if(event.target===this)closePopup()">
   <div class="popup">
     <button class="popup-close" onclick="closePopup()">✕</button>
-    <div class="ph" id="pImg">Галерея 3–5 фото</div>
+    <div class="gal" id="pGal">
+      <div class="ph contain" id="pImg"></div>
+      <button class="gal-nav prev" id="galPrev" type="button" aria-label="Предыдущее фото">‹</button>
+      <button class="gal-nav next" id="galNext" type="button" aria-label="Следующее фото">›</button>
+      <div class="gal-dots" id="galDots"></div>
+    </div>
     <div class="popup-body">
       <div class="kicker" id="pKicker"></div>
       <h3 id="pTitle"></h3>
@@ -619,7 +693,7 @@ function renderCatalog(min,max){
     }
     const d=document.createElement('div');d.className='card';
     d.innerHTML=`<div class="ph${s.contain?' contain':''}">${s.img?`<img src="${s.img}" alt="Печь Dolomiti ${s.name}" loading="lazy">`:`Фото ${s.name}<br>ожидается`}</div>
-      <div><div class="card-series">${s.series}</div><h3>${s.name}</h3><div class="card-meta"><span>${s.power}</span><span>${s.volt}</span><span>${s.vol}</span></div></div>
+      <div><h3 class="card-serie">${s.series}</h3><div class="card-model">${s.name} · ${s.power}</div><div class="card-meta"><span>${s.volt}</span><span>${s.vol}</span></div></div>
       <span class="badge">${s.b2b?'Коммерческая серия':'В наличии в Алматы'}</span>
       <div class="price">${s.price}</div>
       <button class="btn outline sm">Подробнее</button>`;
@@ -673,11 +747,23 @@ document.getElementById('calcBtn').addEventListener('click',()=>{
   }
 });
 
+let galImgs=[],galI=0;
+function galRender(){
+  const box=document.getElementById('pImg');
+  box.innerHTML=galImgs.length?`<img src="${galImgs[galI]}" alt="">`:'Фото ожидается';
+  document.getElementById('galDots').innerHTML=galImgs.map((_,i)=>`<i class="${i===galI?'on':''}" data-i="${i}"></i>`).join('');
+  document.getElementById('pGal').toggleAttribute('hidden-nav',galImgs.length<2);
+}
+function galGo(d){ if(!galImgs.length)return; galI=(galI+d+galImgs.length)%galImgs.length; galRender(); }
+
 function openPopup(s){
-  document.getElementById('pKicker').textContent=`${s.series} · ${s.power} · ${s.volt}`;
-  document.getElementById('pTitle').textContent=s.name;
+  document.getElementById('pKicker').textContent=`${s.name} · ${s.power} · ${s.volt}`;
+  document.getElementById('pTitle').textContent=s.series;
   document.getElementById('pDesc').textContent=s.desc;
-  document.getElementById('pImg').innerHTML=s.img?`<img src="${s.img}" alt="Печь Dolomiti ${s.name}">`:`Фото ${s.name} ожидается`;document.getElementById('pImg').classList.toggle('contain',!!s.contain);
+  galImgs=(s.imgs&&s.imgs.length)?s.imgs:(s.img?[s.img]:[]); galI=0;
+  document.getElementById('pImg').classList.toggle('contain',!!s.contain);
+  document.getElementById('pImg').classList.toggle('plug',!galImgs.length);
+  galRender();
   document.getElementById('pSpecs').innerHTML=s.specs.map(x=>`<div class="row"><span>${x[0]}</span><span>${x[1]}</span></div>`).join('');
   document.getElementById('pModels').innerHTML=`<div class="row"><span>${s.name} · ${s.power}</span><span>${s.price}</span></div>`;
   const kw=parseFloat(String(s.power).replace(',','.'));
@@ -689,7 +775,15 @@ function openPopup(s){
   if(window.animatePopupOpen)window.animatePopupOpen();
 }
 function closePopup(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopup();});
+document.getElementById('galPrev').addEventListener('click',()=>galGo(-1));
+document.getElementById('galNext').addEventListener('click',()=>galGo(1));
+document.getElementById('galDots').addEventListener('click',e=>{const i=e.target.dataset.i;if(i!==undefined){galI=+i;galRender();}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closePopup();
+  if(!document.getElementById('overlay').classList.contains('open'))return;
+  if(e.key==='ArrowLeft')galGo(-1);
+  if(e.key==='ArrowRight')galGo(1);
+});
 
 const FAQS=[
  ["Как подобрать мощность печи?","Ориентир — 1 кВт на 1 м³ парной. Если есть стеклянная дверь или неутеплённые поверхности, добавьте запас 20–30%. Воспользуйтесь калькулятором выше — или напишите в WhatsApp, подберём за 5 минут.","Подбор"],
@@ -720,6 +814,13 @@ document.addEventListener('pointermove',e=>{
   t.style.setProperty('--fx',(e.clientX-r.left)+'px');
   t.style.setProperty('--fy',(e.clientY-r.top)+'px');
 });
+
+const certs=document.getElementById('certs');
+if(certs){
+  const step=()=>certs.querySelector('a').offsetWidth+18;
+  document.getElementById('certPrev').addEventListener('click',()=>certs.scrollBy({left:-step()*2,behavior:'smooth'}));
+  document.getElementById('certNext').addEventListener('click',()=>certs.scrollBy({left:step()*2,behavior:'smooth'}));
+}
 
 const burger=document.getElementById('burger'), mmenu=document.getElementById('mobileMenu');
 burger.addEventListener('click',()=>{
