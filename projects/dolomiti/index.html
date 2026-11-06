@@ -129,6 +129,7 @@
   /* popup */
   .overlay{position:fixed;inset:0;background:rgba(17,17,17,.55);z-index:90;display:none;align-items:flex-start;justify-content:center;padding:4vh 16px;overflow-y:auto}
   .overlay.open{display:flex}
+  .popup.doc-popup{max-width:520px;grid-template-columns:1fr}
   .popup{background:var(--white);max-width:960px;width:100%;position:relative;display:grid;grid-template-columns:1fr 1fr;margin:auto 0}
   .popup .gal{position:relative;align-self:start;position:sticky;top:0}
   .popup .ph{aspect-ratio:1/1.15}
@@ -147,6 +148,10 @@
   .popup .desc{margin:14px 0 22px;color:#333}
   .popup h4{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:26px 0 8px}
   form .fi{width:100%;padding:14px;border:.5px solid var(--line);background:var(--gray);font-size:1rem;font-family:inherit;margin-bottom:10px}
+  .form-note{font-size:.84rem;margin-top:10px;line-height:1.4}
+  .form-note[data-state="ok"]{color:#1d7a3c}
+  .form-note[data-state="err"]{color:#b32020}
+  .dealer-grid .form-note[data-state="ok"]{color:#7fd79b}
   .check{display:flex;gap:10px;font-size:.85rem;color:var(--muted);align-items:flex-start;margin:8px 0 14px}
   .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,52px);margin-top:44px}
   .brand-grid h3{margin-bottom:10px}
@@ -178,7 +183,7 @@
   .kb-h{font-size:clamp(1.3rem,2.4vw,1.8rem);margin-bottom:12px}
   .kb-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px)}
   .kb-col h4{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#999;margin-bottom:12px;font-weight:600}
-  .kb-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;
+  .kb-row{display:flex;width:100%;background:none;border:none;border-radius:0;color:inherit;font:inherit;text-align:left;cursor:pointer;justify-content:space-between;gap:16px;padding:14px 0;
     border-bottom:.5px solid rgba(255,255,255,.16);font-size:.95rem;transition:padding-left .2s}
   .kb-row:hover{padding-left:8px}
   .kb-row span:last-child{color:#999;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
@@ -554,11 +559,11 @@
         </div>
         <div class="kb-col">
           <h4>Документы</h4>
-          <a class="kb-row" href="#form"><span>Каталог Dolomiti 2026–2027</span><span>PDF</span></a>
-          <a class="kb-row" href="#form"><span>Дилерская презентация</span><span>PDF</span></a>
-          <a class="kb-row" href="#form"><span>Инструкции по монтажу печей</span><span>PDF</span></a>
-          <a class="kb-row" href="#form"><span>Паспорта и сертификаты</span><span>PDF</span></a>
-          <p style="font-size:.78rem;color:#777;margin-top:14px">Документы доступны дилерам после регистрации — оставьте заявку выше.</p>
+          <button class="kb-row doc-btn" type="button" data-doc="Каталог Dolomiti 2026–2027"><span>Каталог Dolomiti 2026–2027</span><span>PDF ↓</span></button>
+          <button class="kb-row doc-btn" type="button" data-doc="Дилерская презентация"><span>Дилерская презентация</span><span>PDF ↓</span></button>
+          <button class="kb-row doc-btn" type="button" data-doc="Инструкции по монтажу печей"><span>Инструкции по монтажу печей</span><span>PDF ↓</span></button>
+          <button class="kb-row doc-btn" type="button" data-doc="Паспорта и сертификаты"><span>Паспорта и сертификаты</span><span>PDF ↓</span></button>
+          <p style="font-size:.78rem;color:#777;margin-top:14px">Документы доступны дилерам: оставьте контакты — пришлём ссылку на почту.</p>
         </div>
       </div>
     </div>
@@ -635,6 +640,28 @@
 <div class="mbar">
   <a class="call" href="tel:+77775555884">Позвонить</a>
   <a class="wa" href="https://wa.me/77775555884" target="_blank">WhatsApp</a>
+</div>
+
+<!-- Попап: запрос документа -->
+<div class="overlay" id="docOverlay" onclick="if(event.target===this)closeDoc()">
+  <div class="popup doc-popup">
+    <button class="popup-close" onclick="closeDoc()">✕</button>
+    <div class="popup-body">
+      <div class="kicker">Документ для дилеров</div>
+      <h3 id="docTitle"></h3>
+      <p class="desc">Оставьте контакты — пришлём ссылку на документ и дилерские условия.</p>
+      <form onsubmit="return fakeSubmit(this)">
+        <input class="fi" type="text" name="name" placeholder="Имя" required>
+        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
+        <input class="fi" type="email" name="email" placeholder="E-mail для отправки документа" required>
+        <input class="fi" type="text" name="company" placeholder="Компания / магазин">
+        <input type="hidden" name="model" id="docField">
+        <input type="hidden" name="lead_type" value="Документы">
+        <button class="btn" style="width:100%">Получить документ</button>
+        <p class="muted" style="font-size:.78rem;margin-top:10px">Нажимая кнопку, вы соглашаетесь с <a href="politika.html" style="text-decoration:underline">политикой конфиденциальности</a>.</p>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- Попап товара -->
@@ -827,7 +854,7 @@ document.getElementById('galPrev').addEventListener('click',()=>galGo(-1));
 document.getElementById('galNext').addEventListener('click',()=>galGo(1));
 document.getElementById('galDots').addEventListener('click',e=>{const i=e.target.dataset.i;if(i!==undefined){galI=+i;galRender();}});
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')closePopup();
+  if(e.key==='Escape'){closePopup();closeDoc();}
   if(!document.getElementById('overlay').classList.contains('open'))return;
   if(e.key==='ArrowLeft')galGo(-1);
   if(e.key==='ArrowRight')galGo(1);
@@ -863,6 +890,15 @@ document.addEventListener('pointermove',e=>{
   t.style.setProperty('--fy',(e.clientY-r.top)+'px');
 });
 
+function openDoc(name){
+  document.getElementById('docTitle').textContent=name;
+  document.getElementById('docField').value=name;
+  document.getElementById('docOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDoc(){document.getElementById('docOverlay').classList.remove('open');document.body.style.overflow='';}
+document.querySelectorAll('.doc-btn').forEach(b=>b.addEventListener('click',()=>openDoc(b.dataset.doc)));
+
 document.querySelectorAll('.vid').forEach(v=>v.addEventListener('click',()=>{
   if(v.querySelector('iframe'))return;
   const id=v.dataset.id;
@@ -886,7 +922,46 @@ mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
   mmenu.classList.remove('open'); burger.textContent='☰'; burger.setAttribute('aria-expanded','false');
 }));
 
-function fakeSubmit(f){alert('Прототип: заявка «'+(f.model?f.model.value||'подбор':'подбор')+'» ушла бы на e-mail + WhatsApp с метками (тип: '+f.lead_type.value+').');return false;}
+/* Приём заявок. Подставьте сюда URL веб-приложения Apps Script
+   (Развернуть → Веб-приложение → URL, оканчивается на /exec).
+   Код скрипта и инструкция — в папке apps-script/Code.gs. */
+const LEAD_ENDPOINT = '';
+
+function setFormState(f,state,msg){
+  const btn=f.querySelector('button[type=submit],button:not([type])');
+  let note=f.querySelector('.form-note');
+  if(!note){note=document.createElement('p');note.className='form-note';f.appendChild(note);}
+  note.textContent=msg||'';
+  note.dataset.state=state;
+  if(btn){btn.disabled=(state==='sending');btn.dataset.label=btn.dataset.label||btn.textContent;
+    btn.textContent=state==='sending'?'Отправляем…':btn.dataset.label;}
+}
+
+async function submitLead(f){
+  const data=new FormData(f);
+  data.set('page',location.pathname+location.hash);
+  if(!data.get('utm')){
+    const u=new URLSearchParams(location.search);
+    const s=['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+      .map(k=>u.get(k)?k+'='+u.get(k):null).filter(Boolean).join('&');
+    if(s)data.set('utm',s);
+  }
+  if(!LEAD_ENDPOINT){
+    setFormState(f,'ok','Заявка принята (демо-режим: приём в Google Таблицу подключается после развёртывания скрипта).');
+    f.reset(); return false;
+  }
+  setFormState(f,'sending','');
+  try{
+    await fetch(LEAD_ENDPOINT,{method:'POST',mode:'no-cors',body:data});
+    setFormState(f,'ok','Спасибо! Заявка отправлена — свяжемся с вами в ближайшее время.');
+    f.reset();
+  }catch(err){
+    setFormState(f,'err','Не удалось отправить. Напишите нам в WhatsApp: +7 777 555 58 84');
+  }
+  return false;
+}
+
+function fakeSubmit(f){submitLead(f);return false;}
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
