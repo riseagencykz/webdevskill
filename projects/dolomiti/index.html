@@ -182,6 +182,24 @@
     border-bottom:.5px solid rgba(255,255,255,.16);font-size:.95rem;transition:padding-left .2s}
   .kb-row:hover{padding-left:8px}
   .kb-row span:last-child{color:#999;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+  .kb-grid{align-items:start}
+  .kb-video{grid-column:1/-1}
+  .vid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px}
+  .vid{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;
+    aspect-ratio:9/16;padding:14px;text-align:left;cursor:pointer;color:var(--white);
+    background:#0a0a0a;border:.5px solid rgba(255,255,255,.18);font:inherit;overflow:hidden;
+    transition:border-color .25s,transform .25s}
+  .vid:hover{border-color:rgba(255,255,255,.5);transform:translateY(-3px)}
+  .vid-play{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;
+    border:1.5px solid rgba(255,255,255,.75);border-radius:50%;transition:background .25s}
+  .vid-play::after{content:"";position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);
+    border-left:13px solid rgba(255,255,255,.9);border-top:8px solid transparent;border-bottom:8px solid transparent}
+  .vid:hover .vid-play{background:rgba(255,255,255,.14)}
+  .vid-t{font-size:.92rem;font-weight:700;line-height:1.22;position:relative;z-index:1}
+  .vid-d{font-size:.74rem;color:#9a9a9a;line-height:1.35;position:relative;z-index:1;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  @media(max-width:560px){.vid-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
   @media(max-width:800px){.kb-grid{grid-template-columns:1fr}}
   /* faq (паттерн: 21st.dev faq-monochrome, адаптирован под ч/б без скруглений) */
   .faq-item{border-bottom:.5px solid var(--line);position:relative;overflow:hidden}
@@ -498,13 +516,41 @@
       <h3 class="kb-h">Обучающие материалы и документация</h3>
       <p style="color:#999;max-width:46em;margin-bottom:28px">Видеоуроки по продукции, инструкции по монтажу и подбору мощности, технические паспорта и каталоги — всё в одном месте.</p>
       <div class="kb-grid">
-        <div class="kb-col">
+        <div class="kb-col kb-video">
           <h4>Видеоуроки</h4>
-          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Обзор линейки печей Dolomiti</span><span>YouTube</span></a>
-          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Монтаж и подключение</span><span>YouTube</span></a>
-          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Настройка пультов CL32 / CL50 WiFi</span><span>YouTube</span></a>
-          <a class="kb-row" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener"><span>▶ Замена ТЭНов: порядок обслуживания</span><span>YouTube</span></a>
-          <a class="btn outline sm" style="margin-top:14px" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener">Весь канал на YouTube</a>
+          <div class="vid-grid">
+          <button class="vid" type="button" data-id="oCgjuE-HbCQ" aria-label="Смотреть: Не просто печи, а полный сервис">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Не просто печи, а полный сервис</span>
+            <span class="vid-d">Подбор оборудования, помощь с мощностью, наличие в Алматы, техподдержка и сервис после покупки.</span>
+          </button>
+          <button class="vid" type="button" data-id="nBDZqy5J1OQ" aria-label="Смотреть: Печи в наличии — доставка от 1 дня">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Печи в наличии — доставка от 1 дня</span>
+            <span class="vid-d">Склад в Алматы, доставка по Казахстану 1–7 дней, гарантия 1 год на печь.</span>
+          </button>
+          <button class="vid" type="button" data-id="GAJjUcoEHlE" aria-label="Смотреть: Как рассчитать мощность печи">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Как рассчитать мощность печи</span>
+            <span class="vid-d">Объём парной = длина × ширина × высота. Ориентир — 1 кВт на 1 м³, с запасом на стекло и холодные поверхности.</span>
+          </button>
+          <button class="vid" type="button" data-id="77AMGIdGwpM" aria-label="Смотреть: Электропечь Dolomiti Space">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Электропечь Dolomiti Space</span>
+            <span class="vid-d">SD105E, SD120E и SD160E выглядят одинаково — разбираем, чем отличаются и как выбрать по объёму.</span>
+          </button>
+          <button class="vid" type="button" data-id="kQFeXLWu1FQ" aria-label="Смотреть: Печь Dolomiti в интерьере">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Печь Dolomiti в интерьере</span>
+            <span class="vid-d">Как печь работает, отдаёт тепло и смотрится в готовой парной.</span>
+          </button>
+          <button class="vid" type="button" data-id="_BOxr7w_Svs" aria-label="Смотреть: Наличие и сервис Dolomiti">
+            <span class="vid-play" aria-hidden="true"></span>
+            <span class="vid-t">Наличие и сервис Dolomiti</span>
+            <span class="vid-d">Что есть на складе в Казахстане и как устроена поддержка после покупки.</span>
+          </button>
+          </div>
+          <a class="btn outline sm" style="margin-top:18px" href="https://www.youtube.com/@DolomitiKazakhstan" target="_blank" rel="noopener">Весь канал на YouTube</a>
         </div>
         <div class="kb-col">
           <h4>Документы</h4>
@@ -816,6 +862,12 @@ document.addEventListener('pointermove',e=>{
   t.style.setProperty('--fx',(e.clientX-r.left)+'px');
   t.style.setProperty('--fy',(e.clientY-r.top)+'px');
 });
+
+document.querySelectorAll('.vid').forEach(v=>v.addEventListener('click',()=>{
+  if(v.querySelector('iframe'))return;
+  const id=v.dataset.id;
+  v.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1" title="Видео Dolomiti" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+}));
 
 const certs=document.getElementById('certs');
 if(certs){
