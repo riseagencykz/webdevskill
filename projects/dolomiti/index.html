@@ -947,18 +947,29 @@ async function submitLead(f){
     if(s)data.set('utm',s);
   }
   if(!LEAD_ENDPOINT){
-    setFormState(f,'ok','Заявка принята (демо-режим: приём в Google Таблицу подключается после развёртывания скрипта).');
-    f.reset(); return false;
+    goThanks(data,true); return false;
   }
   setFormState(f,'sending','');
   try{
     await fetch(LEAD_ENDPOINT,{method:'POST',mode:'no-cors',body:data});
-    setFormState(f,'ok','Спасибо! Заявка отправлена — свяжемся с вами в ближайшее время.');
     f.reset();
+    goThanks(data,false);
   }catch(err){
     setFormState(f,'err','Не удалось отправить. Напишите нам в WhatsApp: +7 777 555 58 84');
   }
   return false;
+}
+
+/* Переход на страницу «спасибо». Тип заявки и название документа
+   передаются в адресе, чтобы страница показала нужный текст. */
+function goThanks(data,demo){
+  const q=new URLSearchParams();
+  const t=data.get('lead_type'); if(t)q.set('type',t);
+  const m=data.get('model');
+  if(t&&String(t).toLowerCase().indexOf('документ')===0&&m)q.set('doc',m);
+  if(demo)q.set('demo','1');
+  const s=q.toString();
+  location.href='spasibo.html'+(s?'?'+s:'');
 }
 
 function fakeSubmit(f){submitLead(f);return false;}

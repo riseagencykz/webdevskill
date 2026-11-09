@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Заявка принята — Dolomiti&amp;F</title>
+<meta name="description" content="Спасибо за заявку. Менеджер Dolomiti свяжется с вами в ближайшее рабочее время.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>D</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#111111; --white:#ffffff; --gray:#f4f3f0;
+    --line:rgba(0,0,0,.14); --muted:#6b6b6b;
+    --pad:clamp(20px,4vw,64px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,sans-serif;color:var(--black);background:var(--white);
+       font-size:16px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+  a{color:inherit;text-decoration:none}
+
+  header{border-bottom:1px solid var(--line);padding:18px var(--pad)}
+  .nav{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .logo{font-weight:800;letter-spacing:-.04em;font-size:1.3rem}
+  .logo span{font-weight:400}
+  .nav-phone{font-size:.9rem;font-weight:600;white-space:nowrap}
+  .nav-phone span{display:block;font-size:.68rem;font-weight:500;color:var(--muted);
+                  text-transform:uppercase;letter-spacing:.09em}
+
+  main{flex:1;display:flex;align-items:center;padding:clamp(48px,9vw,120px) var(--pad)}
+  .wrap{max-width:860px;margin:0 auto;width:100%}
+
+  .mark{width:64px;height:64px;border:2px solid var(--black);border-radius:50%;
+        display:flex;align-items:center;justify-content:center;margin-bottom:28px}
+  .mark svg{width:28px;height:28px}
+  .mark path{stroke:var(--black);stroke-width:2.4;fill:none;
+             stroke-linecap:round;stroke-linejoin:round;
+             stroke-dasharray:32;stroke-dashoffset:32;
+             animation:draw .5s cubic-bezier(.4,0,.2,1) .15s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  .eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+           color:var(--muted);margin-bottom:14px}
+  h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:700;letter-spacing:-.025em;
+     line-height:1.1;margin-bottom:18px}
+  .lead{font-size:clamp(1rem,1.6vw,1.15rem);color:#333;max-width:620px;margin-bottom:12px}
+  .lead strong{font-weight:600}
+
+  .demo{margin-top:22px;padding:12px 16px;border:1px dashed var(--line);
+        background:var(--gray);font-size:.86rem;color:var(--muted);max-width:620px}
+
+  .steps{border-top:1px solid var(--line);margin-top:40px;padding-top:28px;
+         display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .step .n{font-size:.72rem;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+  .step p{font-size:.94rem;color:#333}
+
+  .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;
+       padding:14px 26px;font-size:.93rem;font-weight:600;border:1px solid var(--black);
+       background:var(--black);color:var(--white);transition:opacity .2s ease}
+  .btn:hover{opacity:.82}
+  .btn.outline{background:transparent;color:var(--black)}
+  .btn.outline:hover{background:var(--black);color:var(--white);opacity:1}
+
+  footer{border-top:1px solid var(--line);padding:22px var(--pad);
+         font-size:.85rem;color:var(--muted)}
+  .foot{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px;
+        justify-content:space-between}
+
+  @media(max-width:720px){
+    .steps{grid-template-columns:1fr;gap:20px}
+    .nav-phone{display:none}
+    .acts .btn{flex:1 1 100%}
+  }
+  @media(prefers-reduced-motion:reduce){.mark path{animation:none;stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">DOLOMITI<span>&amp;F</span></a>
+    <a class="nav-phone" href="tel:+77775555884"><span>Отдел продаж</span>+7 777 555 58 84</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="mark">
+      <svg viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5"/></svg>
+    </div>
+
+    <p class="eyebrow" id="eyebrow">Заявка принята</p>
+    <h1 id="title">Спасибо! Мы получили вашу заявку</h1>
+    <p class="lead" id="lead">Менеджер отдела продаж свяжется с вами в ближайшее рабочее время,
+      чтобы уточнить параметры парной и подобрать печь.</p>
+    <p class="lead" id="lead2" hidden></p>
+    <p class="demo" id="demo" hidden>Демо-режим: приём заявок в Google Таблицу ещё не подключён,
+      эта заявка никуда не отправлена. Подключается после развёртывания скрипта
+      (см. GUIDE-ZAYAVKI.md).</p>
+
+    <div class="steps">
+      <div class="step">
+        <p class="n">01</p>
+        <p>Звоним или пишем в WhatsApp в течение рабочего дня — с 9:00 до 19:00 по Алматы.</p>
+      </div>
+      <div class="step">
+        <p class="n">02</p>
+        <p>Уточняем объём парной, мощность подводки и подбираем печь с пультом.</p>
+      </div>
+      <div class="step">
+        <p class="n">03</p>
+        <p>Отгружаем со склада в Алматы, доставка по Казахстану 1–7 дней.</p>
+      </div>
+    </div>
+
+    <div class="acts">
+      <a class="btn" href="https://wa.me/77775555884" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      <a class="btn outline" href="index.html#catalog">Вернуться в каталог</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span>ТОО «Dolomiti», БИН 260740019701 · Алматы, ул. Ратушного, 40</span>
+    <span>Сервисный центр +7 777 555 58 83 · <a href="politika.html">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+<script>
+/* Текст подстраивается под тип заявки: ?type=Розница | ОПТ | Документы
+   (значение берётся из скрытого поля lead_type формы). */
+(function(){
+  var p = new URLSearchParams(location.search);
+  var type = (p.get('type') || '').toLowerCase();
+  var doc  = p.get('doc') || '';
+  var T = {
+    title:   document.getElementById('title'),
+    lead:    document.getElementById('lead'),
+    lead2:   document.getElementById('lead2'),
+    eyebrow: document.getElementById('eyebrow')
+  };
+
+  function setSteps(list){
+    var nodes = document.querySelectorAll('.step p:last-child');
+    list.forEach(function(txt,i){ if(nodes[i]) nodes[i].textContent = txt; });
+  }
+
+  if (type.indexOf('документ') === 0) {
+    T.eyebrow.textContent = 'Запрос документов принят';
+    T.title.textContent   = 'Спасибо! Документы отправим на почту';
+    T.lead.textContent    = doc
+      ? '«' + doc + '» — ссылку пришлём на указанный e-mail в течение рабочего дня.'
+      : 'Ссылку на запрошенные документы пришлём на указанный e-mail в течение рабочего дня.';
+    T.lead2.textContent   = 'Если письма нет — проверьте папку «Спам» или напишите нам в WhatsApp.';
+    T.lead2.hidden = false;
+    setSteps([
+      'Проверяем заявку и готовим актуальную редакцию документов.',
+      'Отправляем ссылку на указанный e-mail в течение рабочего дня.',
+      'По техническим вопросам — сервисный центр +7 777 555 58 83.'
+    ]);
+  } else if (type.indexOf('опт') === 0 || type.indexOf('дилер') === 0) {
+    T.eyebrow.textContent = 'Заявка на дилерство принята';
+    T.title.textContent   = 'Спасибо! Передали заявку в отдел продаж';
+    T.lead.textContent    = 'Свяжемся с вами, чтобы обсудить условия сотрудничества, дилерские цены и объёмы поставок.';
+    setSteps([
+      'Связываемся в течение рабочего дня и уточняем регион и профиль работы.',
+      'Высылаем дилерский прайс, презентацию и условия по объёмам.',
+      'Договариваемся о пробной поставке со склада в Алматы.'
+    ]);
+  }
+
+  if (p.get('demo')) document.getElementById('demo').hidden = false;
+
+  /* Точка для аналитики: цель «Заявка» в Яндекс.Метрике / Meta Pixel
+     вешается на просмотр этой страницы либо на событие ниже. */
+  if (window.ym)   { try { ym(window.YM_ID, 'reachGoal', 'lead'); } catch(e){} }
+  if (window.fbq)  { try { fbq('track', 'Lead'); } catch(e){} }
+})();
+</script>
+</body>
+</html>
