@@ -80,7 +80,9 @@
   .ph{background:var(--white);display:flex;align-items:center;justify-content:center;color:#b7b3ab;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:12px;overflow:hidden}
   .ph:has(img){padding:0}
   .ph img{width:100%;height:100%;object-fit:cover}
-  .ph.contain img{object-fit:contain;padding:14px}
+  /* scale-down = contain, но без растягивания сверх исходного размера:
+     мелкие файлы (например, фото пульта BB90) не мылятся */
+  .ph.contain img{object-fit:scale-down;padding:14px}
   .ph.plug{background:var(--gray)}
   .cert-wrap{position:relative;margin-top:34px}
   .certs{display:flex;gap:18px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;
@@ -156,8 +158,10 @@
   .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,52px);margin-top:44px}
   .brand-grid h3{margin-bottom:10px}
   .brand-grid p{font-size:.95rem;color:#333}
-  .brand-photos{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:44px}
-  .brand-photos .ph{aspect-ratio:16/10}
+  .brand-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:44px}
+  /* 2:3 — родное соотношение съёмки, поэтому кадр не режется
+     и печь видно целиком, от основания до каменки */
+  .brand-photos .ph{aspect-ratio:2/3}
   @media(max-width:900px){.brand-grid{grid-template-columns:1fr}.brand-photos{grid-template-columns:1fr}}
   /* generic split */
   .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,72px);align-items:center}
@@ -195,6 +199,15 @@
     background:#0a0a0a;border:.5px solid rgba(255,255,255,.18);font:inherit;overflow:hidden;
     transition:border-color .25s,transform .25s}
   .vid:hover{border-color:rgba(255,255,255,.5);transform:translateY(-3px)}
+  .vid-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:.78;transition:opacity .25s,transform .5s ease}
+  .vid:hover .vid-thumb{opacity:.92;transform:scale(1.04)}
+  /* затемнение снизу, чтобы белый заголовок читался поверх кадра */
+  .vid::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.45) 38%,rgba(0,0,0,.08) 70%)}
+  .vid-play{z-index:2}
+  .vid-t,.vid-d{z-index:2}
+  .vid.playing::after{display:none}
   .vid-play{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;
     border:1.5px solid rgba(255,255,255,.75);border-radius:50%;transition:background .25s}
   .vid-play::after{content:"";position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);
@@ -203,7 +216,7 @@
   .vid-t{font-size:.92rem;font-weight:700;line-height:1.22;position:relative;z-index:1}
   .vid-d{font-size:.74rem;color:#9a9a9a;line-height:1.35;position:relative;z-index:1;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3}
   @media(max-width:560px){.vid-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
   @media(max-width:800px){.kb-grid{grid-template-columns:1fr}}
   /* faq (паттерн: 21st.dev faq-monochrome, адаптирован под ч/б без скруглений) */
@@ -475,7 +488,8 @@
     </div>
     <div class="brand-photos">
       <div class="ph"><img src="img/photo/crown-1.webp" alt="Печь Dolomiti Crown в парной" loading="lazy"></div>
-      <div class="ph"><img src="img/photo/pillar-2.webp" alt="Печь Dolomiti Pillar-E с ограждением" loading="lazy"></div>
+      <div class="ph"><img src="img/photo/pillar-8.webp" alt="Печь Dolomiti Pillar-E в парной" loading="lazy"></div>
+      <div class="ph"><img src="img/photo/space-pro-2.webp" alt="Печь Dolomiti Space Pro в парной" loading="lazy"></div>
     </div>
     <div class="kicker" style="margin-top:44px">Из базы знаний</div>
     <div class="row"><span>Как подобрать печь по объёму сауны</span><span>→</span></div>
@@ -899,9 +913,27 @@ function openDoc(name){
 function closeDoc(){document.getElementById('docOverlay').classList.remove('open');document.body.style.overflow='';}
 document.querySelectorAll('.doc-btn').forEach(b=>b.addEventListener('click',()=>openDoc(b.dataset.doc)));
 
+/* Превью ролика на плитке. Картинка берётся с CDN YouTube: один лёгкий
+   кадр вместо полноценного iframe — плеер по-прежнему грузится только
+   по клику. oardefault — кадр в вертикальном формате Shorts; если его
+   нет, подставляется обычный hqdefault. */
+document.querySelectorAll('.vid').forEach(v=>{
+  const id=v.dataset.id; if(!id)return;
+  const im=document.createElement('img');
+  im.className='vid-thumb'; im.alt=''; im.loading='lazy'; im.decoding='async';
+  im.src='https://i.ytimg.com/vi/'+id+'/oardefault.jpg';
+  im.onerror=function(){
+    if(this.dataset.fb)return;
+    this.dataset.fb='1';
+    this.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';
+  };
+  v.insertBefore(im,v.firstChild);
+});
+
 document.querySelectorAll('.vid').forEach(v=>v.addEventListener('click',()=>{
   if(v.querySelector('iframe'))return;
   const id=v.dataset.id;
+  v.classList.add('playing');
   v.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1" title="Видео Dolomiti" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
 }));
 
