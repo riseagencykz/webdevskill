@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Инверторный стабилизатор Voltek IS">
+  <defs>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2A313B"/><stop offset="1" stop-color="#151A21"/></linearGradient>
+    <linearGradient id="s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0B0E12"/><stop offset="1" stop-color="#1D232B"/></linearGradient>
+  </defs>
+  <ellipse cx="200" cy="272" rx="118" ry="10" fill="#000" opacity=".12"/>
+  <path d="M262 40 286 52v206l-24 10z" fill="url(#s)"/>
+  <rect x="114" y="40" width="148" height="228" rx="10" fill="url(#b)"/>
+  <rect x="130" y="58" width="116" height="48" rx="5" fill="#0A0D11"/>
+  <text x="188" y="92" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="28" font-weight="700" fill="#5FE3D2">220</text>
+  <text x="236" y="72" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#5FE3D2" opacity=".7">OUT V</text>
+  <circle cx="138" cy="122" r="3.5" fill="#5FE3D2"/><circle cx="152" cy="122" r="3.5" fill="#FFC72C"/><circle cx="166" cy="122" r="3.5" fill="#3A424D"/>
+  <g fill="#0E1217">
+    <rect x="130" y="150" width="116" height="4" rx="2"/><rect x="130" y="162" width="116" height="4" rx="2"/>
+    <rect x="130" y="174" width="116" height="4" rx="2"/><rect x="130" y="186" width="116" height="4" rx="2"/>
+  </g>
+  <text x="188" y="236" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="#E9EDF2">VOLTEK</text>
+  <text x="188" y="252" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" letter-spacing="2" fill="#FFC72C">IS · INVERTER</text>
+</svg>
