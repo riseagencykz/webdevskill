@@ -114,11 +114,27 @@
         },
         {
           "name": "Управление",
-          "value": "встроенное или внешний пульт"
+          "value": "внешний пульт (исполнение BE)"
         },
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "370×370×1080 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "16,2 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "BB90, CL32WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 850 мм, до пола 40 мм"
         }
       ],
       "images": [
@@ -129,7 +145,13 @@
         "img/photo/crown-3.webp",
         "img/photo/crown-2.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "370×370×1080 мм",
+      "weight": "16,2 кг",
+      "stones": "60 кг",
+      "ip": null,
+      "compatible_controllers": "BB90, CL32WF-C",
+      "factory_sku": null
     },
     {
       "sku": "CR90BE",
@@ -174,11 +196,27 @@
         },
         {
           "name": "Управление",
-          "value": "встроенное или внешний пульт"
+          "value": "внешний пульт (исполнение BE)"
         },
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "370×370×1080 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "16,2 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "BB90, CL32WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 850 мм, до пола 40 мм"
         }
       ],
       "images": [
@@ -189,7 +227,13 @@
         "img/photo/crown-3.webp",
         "img/photo/crown-1.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "370×370×1080 мм",
+      "weight": "16,2 кг",
+      "stones": "60 кг",
+      "ip": null,
+      "compatible_controllers": "BB90, CL32WF-C",
+      "factory_sku": null
     },
     {
       "sku": "PH60BE",
@@ -239,6 +283,22 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "320×320×950 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "12,68 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "BB90, CL32WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 950 мм, до пола 40 мм"
         }
       ],
       "images": [
@@ -249,7 +309,13 @@
         "img/photo/pillar-2.webp",
         "img/photo/pillar-7.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "320×320×950 мм",
+      "weight": "12,68 кг",
+      "stones": "60 кг",
+      "ip": null,
+      "compatible_controllers": "BB90, CL32WF-C",
+      "factory_sku": null
     },
     {
       "sku": "PH90BE",
@@ -299,6 +365,22 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "320×320×950 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "12,68 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "BB90, CL32WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 950 мм, до пола 40 мм"
         }
       ],
       "images": [
@@ -309,7 +391,13 @@
         "img/photo/pillar-2.webp",
         "img/photo/pillar-5.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "320×320×950 мм",
+      "weight": "12,68 кг",
+      "stones": "60 кг",
+      "ip": null,
+      "compatible_controllers": "BB90, CL32WF-C",
+      "factory_sku": null
     },
     {
       "sku": "SD90E",
@@ -351,6 +439,34 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "455×360×820 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "23 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "50 кг"
+        },
+        {
+          "name": "Класс защиты",
+          "value": "IPX4"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "BB90, CL32WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 30 мм, до потолка 1100 мм, до пола 40 мм"
+        },
+        {
+          "name": "Заводской артикул",
+          "value": "SD90E / SD90BE, серия Space"
         }
       ],
       "images": [
@@ -361,7 +477,13 @@
         "img/photo/space-mini-3.webp",
         "img/photo/space-mini-1.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "455×360×820 мм",
+      "weight": "23 кг",
+      "stones": "50 кг",
+      "ip": "IPX4",
+      "compatible_controllers": "BB90, CL32WF-C",
+      "factory_sku": "SD90E / SD90BE, серия Space"
     },
     {
       "sku": "SD105E",
@@ -403,6 +525,34 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "520×410×590 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "28,6 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "50 кг"
+        },
+        {
+          "name": "Класс защиты",
+          "value": "IPX4"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL32WF-C, CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1300–1500 мм, до пола 40 мм"
+        },
+        {
+          "name": "Заводской артикул",
+          "value": "TH105E / TH105BE, серия Power"
         }
       ],
       "images": [
@@ -412,7 +562,13 @@
         "img/photo/space-2.webp",
         "img/photo/space-6.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "520×410×590 мм",
+      "weight": "28,6 кг",
+      "stones": "50 кг",
+      "ip": "IPX4",
+      "compatible_controllers": "CL32WF-C, CL50WF-C",
+      "factory_sku": "TH105E / TH105BE, серия Power"
     },
     {
       "sku": "SD120E",
@@ -454,6 +610,34 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "520×410×590 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "28,6 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "50 кг"
+        },
+        {
+          "name": "Класс защиты",
+          "value": "IPX4"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL32WF-C, CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1300–1500 мм, до пола 40 мм"
+        },
+        {
+          "name": "Заводской артикул",
+          "value": "TH120E / TH120BE, серия Power"
         }
       ],
       "images": [
@@ -463,7 +647,13 @@
         "img/photo/space-1.webp",
         "img/photo/space-3.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "520×410×590 мм",
+      "weight": "28,6 кг",
+      "stones": "50 кг",
+      "ip": "IPX4",
+      "compatible_controllers": "CL32WF-C, CL50WF-C",
+      "factory_sku": "TH120E / TH120BE, серия Power"
     },
     {
       "sku": "SD160E",
@@ -505,6 +695,34 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "520×410×590 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "28,6 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "50 кг"
+        },
+        {
+          "name": "Класс защиты",
+          "value": "IPX4"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL32WF-C, CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1300–1500 мм, до пола 40 мм"
+        },
+        {
+          "name": "Заводской артикул",
+          "value": "TH160E / TH160BE, серия Power"
         }
       ],
       "images": [
@@ -514,7 +732,13 @@
         "img/photo/space-4.webp",
         "img/photo/space-1.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "520×410×590 мм",
+      "weight": "28,6 кг",
+      "stones": "50 кг",
+      "ip": "IPX4",
+      "compatible_controllers": "CL32WF-C, CL50WF-C",
+      "factory_sku": "TH160E / TH160BE, серия Power"
     },
     {
       "sku": "SD180E",
@@ -556,6 +780,26 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "825×395×830 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "53 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "80 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL32WF-C, CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1400 мм, до пола 50 мм"
         }
       ],
       "images": [
@@ -565,7 +809,13 @@
         "img/photo/space-pro-3.webp",
         "img/photo/space-pro-2.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "825×395×830 мм",
+      "weight": "53 кг",
+      "stones": "80 кг",
+      "ip": null,
+      "compatible_controllers": "CL32WF-C, CL50WF-C",
+      "factory_sku": null
     },
     {
       "sku": "SD225E",
@@ -607,6 +857,26 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "825×395×830 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "53 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "80 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1400 мм, до пола 50 мм"
         }
       ],
       "images": [
@@ -616,7 +886,13 @@
         "img/photo/space-pro-2.webp",
         "img/photo/space-pro-4.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "825×395×830 мм",
+      "weight": "53 кг",
+      "stones": "80 кг",
+      "ip": null,
+      "compatible_controllers": "CL50WF-C",
+      "factory_sku": null
     },
     {
       "sku": "SD270E",
@@ -658,6 +934,26 @@
         {
           "name": "Цвет",
           "value": "чёрный"
+        },
+        {
+          "name": "Габариты (Ш×Г×В)",
+          "value": "825×395×830 мм"
+        },
+        {
+          "name": "Масса",
+          "value": "53 кг"
+        },
+        {
+          "name": "Вместимость камней",
+          "value": "80 кг"
+        },
+        {
+          "name": "Совместимые пульты",
+          "value": "CL50WF-C"
+        },
+        {
+          "name": "Безопасные расстояния",
+          "value": "От стен 100 мм, до потолка 1400 мм, до пола 50 мм"
         }
       ],
       "images": [
@@ -667,7 +963,13 @@
         "img/photo/space-pro-1.webp",
         "img/photo/space-pro-3.webp"
       ],
-      "image_fit": "contain"
+      "image_fit": "contain",
+      "dimensions": "825×395×830 мм",
+      "weight": "53 кг",
+      "stones": "80 кг",
+      "ip": null,
+      "compatible_controllers": "CL50WF-C",
+      "factory_sku": null
     }
   ],
   "controllers": [
@@ -694,6 +996,22 @@
         {
           "name": "Напряжение",
           "value": "220-400 V / 1N - 3N ~ 32A"
+        },
+        {
+          "name": "Макс. нагрузка",
+          "value": "9 кВт при 230V 1N~ · 12 кВт при 400V 3N~"
+        },
+        {
+          "name": "Габариты панели",
+          "value": "141×111×43 мм"
+        },
+        {
+          "name": "Габариты силового блока",
+          "value": "300×250×85 мм"
+        },
+        {
+          "name": "Защита от перегрева",
+          "value": "термостат 110 °C, сбрасываемый"
         }
       ],
       "images": [
@@ -724,6 +1042,26 @@
         {
           "name": "Напряжение",
           "value": "400V / 3N~32A"
+        },
+        {
+          "name": "Макс. нагрузка",
+          "value": "9 кВт при 230V 1N~ · 18 кВт при 400V 3N~"
+        },
+        {
+          "name": "Габариты панели",
+          "value": "103×125×27 мм"
+        },
+        {
+          "name": "Габариты силового блока",
+          "value": "340×300×130 мм"
+        },
+        {
+          "name": "Защита от перегрева",
+          "value": "термостат 150 °C, сбрасываемый"
+        },
+        {
+          "name": "Комплект",
+          "value": "панель, силовой блок, датчик температуры, кабель передачи данных, дверной выключатель"
         }
       ],
       "images": [
@@ -754,6 +1092,26 @@
         {
           "name": "Напряжение",
           "value": "400V / 3N~50A"
+        },
+        {
+          "name": "Макс. нагрузка",
+          "value": "9 кВт при 230V 1N~ · 30 кВт при 400V 3N~"
+        },
+        {
+          "name": "Габариты панели",
+          "value": "103×125×27 мм"
+        },
+        {
+          "name": "Габариты силового блока",
+          "value": "340×300×130 мм"
+        },
+        {
+          "name": "Защита от перегрева",
+          "value": "термостат 150 °C, сбрасываемый"
+        },
+        {
+          "name": "Комплект",
+          "value": "панель, силовой блок, датчик температуры, кабель передачи данных, дверной выключатель"
         }
       ],
       "images": [
@@ -798,5 +1156,6 @@
       "Отлично! У нас есть дилерская программа с защитой территории — условия высылаем по запросу. Подробности — в <a href='#dealers' style='text-decoration:underline'>дилерской секции</a> на этой странице.",
       "Дилерам"
     ]
-  ]
+  ],
+  "_source": "Характеристики — заводской каталог «Dolomiti sauna heater 2026» (см. docs/catalog-specs.md). Напряжение печей и токи пультов в каталоге НЕ указаны — требуют подтверждения техспециалиста."
 }
