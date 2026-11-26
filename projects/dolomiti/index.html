@@ -2,6 +2,73 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<script src="/js/dolomiti-marketing-20261125.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const params=new URLSearchParams(location.search);
+  const clicked=new Date().toISOString();
+  function decorate(a){
+    if(!a || a.origin!=='https://crm.dolomiti.kz' || a.pathname!=='/api/site-whatsapp')return;
+    const url=new URL(a.href);
+    for(const k of ['gclid','gbraid','wbraid'])if(params.get(k)){url.searchParams.set(k,params.get(k));url.searchParams.set('ad_click_at',clicked);}
+    a.href=url.href;
+  }
+  document.querySelectorAll('a[href]').forEach(decorate);
+  function track(method){let ok=false;try{ok=localStorage.getItem('dolomiti.ga4.choice.v1')==='yes';}catch{} if(ok && window.gtag)window.gtag('event','contact_click',{send_to:'G-MH60X6S4TQ',contact_method:method});}
+  for(const type of ['click','auxclick','contextmenu'])document.addEventListener(type,function(e){const a=e.target.closest('a[href]');decorate(a);if(type==='click' && a && a.protocol==='tel:' && a.pathname==='+77775555884')track('phone');},true);
+  const calc=document.getElementById('calcBtn');if(calc)calc.addEventListener('click',function(e){
+    if(typeof calcRange==='undefined'||calcRange)return;
+    e.stopImmediatePropagation();const a=document.createElement('a');const url=new URL('https://crm.dolomiti.kz/api/site-whatsapp');
+    url.searchParams.set('text','Здравствуйте! Помогите подобрать печь под мою парную.');url.searchParams.set('page',location.origin+location.pathname);url.searchParams.set('landing_page',location.origin+location.pathname);
+    for(const k of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'])if(params.has(k))url.searchParams.set(k,params.get(k));a.href=url.href;decorate(a);a.href=window.dolomitiWhatsAppUrl?.(a.href)||a.href;track('whatsapp');window.open(a.href,'_blank','noopener');
+  },true);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const ads = 'AW-18559325430';
+  const ga = 'G-MH60X6S4TQ';
+  const tag = 'AW-18559325430/VR7cCLjBorMdEPap45FF';
+  const panel = document.getElementById('dlm-stat-choice');
+  const choice = document.createElement('input'); choice.type = 'checkbox';
+  const label = document.createElement('label'); label.append(choice, ' Разрешить учитывать обращения из рекламы Google');
+  panel.append(document.createElement('br'), label);
+  function read(key) { try { return localStorage.getItem(key); } catch { return null; } }
+  choice.checked = read('dolomiti.ads.measure.v1') === 'yes';
+  function measureAds() { if (choice.checked && read('dolomiti.ga4.choice.v1') === 'yes' && window.gtag) window.gtag('config', ads, {allow_ad_personalization_signals:false}); }
+  panel.addEventListener('click', function(e) { if (!e.target.dataset.stat) return; if(e.target.dataset.stat==='no')choice.checked=false; try {localStorage.setItem('dolomiti.ads.measure.v1',choice.checked?'yes':'no');} catch {} measureAds(); });
+  measureAds();
+  const params = new URLSearchParams(location.search);
+  for (const form of document.querySelectorAll('form[onsubmit]')) {
+    if (form.getAttribute('onsubmit') !== 'return fakeSubmit(this)') continue;
+    form.removeAttribute('onsubmit');
+    const kind = form.querySelector('#docField')?'document':form.querySelector('#pHidden')?'model':form.elements.company?'dealer':'selection';
+    let previous='', receipt='', busy=false;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault(); if(busy || !form.reportValidity())return;
+      const data=Object.fromEntries(new FormData(form)); delete data.utm;
+      if(kind==='document'){data.document=data.model;delete data.model;}
+      const signature=JSON.stringify(data); if(signature!==previous){receipt=crypto.randomUUID();previous=signature;}
+      Object.assign(data,{form_kind:kind,submission_id:receipt,page:location.origin+location.pathname,landing_page:location.origin+location.pathname});
+      for (const key of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gbraid','wbraid']) if(params.has(key))data[key]=params.get(key);
+      if(params.get('dlm_test')==='1')data.analytics_test='1';
+      Object.assign(data,window.dolomitiAttributionFields?.()||{});
+      busy=true; setFormState(form,'sending','Отправляем заявку…');
+      try {
+        const res=await fetch('https://crm.dolomiti.kz/api/site-leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data),credentials:'omit',signal:AbortSignal.timeout(15000)});
+        const reply=await res.json(); if(!res.ok || !reply.ok || !/^DLM-[a-f0-9]{32}$/i.test(reply.reference))throw new Error('CRM');
+        setFormState(form,'ok','Заявка принята. Менеджер Dolomiti свяжется с вами.');
+        try{window.dolomitiOpenAILeadConfirmed?.(reply,data);}catch{}
+        if (!reply.test && ['selection','model'].includes(kind) && read('dolomiti.ga4.choice.v1')==='yes' && window.gtag) {
+          window.gtag('event','generate_lead',{send_to:ga,form_name:kind});
+          if(choice.checked) window.gtag('event','conversion',{send_to:tag,transaction_id:reply.reference});
+        }
+        form.reset(); previous='';
+      } catch {setFormState(form,'err','Не удалось подтвердить отправку. Повторите попытку или напишите в WhatsApp.');} finally {busy=false;}
+    });
+  }
+});
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Электропечи для бани и сауны Dolomiti — со склада в Казахстане</title>
 <meta name="description" content="Электрические печи Dolomiti для бань и саун 5–45 м³. Гарантия, ТЭНы в наличии в РК, отгрузка по Казахстану. Шоурум в Алматы, Ратушного 40.">
@@ -323,6 +390,21 @@
     .btn{padding:15px 24px}
   }
 </style>
+	
+	<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114622814', 'ym');
+
+    ym(114622814, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114622814" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+	
 </head>
 <body>
 
@@ -849,6 +931,7 @@ function galRender(){
 function galGo(d){ if(!galImgs.length)return; galI=(galI+d+galImgs.length)%galImgs.length; galRender(); }
 
 function openPopup(s){
+  document.dispatchEvent(new CustomEvent('dolomiti:model-view',{detail:{name:s.name,series:s.series}}));
   document.getElementById('pKicker').textContent=`${s.name} · ${s.power} · ${s.volt}`;
   document.getElementById('pTitle').textContent=s.series;
   document.getElementById('pDesc').textContent=s.desc;
@@ -1074,6 +1157,60 @@ if(utmStr)document.querySelectorAll('form').forEach(f=>{
     gsap.fromTo('#overlay .popup',{opacity:0,y:24,scale:.985},
       {opacity:1,y:0,scale:1,duration:.32,ease:'power2.out'});
   };
+})();
+</script>
+
+<div id="dlm-stat-choice" role="region" aria-label="Настройки аналитики" style="position:fixed;bottom:12px;left:12px;max-width:min(390px,92vw);background:white;color:#222;padding:12px;border:1px solid #aaa;z-index:99999;font:14px/1.4 sans-serif" hidden>Разрешить Google Аналитике учитывать посещение сайта и просмотр моделей? <button type="button" data-stat="yes">Разрешить</button> <button type="button" data-stat="no">Отказаться</button></div>
+<button type="button" id="dlm-stat-settings">Настройки аналитики</button>
+<script>
+(function () {
+  const id = 'G-MH60X6S4TQ';
+  const key = 'dolomiti.ga4.choice.v1';
+  const panel = document.getElementById('dlm-stat-choice');
+  let choice = '', started = false;
+  try { choice = localStorage.getItem(key) || ''; } catch (_) {}
+  function start() {
+    if (started) return;
+    started = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    const url = new URL(location.origin + location.pathname);
+    const params = new URLSearchParams(location.search);
+    for (const name of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gbraid','wbraid']) if (params.has(name)) url.searchParams.set(name,params.get(name));
+    let ref = ''; try { ref = new URL(document.referrer).origin; } catch (_) {}
+    window.gtag('js',new Date());
+    window.gtag('config',id,{page_location:url.href,page_referrer:ref, allow_google_signals:false,allow_ad_personalization_signals:false});
+    const tag = document.createElement('script'); tag.async=true; tag.src='https://www.googletagmanager.com/gtag/js?id='+id; document.head.appendChild(tag);
+  }
+  panel.hidden = choice==='yes' || choice==='no';
+  if (choice==='yes') start();
+  document.getElementById('dlm-stat-settings').onclick = function () { panel.hidden = false; };
+  panel.onclick = function (e) {
+    const next = e.target.dataset.stat; if (!next) return;
+    choice = next; try {localStorage.setItem(key,next);} catch (_) {}
+    panel.hidden = true; window['ga-disable-'+id] = next==='no'; if(next==='yes') start();
+  };
+  function track(name,details) { if (choice==='yes' && started) window.gtag('event',name,Object.assign({send_to:id},details)); }
+  document.addEventListener('dolomiti:model-view',function(e){track('view_item',{items:[{item_id:e.detail.name,item_name:e.detail.series}]});});
+  document.addEventListener('click',function(e){const a=e.target.closest && e.target.closest('a[href]'); if (!a) return; if (a.hostname==='wa.me' || a.pathname==='/api/site-whatsapp') track('contact_click',{contact_method:'whatsapp'});},true);
+})();
+</script>
+
+<script>
+(function(){
+  function route(a){
+    if(!a || a.hostname!=='wa.me' || a.pathname!=='/77775555884') return;
+    const target=new URL('https://crm.dolomiti.kz/api/site-whatsapp');
+    const href=new URL(a.href), here=new URL(location.href);
+    target.searchParams.set('text',href.searchParams.get('text') || 'Здравствуйте! Интересуют печи Dolomiti');
+    target.searchParams.set('page',here.origin+here.pathname);
+    target.searchParams.set('landing_page',here.origin+here.pathname);
+    for(const key of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']) if(here.searchParams.has(key))target.searchParams.set(key,here.searchParams.get(key));
+    try { const ref=new URL(document.referrer); if(ref.origin!==here.origin)target.searchParams.set('referrer',ref.origin); } catch (_) {}
+    a.href=target.href;
+  }
+  document.querySelectorAll('a[href]').forEach(route);
+  for(const type of ['click','auxclick','contextmenu'])document.addEventListener(type,function(e){route(e.target.closest && e.target.closest('a[href]'));},true);
 })();
 </script>
 </body>
