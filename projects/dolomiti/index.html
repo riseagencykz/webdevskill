@@ -73,6 +73,17 @@ document.addEventListener('DOMContentLoaded', function () {
 <title>Электропечи для бани и сауны Dolomiti — со склада в Казахстане</title>
 <meta name="description" content="Электрические печи Dolomiti для бань и саун 5–45 м³. Гарантия, ТЭНы в наличии в РК, отгрузка по Казахстану. Шоурум в Алматы, Ратушного 40.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23111'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>D</text></svg>">
+<link rel="canonical" href="https://dolomiti.kz/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dolomiti&amp;F Казахстан">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://dolomiti.kz/">
+<meta property="og:title" content="Электропечи для бани и сауны Dolomiti — со склада в Казахстане">
+<meta property="og:description" content="Электрические печи Dolomiti для бань и саун 5–45 м³. Гарантия, ТЭНы в наличии в РК, отгрузка по Казахстану. Шоурум в Алматы, Ратушного 40.">
+<meta property="og:image" content="https://dolomiti.kz/img/photo/crown-1.webp">
+<meta property="og:image:width" content="1067">
+<meta property="og:image:height" content="1600">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -414,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <nav class="menu">
       <a href="#catalog">Каталог</a><a href="#podbor">Подбор</a><a href="#pults">Пульты</a>
       <a href="#accessories">Аксессуары</a>
-      <a href="#brand">О бренде</a><a href="#dealers">База знаний</a><a href="#contacts">Контакты</a>
+      <a href="#brand">О бренде</a><a href="#knowledge">База знаний</a><a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
       <a class="nav-phone" href="tel:+77775555884"><span>Отдел продаж</span>+7 777 555 58 84</a>
@@ -491,6 +502,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="kicker">Каталог 2026–2027</div>
     <h2>Печи Dolomiti&amp;F</h2>
     <p class="muted" style="margin:14px 0 0;max-width:44em">11 моделей от 6 до 27 кВт — от домашней парной до коммерческой сауны на 45 м³. Печи в наличии на складе в Алматы.</p>
+    <p class="muted" id="calcNote" style="margin:18px 0 -14px;font-size:.92rem" hidden></p>
     <div class="grid" id="catalogGrid"></div>
   </div>
 </section>
@@ -577,9 +589,12 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="ph"><img src="img/photo/space-pro-2.webp" alt="Печь Dolomiti Space Pro в парной" loading="lazy"></div>
     </div>
     <div class="kicker" style="margin-top:44px">Из базы знаний</div>
-    <div class="row"><span>Как подобрать печь по объёму сауны</span><span>→</span></div>
-    <div class="row"><span>Открытая или закрытая каменка: что выбрать</span><span>→</span></div>
-    <div class="row"><span>Как выбрать контроллер: встроенный, выносной, WiFi</span><span>→</span></div>
+    <!-- Пока это якоря на блок базы знаний. Когда появятся статьи
+         (/guide/...), заменить href на их адреса. Отдельные статьи
+         обещаны в плане Этапа 3, до тех пор вести в никуда нельзя. -->
+    <a class="row" href="#knowledge"><span>Как подобрать печь по объёму сауны</span><span>→</span></a>
+    <a class="row" href="#knowledge"><span>Открытая или закрытая каменка: что выбрать</span><span>→</span></a>
+    <a class="row" href="#knowledge"><span>Как выбрать контроллер: встроенный, выносной, WiFi</span><span>→</span></a>
   </div>
 </section>
 
@@ -605,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <form onsubmit="return fakeSubmit(this)">
         <input class="fi" type="text" name="name" placeholder="Имя" required>
-        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
+        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" aria-label="Номер телефона" autocomplete="tel" inputmode="tel" required>
         <input class="fi" type="text" name="city" placeholder="Город" required>
         <input class="fi" type="text" name="company" placeholder="Название магазина / компании">
         <label class="check" style="color:#999"><input type="checkbox" name="retail" checked> Есть розничная точка</label>
@@ -616,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
 
     <div class="kb">
-      <div class="kicker" style="color:#999">База знаний для дилеров</div>
+      <div class="kicker" style="color:#999" id="knowledge">База знаний для дилеров</div>
       <h3 class="kb-h">Обучающие материалы и документация</h3>
       <p style="color:#999;max-width:46em;margin-bottom:28px">Видеоуроки по продукции, инструкции по монтажу и подбору мощности, технические паспорта и каталоги — всё в одном месте.</p>
       <div class="kb-grid">
@@ -701,8 +716,8 @@ document.addEventListener('DOMContentLoaded', function () {
       <p class="muted" style="margin:16px 0 0;max-width:30em">Расскажем про наличие, доставку в ваш город и поможем не ошибиться с мощностью.</p>
     </div>
     <form onsubmit="return fakeSubmit(this)">
-      <input class="fi" type="text" name="name" placeholder="Ваше имя" required>
-      <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
+      <input class="fi" type="text" name="name" placeholder="Ваше имя" aria-label="Ваше имя" autocomplete="name" required>
+      <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" aria-label="Номер телефона" autocomplete="tel" inputmode="tel" required>
       <label class="check"><input type="checkbox" name="accessories"> Нужен комплект аксессуаров</label>
       <input type="hidden" name="lead_type" value="Розница">
       <button class="btn" style="width:100%">Получить подбор и цену</button>
@@ -727,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <p><b>Отдел продаж</b><br><a href="tel:+77775555884">+7 777 555 58 84</a></p>
       <p style="margin-top:10px"><b>Сервисный центр</b><br><a href="tel:+77775555883">+7 777 555 58 83</a></p>
       <p style="margin-top:10px">artemzaharov2707@gmail.com<br>Алматы, Ратушного 40</p><br>
-      <p><a href="https://instagram.com/" target="_blank" style="text-decoration:underline">Instagram</a></p>
+      <p><a href="https://www.instagram.com/dolomiti.kz/" target="_blank" rel="noopener" style="text-decoration:underline">Instagram @dolomiti.kz</a></p>
     </div>
     <div>
       <p><b>Разделы</b></p><br>
@@ -743,16 +758,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Попап: запрос документа -->
 <div class="overlay" id="docOverlay" onclick="if(event.target===this)closeDoc()">
-  <div class="popup doc-popup">
-    <button class="popup-close" onclick="closeDoc()">✕</button>
+  <div class="popup doc-popup" role="dialog" aria-modal="true" aria-labelledby="docTitle">
+    <button class="popup-close" id="docClose" onclick="closeDoc()" aria-label="Закрыть">✕</button>
     <div class="popup-body">
       <div class="kicker">Документ для дилеров</div>
       <h3 id="docTitle"></h3>
       <p class="desc">Оставьте контакты — пришлём ссылку на документ и дилерские условия.</p>
       <form onsubmit="return fakeSubmit(this)">
         <input class="fi" type="text" name="name" placeholder="Имя" required>
-        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
-        <input class="fi" type="email" name="email" placeholder="E-mail для отправки документа" required>
+        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" aria-label="Номер телефона" autocomplete="tel" inputmode="tel" required>
+        <input class="fi" type="email" name="email" autocomplete="email" placeholder="E-mail для отправки документа" required>
         <input class="fi" type="text" name="company" placeholder="Компания / магазин">
         <input type="hidden" name="model" id="docField">
         <input type="hidden" name="lead_type" value="Документы">
@@ -765,8 +780,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Попап товара -->
 <div class="overlay" id="overlay" onclick="if(event.target===this)closePopup()">
-  <div class="popup">
-    <button class="popup-close" onclick="closePopup()">✕</button>
+  <div class="popup" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+    <button class="popup-close" id="pClose" onclick="closePopup()" aria-label="Закрыть">✕</button>
     <div class="gal" id="pGal">
       <div class="ph contain" id="pImg"></div>
       <button class="gal-nav prev" id="galPrev" type="button" aria-label="Предыдущее фото">‹</button>
@@ -787,8 +802,8 @@ document.addEventListener('DOMContentLoaded', function () {
       <p style="font-size:.95rem">Ограждение · Защитная крышка · Кронштейны крепления</p>
       <h4>Узнать наличие и купить</h4>
       <form onsubmit="return fakeSubmit(this)">
-        <input class="fi" type="text" name="name" placeholder="Ваше имя" required>
-        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" required>
+        <input class="fi" type="text" name="name" placeholder="Ваше имя" aria-label="Ваше имя" autocomplete="name" required>
+        <input class="fi" type="tel" name="phone" placeholder="+7 ___ ___ __ __" aria-label="Номер телефона" autocomplete="tel" inputmode="tel" required>
         <label class="check"><input type="checkbox" name="accessories"> Нужен комплект аксессуаров</label>
         <input type="hidden" name="model" id="pHidden">
         <input type="hidden" name="lead_type" value="Розница">
@@ -800,7 +815,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 <script>
-/* Все цены — ЗАГЛУШКИ, заменить на актуальные от заказчика */
+/* Цены по прайсу заказчика; актуальная редакция — 28.09.2026. */
 const SERIES=[
  {id:"cr60",imgs:["img/crown.webp", "img/photo/crown-5.webp", "img/photo/crown-4.webp", "img/photo/crown-1.webp", "img/photo/crown-3.webp", "img/photo/crown-2.webp"],img:"img/crown.webp",contain:1,series:"Crown",name:"CR60BE",power:"6 кВт",volt:"3~400В",vol:"5–8 м³",min:5,max:8,price:"460 000 ₸",
   desc:"Электрическая печь Crown отличается мягкими линиями, металлической эстетикой и внешним видом, напоминающим корону, что добавляет премиальный стиль интерьеру парной. Круглая конструкция позволяет ставить печь на пол или встраивать её в полок. Благодаря большой вместимости камней воду можно поддавать с разных сторон — печь даёт много тепла и пара и подходит как для семейной, так и для небольшой коммерческой сауны.",
@@ -837,24 +852,34 @@ const SERIES=[
   specs:[["Модель","SD270E"],["Мощность","27 кВт"],["Напряжение","3~400В"],["Объём парной","27–45 м³"],["Замена ТЭНов","через переднюю крышку"],["Цвет","чёрный"]]}
 ];
 const PULTS=[
- {img:"img/pult-bb90.webp",contain:1,name:"BB90",
+ {img:"img/photo/pult-bb90-1.webp",contain:0,name:"BB90",
   desc:"Контроллер с реле. Сенсорный дисплей: свет, вентиляция, таймер, температура.",
   specs:[["Тип","контроллер с реле"],["Регулировка нагрева","40–110 °C"],["Мощность","до 9 кВт"],["Напряжение","220-400 V / 1N - 3N ~ 32A"]],
   price:"345 000 ₸"},
- {img:"img/pult-classy.webp",contain:0,name:"CL32WF-C",
+ {img:"img/photo/pult-classy-1.webp",contain:0,name:"CL32WF-C",
   desc:"Classy WiFi: дистанционное управление сауной со смартфона — включите баню по дороге домой.",
   specs:[["Управление","Wi-Fi + приложение"],["Регулировка нагрева","40–110 °C, сенсорная"],["Мощность","до 18 кВт"],["Напряжение","400V / 3N~32A"]],
   price:"460 000 ₸"},
- {img:"img/pult-classy.webp",contain:0,name:"CL50WF-C",
+ {img:"img/photo/pult-classy-2.webp",contain:0,name:"CL50WF-C",
   desc:"Classy WiFi для мощных коммерческих печей — до 30 кВт. Те же функции и приложение.",
   specs:[["Управление","Wi-Fi + приложение"],["Регулировка нагрева","40–110 °C, сенсорная"],["Мощность","до 30 кВт"],["Напряжение","400V / 3N~50A"]],
   price:"805 000 ₸"}
 ];
 
 const grid=document.getElementById('catalogGrid');
-function renderCatalog(min,max){
+/* Подбор печей.
+   Раньше калькулятор не считал по точному объёму: он находил группу-чип
+   и нажимал её, а чипы фильтровали по пересечению диапазонов. Из-за этого
+   на 25 м³ выдавалась SD160E (потолок 22), на 45 м³ — SD225E (потолок 35).
+   Теперь это две разные операции:
+     byRange  — просмотр по группе, пересечение с ВКЛЮЧЁННЫМИ границами;
+     byVolume — расчёт под конкретную парную, модель обязана покрывать объём. */
+const byRange=(min,max)=>SERIES.filter(s=>s.max>=min&&s.min<=max);
+const byVolume=vol=>SERIES.filter(s=>s.min<=vol&&vol<=s.max);
+
+function renderCatalog(list){
   grid.innerHTML='';
-  const list=SERIES.filter(s=>min==null||(s.max>min&&s.min<max));
+  if(!list)list=SERIES;
   let cur=null;
   list.forEach(s=>{
     if(s.series!==cur){
@@ -888,33 +913,65 @@ document.querySelectorAll('#chips .chip').forEach(c=>c.onclick=()=>{
   document.querySelectorAll('#chips .chip').forEach(x=>x.classList.remove('active'));
   c.classList.add('active');
   const r=c.dataset.r;
+  clearCalcView();
   if(r==='all')renderCatalog();
-  else{const[a,b]=r.split('-').map(Number);renderCatalog(a,b);}
+  else{const[a,b]=r.split('-').map(Number);renderCatalog(byRange(a,b));}
   document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
 });
 
+/* calcRange — список моделей, покрывающих посчитанный объём, либо null,
+   если подходящих нет. Имя переменной оставлено прежним: внешний
+   маркетинговый скрипт (js/dolomiti-marketing-*.js) проверяет её, чтобы
+   перехватить клик по кнопке в сценарии «нет подходящей модели». */
 let calcRange=null;
+let calcVol=0;
+let calcView=false;   // в каталоге сейчас выдача калькулятора, а не группа
+
+/* Убирает выдачу калькулятора, чтобы прошлый результат не выглядел
+   ответом на новый ввод (замечание аудита по 60 м³). */
+function clearCalcView(){
+  const n=document.getElementById('calcNote');
+  if(n){n.hidden=true;n.textContent='';}
+  calcView=false;
+}
+
 function recalcVolume(){
-  const v=['cL','cW','cH'].map(i=>parseFloat(document.getElementById(i).value)||0);
-  const vol=v[0]*v[1]*v[2];
+  if(calcView){ clearCalcView(); renderCatalog();
+    document.querySelector('#chips .chip[data-r="all"]')?.classList.add('active'); }
+  const nums=['cL','cW','cH'].map(i=>parseFloat(document.getElementById(i).value));
   const res=document.getElementById('calcRes');
   const btn=document.getElementById('calcBtn');
-  const chips=[...document.querySelectorAll('#chips .chip')];
-  if(vol>0){
-    const match=chips.find(c=>{if(c.dataset.r==='all')return false;const[a,b]=c.dataset.r.split('-').map(Number);return vol>a&&vol<=b;});
-    calcRange=match?match.dataset.r:null;
-    res.innerHTML=`Объём парной: <b>${vol.toFixed(1)} м³</b>`+(match?` · подходят печи ${match.textContent}`:' · подберём индивидуально');
-    btn.hidden=false;
-    btn.textContent=match?'Показать подходящие печи':'Написать в WhatsApp';
-  } else {
-    calcRange=null; res.textContent='Объём: — м³'; btn.hidden=true;
+  const bad=nums.some(n=>!isNaN(n)&&n<=0);
+  const vol=nums.every(n=>n>0)?nums[0]*nums[1]*nums[2]:0;
+  calcVol=vol;
+  if(bad){
+    calcRange=null; calcVol=0;
+    res.textContent='Размеры должны быть больше нуля.';
+    btn.hidden=true; return;
   }
+  if(!vol){
+    calcRange=null; res.textContent='Объём: — м³'; btn.hidden=true; return;
+  }
+  const fit=byVolume(vol);
+  calcRange=fit.length?fit:null;
+  res.innerHTML=`Объём парной: <b>${vol.toFixed(1)} м³</b> · `+(fit.length
+    ? `подходит ${fit.length===1?'одна модель':`моделей: ${fit.length}`}`
+    : 'серийной модели на такой объём нет — подберём индивидуально');
+  btn.hidden=false;
+  btn.textContent=fit.length?'Показать подходящие печи':'Написать в WhatsApp';
 }
 ['cL','cW','cH'].forEach(id=>document.getElementById(id).addEventListener('input',recalcVolume));
 document.getElementById('calcBtn').addEventListener('click',()=>{
   if(calcRange){
-    const chip=[...document.querySelectorAll('#chips .chip')].find(c=>c.dataset.r===calcRange);
-    if(chip)chip.click();
+    /* Выдача строится по точному объёму, а не по группе: ни одна модель
+       в ней не может иметь потолок ниже парной клиента. Чипы при этом
+       сбрасываются — активная группа больше не описывает показанное. */
+    document.querySelectorAll('#chips .chip').forEach(x=>x.classList.remove('active'));
+    renderCatalog(calcRange);
+    const n=document.getElementById('calcNote');
+    if(n){n.hidden=false;n.textContent=`Показаны печи для парной ${calcVol.toFixed(1)} м³ — каждая покрывает этот объём.`;}
+    calcView=true;
+    document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
   } else {
     window.open('https://wa.me/77775555884?text='+encodeURIComponent('Здравствуйте! Помогите подобрать печь под мою парную.'),'_blank');
   }
@@ -945,11 +1002,37 @@ function openPopup(s){
   document.getElementById('pPults').textContent=kw>18?'CL50WF-C (до 30 кВт)':(kw>9?'CL32WF-C (до 18 кВт)':'BB90 (до 9 кВт) · CL32WF-C');
   document.getElementById('pHidden').value=s.name;
   document.getElementById('pWa').href=`https://wa.me/77775555884?text=${encodeURIComponent('Здравствуйте, интересует печь '+s.name)}`;
-  document.getElementById('overlay').classList.add('open');
+  /* Сброс состояния прошлой модели (U01 аудита): при открытии другой печи
+     окно сохраняло прокрутку, заполненные поля и сообщение о предыдущей
+     отправке — человек видел «Заявка принята» над карточкой, которую
+     ещё не отправлял. */
+  const ov=document.getElementById('overlay');
+  const form=ov.querySelector('form');
+  if(form){
+    form.reset();
+    const note=form.querySelector('.form-note');
+    if(note)note.remove();
+    const btn=form.querySelector('button[type=submit],button:not([type])');
+    if(btn&&btn.dataset.label){btn.disabled=false;btn.textContent=btn.dataset.label;}
+  }
+  document.getElementById('pHidden').value=s.name;   // после reset, иначе затрётся
+  ov.scrollTop=0;
+  const box=ov.querySelector('.popup');
+  if(box)box.scrollTop=0;
+
+  lastFocus=document.activeElement;
+  ov.classList.add('open');
   document.body.style.overflow='hidden';
+  const close=document.getElementById('pClose');
+  if(close)close.focus();
   if(window.animatePopupOpen)window.animatePopupOpen();
 }
-function closePopup(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
+let lastFocus=null;
+function closePopup(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+  if(lastFocus&&lastFocus.focus){lastFocus.focus();lastFocus=null;}
+}
 document.getElementById('galPrev').addEventListener('click',()=>galGo(-1));
 document.getElementById('galNext').addEventListener('click',()=>galGo(1));
 document.getElementById('galDots').addEventListener('click',e=>{const i=e.target.dataset.i;if(i!==undefined){galI=+i;galRender();}});
@@ -1091,6 +1174,25 @@ function goThanks(data,demo){
 }
 
 function fakeSubmit(f){submitLead(f);return false;}
+
+/* Проверка телефона на стороне браузера (U02 аудита): поле type=tel
+   принимало «abc» как валидное значение. Проверяем количество цифр,
+   а не форму записи — человек пишет номер по-разному, и придираться
+   к скобкам и пробелам значит терять заявки. Это удобство, а не защита:
+   нормализация и проверка на сервере остаются обязательными. */
+document.querySelectorAll('input[type=tel]').forEach(function(f){
+  function check(){
+    const d=f.value.replace(/\D/g,'');
+    if(!f.value.trim()){f.setCustomValidity('');return;}
+    if(/[A-Za-zА-Яа-я]/.test(f.value))
+      f.setCustomValidity('В номере телефона не должно быть букв.');
+    else if(d.length<10||d.length>15)
+      f.setCustomValidity('Укажите номер полностью, например +7 777 555 58 84.');
+    else f.setCustomValidity('');
+  }
+  f.addEventListener('input',check);
+  f.addEventListener('blur',check);
+});
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));

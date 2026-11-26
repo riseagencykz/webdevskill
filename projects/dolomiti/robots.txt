@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Служебные страницы в поиске не нужны
+Disallow: /spasibo.html
+Disallow: /privacy-instagram.html
+Disallow: /apps-script/
+Disallow: /*.zip$
+
+Sitemap: https://dolomiti.kz/sitemap.xml
